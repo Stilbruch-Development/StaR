@@ -4,7 +4,7 @@ import NavLogoSVG from "../../images/styled_images/MainLogoSmall";
 import StyledLink from "./../styled_components/StyledLink";
 
 const NavLogo = props => {
-  const { navbarOpen, closeNav } = useContext(NavContext);
+  const { closeNav } = useContext(NavContext);
 
   return (
     <StyledLink

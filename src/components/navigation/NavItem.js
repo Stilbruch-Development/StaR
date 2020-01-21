@@ -3,7 +3,7 @@ import StyledLink from "./../styled_components/StyledLink";
 import NavContext from "../context/navigation/navContext";
 
 const NavItem = props => {
-  const { navbarOpen, closeNav } = useContext(NavContext);
+  const { closeNav } = useContext(NavContext);
 
   return (
     <StyledLink

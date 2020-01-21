@@ -37,7 +37,7 @@ const ExpanderShortsWrapper = styled.div`
 const Expander = props => {
   const [open, setOpen] = useState(false);
 
-  const { alerts, setAlert } = useContext(AlertContext);
+  const { setAlert } = useContext(AlertContext);
 
   const { selectExpanderItem, lockEditor, setExpanderEditor } = useContext(
     ExpanderContext

@@ -3,6 +3,8 @@ import ExpanderContext from "./expanderContext";
 import expanderReducer from "./expanderReducer";
 import axios from "axios";
 import AlertContext from "../../context/alert/alertContext";
+import db from "../../indexedDB/db";
+import uuid4 from "uuid/v4";
 
 import {
   GET_EXPANDER,
@@ -33,47 +35,53 @@ const ExpanderState = props => {
   // GET_EXPANDER;
   const getExpander = async () => {
     dispatch({ type: GET_EXPANDER });
-    try {
-      const res = await axios.get("http://localhost:2000/api/expander");
-      dispatch({
-        type: GET_EXPANDER_SUCCESS,
-        payload: res.data
-      });
-    } catch (err) {
-      dispatch({ type: EXPANDER_ERROR, payload: err.response.data.msg });
-    }
+    // try {
+    //   const res = await axios.get("http://localhost:2000/api/expander");
+    //   dispatch({
+    //     type: GET_EXPANDER_SUCCESS,
+    //     payload: res.data
+    //   });
+    // } catch (err) {
+    //   dispatch({ type: EXPANDER_ERROR, payload: err });
+    // }
   };
 
   // ADD_EXPANDER_ITEM,
   const addExpanderItem = async (itemElements, longState) => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    };
+    // const config = {
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   }
+    // };
     const item = { ...itemElements, long: longState };
     try {
-      await axios
-        .post("http://localhost:2000/api/expander", item, config)
-        .then(res => {
-          dispatch({
-            type: ADD_EXPANDER_ITEM,
-            payload: res.data
-          });
+      // await axios
+      //   .post("http://localhost:2000/api/expander", item, config)
+      //   .then(res => {
+      //     dispatch({
+      //       type: ADD_EXPANDER_ITEM,
+      //       payload: res.data
+      //     });
+      //   })
+      await db.expanders.add(item).then(
+        dispatch({
+          type: ADD_EXPANDER_ITEM,
+          payload: item
         })
-        .then(async () => {
-          try {
-            dispatch({ type: GET_EXPANDER });
+      );
+      // .then(async () => {
+      //   try {
+      //     dispatch({ type: GET_EXPANDER });
 
-            const res = await axios.get("http://localhost:2000/api/expander");
-            dispatch({
-              type: GET_EXPANDER_SUCCESS,
-              payload: res.data
-            });
-          } catch (err) {
-            console.log(err);
-          }
-        });
+      //     const res = await axios.get("http://localhost:2000/api/expander");
+      //     dispatch({
+      //       type: GET_EXPANDER_SUCCESS,
+      //       payload: res.data
+      //     });
+      //   } catch (err) {
+      //     console.log(err);
+      //   }
+      // });
     } catch (err) {
       dispatch({ type: EXPANDER_ERROR, payload: err.response.data.msg });
       setAlert(

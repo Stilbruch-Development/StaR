@@ -54,7 +54,7 @@ const NavRight = styled.div`
 `;
 
 const Navbar = () => {
-  const { navbarOpen, closeNav, openNav } = useContext(NavContext);
+  const { navbarOpen, closeNav } = useContext(NavContext);
 
   const { isAuthenticated, logout, user } = useContext(authContext);
 
