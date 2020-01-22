@@ -25,25 +25,26 @@ const Editor = styled.div`
 const Radeditor = props => {
   const {
     expanderUserData,
-    // loading,
-    // getExpander,
-    setExpanderItem
-    // clearExpander
+    loading,
+    getExpander,
+    setExpanderItem,
+    clearExpander
   } = useContext(ExpanderContext);
 
-  // const { loadUser } = useContext(AuthContext);
+  const { loadUser, user } = useContext(AuthContext);
 
   const [toggleState, setToggleState] = useToggle(false);
 
-  // if (expanderUserData === null && loading === false) {
-  //   getExpander();
-  // }
+  useEffect(() => {
+    getExpander();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
-  // useEffect(() => {
-  //   clearExpander();
-  //   loadUser();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  useEffect(() => {
+    clearExpander();
+    loadUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   window.scroll({
     top: 0,

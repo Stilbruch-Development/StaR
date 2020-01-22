@@ -35,9 +35,9 @@ const AuthState = props => {
   const loadUser = async () => {
     try {
       const user = checkToken(localStorage.token);
-      if (user.id) {
+      if (user._id) {
         const userData = await db.users.get({
-          id: user.id
+          _id: user._id
         });
 
         dispatch({
@@ -59,7 +59,7 @@ const AuthState = props => {
 
     formData.password = await bcrypt.hash(password, salt);
 
-    formData.id = uuid4();
+    formData._id = uuid4();
 
     function getEmail(email) {
       return db.users
@@ -76,7 +76,7 @@ const AuthState = props => {
 
         const payload = {
           user: {
-            id: formData.id
+            _id: formData._id
           }
         };
 
@@ -122,7 +122,7 @@ const AuthState = props => {
 
       const payload = {
         user: {
-          id: userData.id
+          _id: userData._id
         }
       };
 

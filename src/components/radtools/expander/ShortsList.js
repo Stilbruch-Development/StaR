@@ -29,7 +29,7 @@ export default function ShortsList(props) {
       { title: "Kürzel", field: "short" },
       { title: "Kategorie", field: "category" }
     ],
-    data: expanderUserData
+    data: expanderUserData || null
   });
 
   useEffect(() => {
@@ -56,16 +56,16 @@ export default function ShortsList(props) {
       editable={{
         onRowAdd: newData =>
           new Promise((resolve, reject) => {
-            if (newData.short && newData.category) {
+            if (newData.short || newData.category) {
               setTimeout(() => {
                 resolve();
                 const rawExpanderContent = convertToRaw(expanderEditorState);
                 addExpanderItem(newData, rawExpanderContent);
-                setState(prevState => {
-                  const data = [...prevState.data];
-                  data.push(newData);
-                  return { ...prevState, data };
-                });
+                // setState(prevState => {
+                //   const data = [...prevState.data];
+                //   data.push(newData);
+                //   return { ...prevState, data };
+                // });
                 lockEditor(true);
               }, 600);
             } else {

@@ -5,6 +5,7 @@ import axios from "axios";
 import AlertContext from "../../context/alert/alertContext";
 import db from "../../indexedDB/db";
 import uuid4 from "uuid/v4";
+import AuthContext from "../../context/auth/authContext";
 
 import {
   GET_EXPANDER,
@@ -31,19 +32,26 @@ const ExpanderState = props => {
 
   const [state, dispatch] = useReducer(expanderReducer, initialState);
   const { setAlert } = useContext(AlertContext);
+  const { user } = useContext(AuthContext);
 
   // GET_EXPANDER;
   const getExpander = async () => {
     dispatch({ type: GET_EXPANDER });
-    // try {
-    //   const res = await axios.get("http://localhost:2000/api/expander");
-    //   dispatch({
-    //     type: GET_EXPANDER_SUCCESS,
-    //     payload: res.data
-    //   });
-    // } catch (err) {
-    //   dispatch({ type: EXPANDER_ERROR, payload: err });
-    // }
+    if (user !== null) {
+      try {
+        const data = await db.expanders
+          .where("user")
+          .equals(user._id)
+          .toArray();
+        console.log(data);
+        dispatch({
+          type: GET_EXPANDER_SUCCESS,
+          payload: data
+        });
+      } catch (err) {
+        dispatch({ type: EXPANDER_ERROR, payload: err });
+      }
+    }
   };
 
   // ADD_EXPANDER_ITEM,
@@ -53,7 +61,13 @@ const ExpanderState = props => {
     //     "Content-Type": "application/json"
     //   }
     // };
-    const item = { ...itemElements, long: longState };
+    const item = {
+      ...itemElements,
+      _id: uuid4(),
+      user: user._id,
+      long: longState
+    };
+    console.log(item);
     try {
       // await axios
       //   .post("http://localhost:2000/api/expander", item, config)
@@ -83,7 +97,7 @@ const ExpanderState = props => {
       //   }
       // });
     } catch (err) {
-      dispatch({ type: EXPANDER_ERROR, payload: err.response.data.msg });
+      dispatch({ type: EXPANDER_ERROR, payload: err });
       setAlert(
         "",
         "",
