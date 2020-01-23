@@ -28,7 +28,14 @@ const createLoadingScreen = () => {
 let mainWindow;
 
 const createWindow = () => {
-  mainWindow = new BrowserWindow({ width: 900, height: 680, show: false });
+  mainWindow = new BrowserWindow({
+    width: 900,
+    height: 680,
+    show: false,
+    webPreferences: {
+      devTools: false
+    }
+  });
   mainWindow.loadURL(
     isDev
       ? "http://localhost:3000/"

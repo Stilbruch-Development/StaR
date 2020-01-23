@@ -25,7 +25,6 @@ const Editor = styled.div`
 const Radeditor = props => {
   const {
     expanderUserData,
-    loading,
     getExpander,
     setExpanderItem,
     clearExpander

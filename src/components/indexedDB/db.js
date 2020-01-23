@@ -1,5 +1,4 @@
 import Dexie from "dexie";
-import uuid4 from "uuid/v4";
 
 const db = new Dexie("StaR_DB");
 
