@@ -4,15 +4,6 @@ const BrowserWindow = electron.BrowserWindow;
 const path = require("path");
 const isDev = require("electron-is-dev");
 
-let express;
-if (isDev) {
-  express = require("../express_server/app");
-  require("dotenv").config();
-} else {
-  express = require(process.resourcesPath + "/express_server/app");
-  require("dotenv").config({ path: process.resourcesPath + "/.env" });
-}
-
 let loadingScreen;
 const createLoadingScreen = () => {
   loadingScreen = new BrowserWindow(
@@ -38,7 +29,6 @@ let mainWindow;
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({ width: 900, height: 680, show: false });
-  express();
   mainWindow.loadURL(
     isDev
       ? "http://localhost:3000/"

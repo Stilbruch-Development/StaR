@@ -1,7 +1,6 @@
 import React, { useReducer, useContext } from "react";
 import ExpanderContext from "./expanderContext";
 import expanderReducer from "./expanderReducer";
-import axios from "axios";
 import AlertContext from "../../context/alert/alertContext";
 import db from "../../indexedDB/db";
 import uuid4 from "uuid/v4";
@@ -56,11 +55,6 @@ const ExpanderState = props => {
 
   // ADD_EXPANDER_ITEM,
   const addExpanderItem = async (itemElements, longState) => {
-    // const config = {
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   }
-    // };
     const item = {
       ...itemElements,
       _id: uuid4(),
@@ -69,18 +63,29 @@ const ExpanderState = props => {
     };
     console.log(item);
     try {
-      // await axios
-      //   .post("http://localhost:2000/api/expander", item, config)
-      //   .then(res => {
-      //     dispatch({
-      //       type: ADD_EXPANDER_ITEM,
-      //       payload: res.data
-      //     });
-      //   })
       await db.expanders.add(item).then(
         dispatch({
           type: ADD_EXPANDER_ITEM,
           payload: item
+        })
+      );
+    } catch (err) {
+      dispatch({ type: EXPANDER_ERROR, payload: err });
+      setAlert(
+        "",
+        "",
+        "Login-Berrechtigung ist abgelaufen. Bitte melde dich erneut an."
+      );
+    }
+  };
+
+  //DELETE_EXPANDER
+  const deleteExpander = async id => {
+    try {
+      await db.expanders.delete(id).then(
+        dispatch({
+          type: DELETE_EXPANDER,
+          payload: id
         })
       );
       // .then(async () => {
@@ -106,73 +111,31 @@ const ExpanderState = props => {
     }
   };
 
-  //DELETE_EXPANDER
-  const deleteExpander = async id => {
-    try {
-      await axios
-        .delete(`http://localhost:2000/api/expander/${id}`)
-        .then(res => {
-          dispatch({
-            type: DELETE_EXPANDER,
-            payload: id
-          });
-        })
-        .then(async () => {
-          try {
-            dispatch({ type: GET_EXPANDER });
-
-            const res = await axios.get("http://localhost:2000/api/expander");
-            dispatch({
-              type: GET_EXPANDER_SUCCESS,
-              payload: res.data
-            });
-          } catch (err) {
-            console.log(err);
-          }
-        });
-    } catch (err) {
-      dispatch({ type: EXPANDER_ERROR, payload: err.response.data.msg });
-      setAlert(
-        "",
-        "",
-        "Login-Berrechtigung ist abgelaufen. Bitte melde dich erneut an."
-      );
-    }
-  };
-
   // UPDATE_EXPANDER
   const updateExpander = async (itemElements, longState) => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    };
     const item = { ...itemElements, long: longState };
-    console.log(item);
     try {
-      await axios
-        .put(`http://localhost:2000/api/expander/${item._id}`, item, config)
-        .then(res => {
-          dispatch({
-            type: UPDATE_EXPANDER,
-            payload: res.data
-          });
+      await db.expanders.update(item._id, item).then(
+        dispatch({
+          type: UPDATE_EXPANDER,
+          payload: item
         })
-        .then(async () => {
-          try {
-            dispatch({ type: GET_EXPANDER });
+      );
+      // .then(async () => {
+      //   try {
+      //     dispatch({ type: GET_EXPANDER });
 
-            const res = await axios.get("http://localhost:2000/api/expander");
-            dispatch({
-              type: GET_EXPANDER_SUCCESS,
-              payload: res.data
-            });
-          } catch (err) {
-            console.log(err);
-          }
-        });
+      //     const res = await axios.get("http://localhost:2000/api/expander");
+      //     dispatch({
+      //       type: GET_EXPANDER_SUCCESS,
+      //       payload: res.data
+      //     });
+      //   } catch (err) {
+      //     console.log(err);
+      //   }
+      // });
     } catch (err) {
-      dispatch({ type: EXPANDER_ERROR, payload: err.response.data.msg });
+      dispatch({ type: EXPANDER_ERROR, payload: err });
       setAlert(
         "",
         "",

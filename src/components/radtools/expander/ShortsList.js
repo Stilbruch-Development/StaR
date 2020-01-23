@@ -61,11 +61,6 @@ export default function ShortsList(props) {
                 resolve();
                 const rawExpanderContent = convertToRaw(expanderEditorState);
                 addExpanderItem(newData, rawExpanderContent);
-                // setState(prevState => {
-                //   const data = [...prevState.data];
-                //   data.push(newData);
-                //   return { ...prevState, data };
-                // });
                 lockEditor(true);
               }, 600);
             } else {
@@ -82,14 +77,6 @@ export default function ShortsList(props) {
               resolve();
               const rawExpanderContent = convertToRaw(expanderEditorState);
               updateExpander(newData, rawExpanderContent);
-
-              if (oldData) {
-                setState(prevState => {
-                  const data = [...prevState.data];
-                  data[data.indexOf(oldData)] = newData;
-                  return { ...prevState, data };
-                });
-              }
               lockEditor(true);
             }, 600);
           }),
@@ -98,11 +85,6 @@ export default function ShortsList(props) {
             setTimeout(() => {
               resolve();
               deleteExpander(oldData._id);
-              setState(prevState => {
-                const data = [...prevState.data];
-                data.splice(data.indexOf(oldData), 1);
-                return { ...prevState, data };
-              });
             }, 600);
           })
       }}
