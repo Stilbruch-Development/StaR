@@ -115,9 +115,16 @@ const Navbar = () => {
         <NavMain id="NavMain">
           <NavLeft data-testid="NavbarComponent">
             <NavLogo navLink="/#Start" width={"15%"} />
-            <NavItem head="Arbeitsplatz" navLink="/workplace" />
-            <NavItem head="Einstellungen" navLink="/settings" />
+            {isAuthenticated && (
+              <>
+                <NavItem head="Arbeitsplatz" navLink="/workplace" />
+                <NavItem head="Einstellungen" navLink="/settings" />
+              </>
+            )}
             <NavItem head="Hilfe" navLink="/help" />
+            {isAuthenticated && user && user.role && (
+              <NavItem head="Admin Panel" navLink="/admin" />
+            )}
           </NavLeft>
           <NavRight>
             {isAuthenticated ? (

@@ -1,6 +1,6 @@
 {
   "name": "star",
-  "version": "0.0.5",
+  "version": "0.0.1",
   "description": "Support for your clinical radiological workflow.",
   "author": "stilbruch.dev",
   "private": true,
@@ -17,7 +17,6 @@
   "build": {
     "appId": "StaR - Standards der Radiologie",
     "extraResources": [
-      "./express_server/**/*",
       ".env"
     ]
   },
@@ -29,13 +28,14 @@
     "bcryptjs": "^2.4.3",
     "concurrently": "^5.0.2",
     "cross-env": "^6.0.3",
-    "dexie": "^2.0.4",
     "dotenv": "^8.2.0",
     "draft-js": "^0.11.4",
     "electron-is-dev": "^1.1.0",
     "immutable": "^4.0.0-rc.12",
     "jsonwebtoken": "^8.5.1",
     "material-table": "^1.54.2",
+    "pouchdb": "^7.1.1",
+    "pouchdb-find": "^7.1.1",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-app-rewire-styled-components": "^3.0.2",
@@ -84,6 +84,5 @@
     "jest-dom": "^4.0.0",
     "prettier": "^1.19.1",
     "react-app-rewired": "^2.1.5"
-  },
-  "proxy": "http://localhost:2000"
+  }
 }

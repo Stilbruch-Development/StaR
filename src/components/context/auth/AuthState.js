@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import AuthContext from "./authContext";
 import authReducer from "./authReducer";
-import db from "../../indexedDB/db";
+import { user_db } from "../../../pouchdb/db";
 import bcrypt from "bcryptjs";
 import uuid4 from "uuid/v4";
 import jwt from "jsonwebtoken";
@@ -23,8 +23,8 @@ const jwtSecret = process.env.REACT_APP_JWTSECRET;
 const AuthState = props => {
   const initialState = {
     token: localStorage.getItem("token"),
-    isAuthenticated: null,
-    loading: true,
+    isAuthenticated: false,
+    loading: false,
     user: null,
     error: null
   };
@@ -36,9 +36,7 @@ const AuthState = props => {
     try {
       const user = checkToken(localStorage.token);
       if (user._id) {
-        const userData = await db.users.get({
-          _id: user._id
-        });
+        const userData = await user_db.get(user._id);
 
         dispatch({
           type: USER_LOADED,
@@ -61,18 +59,19 @@ const AuthState = props => {
 
     formData._id = uuid4();
 
-    function getEmail(email) {
-      return db.users
-        .where("email")
-        .equals(email)
-        .toArray();
-    }
+    const getEmail = email => {
+      return user_db.find({
+        selector: { email: email },
+        fields: ["email"]
+      });
+    };
 
     try {
       const matchEmail = await getEmail(email);
+      console.log(matchEmail);
 
-      if (matchEmail.length === 0) {
-        await db.users.add(formData);
+      if (matchEmail.docs.length === 0) {
+        await user_db.put(formData);
 
         const payload = {
           user: {
@@ -103,13 +102,15 @@ const AuthState = props => {
   // Login User
   const login = async formData => {
     try {
-      const userData = await db.users.get({
-        email: formData.email
+      const dbResponse = await user_db.find({
+        selector: { email: formData.email }
       });
 
-      if (!userData) {
+      if (dbResponse.docs.length === 0) {
         throw new Error("Dieser Benutzer existiert nicht. Bitte registrieren.");
       }
+
+      const userData = dbResponse.docs[0];
 
       const isMatch = await bcrypt.compare(
         formData.password,
@@ -122,7 +123,8 @@ const AuthState = props => {
 
       const payload = {
         user: {
-          _id: userData._id
+          _id: userData._id,
+          role: userData.role || null
         }
       };
 

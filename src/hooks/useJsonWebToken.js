@@ -4,7 +4,7 @@ const jwtSecret = process.env.REACT_APP_JWTSECRET;
 export default function useJsonWebToken() {
   const checkToken = token => {
     if (!token) {
-      throw new Error("Kein JWT! Keine Autorisierung!");
+      throw new Error("Kein Token! Keine Autorisierung!");
     }
 
     try {

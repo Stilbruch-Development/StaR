@@ -22,7 +22,7 @@ const Editor = styled.div`
   height: 100%;
 `;
 
-const Radeditor = props => {
+const Radeditor = () => {
   const {
     expanderUserData,
     getExpander,
@@ -50,6 +50,7 @@ const Radeditor = props => {
     left: 0,
     behavior: "instant"
   });
+
   return (
     <MainFlex>
       {toggleState ? (

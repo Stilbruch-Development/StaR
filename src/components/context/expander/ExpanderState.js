@@ -2,7 +2,7 @@ import React, { useReducer, useContext } from "react";
 import ExpanderContext from "./expanderContext";
 import expanderReducer from "./expanderReducer";
 import AlertContext from "../../context/alert/alertContext";
-import db from "../../indexedDB/db";
+import { expander_db } from "../../../pouchdb/db";
 import uuid4 from "uuid/v4";
 import AuthContext from "../../context/auth/authContext";
 
@@ -38,14 +38,12 @@ const ExpanderState = props => {
     dispatch({ type: GET_EXPANDER });
     if (user !== null) {
       try {
-        const data = await db.expanders
-          .where("user")
-          .equals(user._id)
-          .toArray();
-        console.log(data);
+        const data = await expander_db.find({
+          selector: { user: user._id }
+        });
         dispatch({
           type: GET_EXPANDER_SUCCESS,
-          payload: data
+          payload: data.docs
         });
       } catch (err) {
         dispatch({ type: EXPANDER_ERROR, payload: err });
@@ -61,9 +59,8 @@ const ExpanderState = props => {
       user: user._id,
       long: longState
     };
-    console.log(item);
     try {
-      await db.expanders.add(item).then(
+      await expander_db.put(item).then(
         dispatch({
           type: ADD_EXPANDER_ITEM,
           payload: item
@@ -82,25 +79,13 @@ const ExpanderState = props => {
   //DELETE_EXPANDER
   const deleteExpander = async id => {
     try {
-      await db.expanders.delete(id).then(
+      var doc = await expander_db.get(id);
+      await expander_db.remove(doc).then(
         dispatch({
           type: DELETE_EXPANDER,
           payload: id
         })
       );
-      // .then(async () => {
-      //   try {
-      //     dispatch({ type: GET_EXPANDER });
-
-      //     const res = await axios.get("http://localhost:2000/api/expander");
-      //     dispatch({
-      //       type: GET_EXPANDER_SUCCESS,
-      //       payload: res.data
-      //     });
-      //   } catch (err) {
-      //     console.log(err);
-      //   }
-      // });
     } catch (err) {
       dispatch({ type: EXPANDER_ERROR, payload: err });
       setAlert(
@@ -115,25 +100,18 @@ const ExpanderState = props => {
   const updateExpander = async (itemElements, longState) => {
     const item = { ...itemElements, long: longState };
     try {
-      await db.expanders.update(item._id, item).then(
-        dispatch({
-          type: UPDATE_EXPANDER,
-          payload: item
+      var doc = await expander_db.get(item._id);
+      await expander_db
+        .put({
+          ...item,
+          _rev: doc._rev
         })
-      );
-      // .then(async () => {
-      //   try {
-      //     dispatch({ type: GET_EXPANDER });
-
-      //     const res = await axios.get("http://localhost:2000/api/expander");
-      //     dispatch({
-      //       type: GET_EXPANDER_SUCCESS,
-      //       payload: res.data
-      //     });
-      //   } catch (err) {
-      //     console.log(err);
-      //   }
-      // });
+        .then(
+          dispatch({
+            type: UPDATE_EXPANDER,
+            payload: item
+          })
+        );
     } catch (err) {
       dispatch({ type: EXPANDER_ERROR, payload: err });
       setAlert(
