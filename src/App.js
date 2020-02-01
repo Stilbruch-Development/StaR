@@ -4,7 +4,6 @@ import GlobalStyle from "./components/styled_components/GlobalStyle";
 import Main from "./components/Main";
 import Footer from "./components/navigation/Footer";
 import Navbar from "./components/navigation/Navbar";
-import Message from "./components/layout/Message";
 
 import AuthState from "./components/context/auth/AuthState";
 import AlertState from "./components/context/alert/AlertState";
@@ -21,7 +20,6 @@ function App() {
               <div className="App">
                 <GlobalStyle />
                 <Navbar />
-                <Message />
                 <Main />
                 <Footer />
               </div>
