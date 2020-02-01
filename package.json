@@ -1,6 +1,6 @@
 {
   "name": "star",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Support for your clinical radiological workflow.",
   "author": "stilbruch.dev",
   "private": true,
@@ -16,6 +16,7 @@
   "homepage": "./",
   "build": {
     "appId": "StaR - Standards der Radiologie",
+    "productName": "StaR - Standards der Radiologie",
     "extraResources": [
       ".env"
     ],
@@ -25,7 +26,25 @@
         "owner": "Stilbruch-Development",
         "repo": "StaR"
       }
-    ]
+    ],
+    "copyright": "Copyright © 2020 ${author}",
+    "mac": {
+      "icon": "./src/images/icons/mac/icon.icns",
+      "category": "public.app-category.utilities"
+    },
+    "win": {
+      "icon": "./src/images/icons/win/icon.ico"
+    },
+    "files": [
+      "./build/**/*",
+      "./dist/**/*",
+      "./node_modules/**/*",
+      "./src/components/images/icons**/*",
+      "*.js"
+    ],
+    "directories": {
+      "buildResources": "public"
+    }
   },
   "dependencies": {
     "@material-ui/core": "^4.8.3",
@@ -62,7 +81,7 @@
     "react-build": "react-app-rewired build",
     "react-test": "react-scripts test",
     "react-eject": "react-scripts eject",
-    "electron-build": "electron-builder build --mac --win --publish never",
+    "electron-build": "electron-builder build -mwl --publish never",
     "deploy": "electron-builder build --mac --win --publish always",
     "build": "npm run react-build && npm run electron-build",
     "start": "concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\""
