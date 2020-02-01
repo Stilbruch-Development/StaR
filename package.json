@@ -18,6 +18,13 @@
     "appId": "StaR - Standards der Radiologie",
     "extraResources": [
       ".env"
+    ],
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "Stilbruch-Development",
+        "repo": "StaR"
+      }
     ]
   },
   "dependencies": {
