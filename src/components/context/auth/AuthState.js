@@ -68,7 +68,6 @@ const AuthState = props => {
 
     try {
       const matchEmail = await getEmail(email);
-      console.log(matchEmail);
 
       if (matchEmail.docs.length === 0) {
         await user_db.put(formData);
