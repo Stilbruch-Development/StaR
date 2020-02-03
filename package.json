@@ -1,5 +1,5 @@
 {
-  "name": "star",
+  "name": "StaR",
   "version": "0.0.2",
   "description": "Support for your clinical radiological workflow.",
   "author": "stilbruch.dev",
@@ -13,7 +13,6 @@
     "url": "https://github.com/Stilbruch-Development/StaR/issues"
   },
   "main": "public/electron.js",
-  "homepage": "./",
   "build": {
     "appId": "StaR - Standards der Radiologie",
     "productName": "StaR - Standards der Radiologie",
@@ -36,11 +35,7 @@
       "icon": "./src/images/icons/win/icon.ico"
     },
     "files": [
-      "./build/**/*",
-      "./dist/**/*",
-      "./node_modules/**/*",
-      "./src/components/images/icons**/*",
-      "*.js"
+      "./src/components/images/icons**/*"
     ],
     "directories": {
       "buildResources": "public"
@@ -49,7 +44,6 @@
   "dependencies": {
     "@material-ui/core": "^4.8.3",
     "@material-ui/icons": "^4.5.1",
-    "axios": "^0.19.0",
     "babel-polyfill": "^6.26.0",
     "bcryptjs": "^2.4.3",
     "concurrently": "^5.0.2",
@@ -57,13 +51,13 @@
     "dotenv": "^8.2.0",
     "draft-js": "^0.11.4",
     "electron-is-dev": "^1.1.0",
+    "electron-log": "^4.0.5",
     "electron-updater": "^4.2.0",
     "immutable": "^4.0.0-rc.12",
     "jsonwebtoken": "^8.5.1",
     "material-table": "^1.54.2",
     "pouchdb": "^7.1.1",
     "pouchdb-find": "^7.1.1",
-    "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-app-rewire-styled-components": "^3.0.2",
     "react-dom": "^16.12.0",
@@ -73,7 +67,6 @@
     "react-scripts": "^3.3.0",
     "styled-components": "^4.4.1",
     "uuid": "^3.4.0",
-    "validator": "^12.1.0",
     "wait-on": "^3.3.0"
   },
   "scripts": {
@@ -81,13 +74,22 @@
     "react-build": "react-app-rewired build",
     "react-test": "react-scripts test",
     "react-eject": "react-scripts eject",
-    "electron-build": "electron-builder build --win --publish never",
+    "electron-build": "electron-builder build --publish never",
     "deploy": "electron-builder build --win --publish always",
     "build": "npm run react-build && npm run electron-build",
     "start": "concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\""
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "devDependencies": {
+    "@testing-library/user-event": "^8.0.3",
+    "electron": "^7.1.8",
+    "electron-builder": "^21.2.0",
+    "eslint-config-prettier": "^6.9.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "^1.19.1",
+    "react-app-rewired": "^2.1.5"
   },
   "browserslist": {
     "production": [
@@ -100,16 +102,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@testing-library/react": "^9.4.0",
-    "@testing-library/user-event": "^8.0.3",
-    "electron": "^7.1.8",
-    "electron-builder": "^21.2.0",
-    "eslint-config-prettier": "^6.9.0",
-    "eslint-plugin-prettier": "^3.1.2",
-    "jest-dom": "^4.0.0",
-    "prettier": "^1.19.1",
-    "react-app-rewired": "^2.1.5"
   }
 }

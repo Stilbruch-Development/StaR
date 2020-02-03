@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { ReactComponent as RadtoolboxLogo } from "../StaR_Main.svg";
+import { ReactComponent as RadtoolboxLogo } from "../StaR_Main_500.svg";
 
 const Logo = styled.object`
   display: flex;

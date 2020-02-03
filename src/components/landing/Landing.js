@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import MainLogo from "../../images/styled_images/MainLogo";
 import Message from "../layout/Message";
+import useUpdater from "../../hooks/useUpdater";
 
 const LandingMain = styled.div`
   height: 100vh;
@@ -59,35 +60,24 @@ const Version = styled.div`
 const Landing = () => {
   const [state, setState] = useState({
     notification: false,
-    update: false,
+    checkUpdate: false,
     downloaded: false,
     message: "",
     version: ""
   });
 
-  window.ipcRenderer.on("update_available", () => {
-    window.ipcRenderer.removeAllListeners("update_available");
-    setState({
-      ...state,
-      notification: true,
-      update: true,
-      downloaded: false,
-      message:
-        "Es steht ein neues Update zur Verfügung. Es wird jetzt herunter geladen..."
-    });
-  });
+  const [valu, listenForUpdate, listenForUpdateDownloaded] = useUpdater(state);
 
-  window.ipcRenderer.on("update_downloaded", () => {
-    window.ipcRenderer.removeAllListeners("update_downloaded");
-    setState({
-      ...state,
-      notification: true,
-      update: true,
-      downloaded: true,
-      message:
-        "Update erfolgreich geladen. Die Installation erfolg nach dem Neustart. Jetzt neu starten?"
-    });
-  });
+  useEffect(() => {
+    listenForUpdate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.checkUpdate]);
+
+  useEffect(() => {
+    // state.checkUpdated && !state.downloaded && listenForUpdateDownloaded(state);
+    listenForUpdateDownloaded();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.downloaded]);
 
   const closeNotification = () => {
     setState({
@@ -100,7 +90,7 @@ const Landing = () => {
     setState({
       ...state,
       notification: false,
-      update: false,
+      checkUpdate: false,
       downloaded: false,
       message: ""
     });
@@ -112,7 +102,6 @@ const Landing = () => {
     window.ipcRenderer.on("app_version", (event, arg) => {
       window.ipcRenderer.removeAllListeners("app_version");
       setState({ ...state, version: `Version ${arg.version}` });
-      console.log(arg.version);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.version]);
