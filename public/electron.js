@@ -29,16 +29,14 @@ const createWindow = () => {
   );
 
   mainWindow.on("closed", () => (mainWindow = null));
-
-  mainWindow.once("ready-to-show", () => {
-    autoUpdater.checkForUpdatesAndNotify();
-  });
 };
 
 app.on("ready", () => {
   createWindow();
   app.focus();
-  autoUpdater.checkForUpdatesAndNotify();
+  //mainWindow.once("ready-to-show", () => {
+  //autoUpdater.checkForUpdatesAndNotify();
+  //});
 });
 
 app.on("window-all-closed", () => {
@@ -57,54 +55,54 @@ app.on("activate", () => {
 //
 //-------------------------------------------------------------------
 
-ipcMain.on("app_version", event => {
-  event.sender.send("app_version", { version: app.getVersion() });
-});
+// ipcMain.on("app_version", event => {
+//   event.sender.send("app_version", { version: app.getVersion() });
+// });
 
-ipcMain.on("restart_app", () => {
-  autoUpdater.quitAndInstall();
-});
+// ipcMain.on("restart_app", () => {
+//   autoUpdater.quitAndInstall();
+// });
 
-autoUpdater.on("checking-for-update", () => {
-  mainWindow.webContents.send("Checking for update...");
-});
+// autoUpdater.on("checking-for-update", () => {
+//   mainWindow.webContents.send("Checking for update...");
+// });
 
-autoUpdater.on("update-available", () => {
-  mainWindow.webContents.send("update_available");
-});
+// autoUpdater.on("update-available", () => {
+//   mainWindow.webContents.send("update_available");
+// });
 
-autoUpdater.on("update-not-available", info => {
-  mainWindow.webContents.send("Update not available.");
-});
+// autoUpdater.on("update-not-available", info => {
+//   mainWindow.webContents.send("Update not available.");
+// });
 
-autoUpdater.on("update-downloaded", () => {
-  mainWindow.webContents.send("update_downloaded");
-});
+// autoUpdater.on("update-downloaded", () => {
+//   mainWindow.webContents.send("update_downloaded");
+// });
 
-autoUpdater.on("download-progress", progressObj => {
-  let log_message = "Download speed: " + progressObj.bytesPerSecond;
-  log_message = log_message + " - Downloaded " + progressObj.percent + "%";
-  log_message =
-    log_message +
-    " (" +
-    progressObj.transferred +
-    "/" +
-    progressObj.total +
-    ")";
-  mainWindow.webContents.send(log_message);
-});
+// autoUpdater.on("download-progress", progressObj => {
+//   let log_message = "Download speed: " + progressObj.bytesPerSecond;
+//   log_message = log_message + " - Downloaded " + progressObj.percent + "%";
+//   log_message =
+//     log_message +
+//     " (" +
+//     progressObj.transferred +
+//     "/" +
+//     progressObj.total +
+//     ")";
+//   mainWindow.webContents.send(log_message);
+// });
 
-autoUpdater.on("update-downloaded", info => {
-  mainWindow.webContents.send("Update downloaded");
-});
+// autoUpdater.on("update-downloaded", info => {
+//   mainWindow.webContents.send("Update downloaded");
+// });
 
-autoUpdater.on("error", err => {
-  mainWindow.webContents.send("Error in auto-updater. " + err);
-});
+// autoUpdater.on("error", err => {
+//   mainWindow.webContents.send("Error in auto-updater. " + err);
+// });
 
-autoUpdater.logger = log;
-autoUpdater.logger.transports.file.level = "info";
-log.info("App starting...");
+// autoUpdater.logger = log;
+// autoUpdater.logger.transports.file.level = "info";
+// log.info("App starting...");
 
 //-------------------------------------------------------------------
 // Menu

@@ -5,4 +5,4 @@ package-lock.json
 /dist
 /user_db
 /expander_db
-electron-builder.yml
+/public/electron-builder.yml
