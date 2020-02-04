@@ -34,10 +34,8 @@ const createWindow = () => {
 app.on("ready", () => {
   createWindow();
   app.focus();
-  mainWindow.once("ready-to-show", () => {
-    autoUpdater.checkForUpdatesAndNotify();
-    console.log("start autoUpdater");
-  });
+  autoUpdater.checkForUpdatesAndNotify();
+  console.log("start autoUpdater");
 });
 
 app.on("window-all-closed", () => {
