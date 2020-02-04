@@ -36,6 +36,7 @@ app.on("ready", () => {
   app.focus();
   mainWindow.once("ready-to-show", () => {
     autoUpdater.checkForUpdatesAndNotify();
+    console.log("start autoUpdater");
   });
 });
 
@@ -73,6 +74,7 @@ autoUpdater.on("update-available", () => {
 
 autoUpdater.on("update-not-available", info => {
   mainWindow.webContents.send("Update not available.");
+  console.log("update not available");
 });
 
 autoUpdater.on("update-downloaded", () => {
