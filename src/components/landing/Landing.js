@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import MainLogo from "../../images/styled_images/MainLogo";
 import Message from "../layout/Message";
-import useUpdater from "../../hooks/useUpdater";
+// import useUpdater from "../../hooks/useUpdater";
 
 const LandingMain = styled.div`
   height: 100vh;
@@ -61,23 +61,51 @@ const Landing = () => {
   const [state, setState] = useState({
     notification: false,
     checkUpdate: false,
+    updateAvailable: null,
     downloaded: false,
     message: "",
     version: ""
   });
 
-  const [valu, listenForUpdate, listenForUpdateDownloaded] = useUpdater(state);
+  if (state.checkUpdate === false && state.updateAvailable === null) {
+    window.ipcRenderer.on("update_available", () => {
+      console.log("update available");
+      window.ipcRenderer.removeAllListeners("update_available");
+      setState({
+        ...state,
+        notification: true,
+        checkUpdate: true,
+        updateAvailable: true,
+        message:
+          "Es steht ein neues Update zur Verfügung. Es wird jetzt herunter geladen..."
+      });
+    });
 
-  useEffect(() => {
-    listenForUpdate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.checkUpdate]);
+    window.ipcRenderer.on("update_not_available", () => {
+      console.log("update not available");
+      window.ipcRenderer.removeAllListeners("update-not-available");
+      setState({
+        ...state,
+        notification: true,
+        checkUpdate: true,
+        updateAvailable: false,
+        message: "Es steht kein neues Update zur Verfügung."
+      });
+    });
+  }
 
-  useEffect(() => {
-    // state.checkUpdated && !state.downloaded && listenForUpdateDownloaded(state);
-    listenForUpdateDownloaded();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.downloaded]);
+  if (state.updateAvailable === true) {
+    window.ipcRenderer.on("update_downloaded", () => {
+      console.log("update downloaded");
+      window.ipcRenderer.removeAllListeners("update_downloaded");
+      setState({
+        ...state,
+        downloaded: true,
+        message:
+          "Update erfolgreich geladen. Die Installation erfolg nach dem Neustart. Jetzt neu starten?"
+      });
+    });
+  }
 
   const closeNotification = () => {
     setState({
@@ -91,6 +119,7 @@ const Landing = () => {
       ...state,
       notification: false,
       checkUpdate: false,
+      updateAvailable: null,
       downloaded: false,
       message: ""
     });
@@ -105,6 +134,7 @@ const Landing = () => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.version]);
+
   return (
     <LandingMain id="Start" data-testid="LandingComponent">
       <div className="navChange">

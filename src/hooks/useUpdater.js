@@ -15,17 +15,17 @@ export default initialVal => {
             "Es steht ein neues Update zur Verfügung. Es wird jetzt herunter geladen..."
         });
       });
-    !value.checkUpdate &&
-      window.ipcRenderer.on("update-not-available", () => {
-        window.ipcRenderer.removeAllListeners("update-not-available");
-        setValue({
-          ...value,
-          notification: true,
-          checkUpdate: true,
-          downloaded: true,
-          message: "Es steht kein Update zur Verfügung."
-        });
+
+    window.ipcRenderer.on("update-not-available", () => {
+      window.ipcRenderer.removeAllListeners("update-not-available");
+      setValue({
+        ...value,
+        notification: true,
+        checkUpdate: true,
+        downloaded: true,
+        message: "Es steht kein Update zur Verfügung."
       });
+    });
   };
 
   const listenForUpdateDownloaded = () => {

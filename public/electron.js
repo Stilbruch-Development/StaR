@@ -63,7 +63,7 @@ ipcMain.on("restart_app", () => {
 });
 
 autoUpdater.on("checking-for-update", () => {
-  mainWindow.webContents.send("Checking for update...");
+  mainWindow.webContents.send("checking_for_update");
 });
 
 autoUpdater.on("update-available", () => {
@@ -71,7 +71,7 @@ autoUpdater.on("update-available", () => {
 });
 
 autoUpdater.on("update-not-available", info => {
-  mainWindow.webContents.send("Update not available.");
+  mainWindow.webContents.send("update_not_available");
   console.log("update not available");
 });
 
@@ -89,7 +89,7 @@ autoUpdater.on("download-progress", progressObj => {
     "/" +
     progressObj.total +
     ")";
-  mainWindow.webContents.send(log_message);
+  mainWindow.webContents.send("download_progress", log_message);
 });
 
 autoUpdater.on("update-downloaded", info => {
