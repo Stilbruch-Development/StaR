@@ -135,8 +135,6 @@ const Landing = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.version]);
 
-  console.log(state);
-
   return (
     <LandingMain id="Start" data-testid="LandingComponent">
       <div className="navChange">
