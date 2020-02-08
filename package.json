@@ -17,9 +17,6 @@
   "build": {
     "appId": "StaR - Standards der Radiologie",
     "productName": "StaR - Standards der Radiologie",
-    "extraResources": [
-      ".env"
-    ],
     "publish": [
       {
         "provider": "github",
