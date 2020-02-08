@@ -13,8 +13,8 @@ let mainWindow;
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
-    width: 900,
-    height: 680,
+    width: 1200,
+    height: 800,
     webPreferences: {
       devTools: true,
       nodeIntegration: true,
@@ -35,7 +35,6 @@ app.on("ready", () => {
   createWindow();
   app.focus();
   autoUpdater.checkForUpdatesAndNotify();
-  console.log("start autoUpdater");
 });
 
 app.on("window-all-closed", () => {

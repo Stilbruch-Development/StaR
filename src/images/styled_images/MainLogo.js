@@ -2,27 +2,22 @@ import React from "react";
 import styled from "styled-components";
 import { ReactComponent as RadtoolboxLogo } from "../StaR_Main_500.svg";
 
-const Logo = styled.object`
+const Logo = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  svg {
-    width: 40rem;
-  }
+  width: 40rem;
 
   /* phone */
   @media (max-width: 600px) {
-    svg {
-      width: 80rem;
-    }
   }
   /* tablet portrait */
   @media (max-width: 900px) {
   }
   /* tablet landscape */
   @media (max-width: 1200px) {
+    width: 40rem;
   }
   /* desktop */
   @media (max-width: 1800px) {
@@ -33,7 +28,15 @@ const Logo = styled.object`
 export default function MainLogo() {
   return (
     <Logo>
-      <RadtoolboxLogo />
+      <RadtoolboxLogo
+        preserveAspectRatio="xMidYMin slice"
+        style={{
+          width: "100%",
+          paddingBottom: "90%",
+          height: "1px",
+          overflow: "visible"
+        }}
+      />
     </Logo>
   );
 }

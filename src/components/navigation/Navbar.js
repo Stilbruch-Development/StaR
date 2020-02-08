@@ -114,7 +114,7 @@ const Navbar = () => {
       {mobileViewState.mobileView === false || navbarOpen === true ? (
         <NavMain id="NavMain">
           <NavLeft data-testid="NavbarComponent">
-            <NavLogo navLink="/#Start" width={"15%"} />
+            <NavLogo navLink="/#Start" width={"25%"} />
             {isAuthenticated && (
               <>
                 <NavItem head="Arbeitsplatz" navLink="/workplace" />
