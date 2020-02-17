@@ -4,7 +4,6 @@ import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import styled from "styled-components";
 import AlertContext from "../context/alert/alertContext";
-import AlertBox from "../layout/Alerts";
 import AuthContext from "../context/auth/authContext";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
@@ -31,7 +30,7 @@ const Register = props => {
   const alertContext = useContext(AlertContext);
   const authContext = useContext(AuthContext);
 
-  const { setAlert } = alertContext;
+  const { setAlertMessage } = alertContext;
 
   const { register, error, clearErrors } = authContext;
 
@@ -50,31 +49,29 @@ const Register = props => {
   const onSubmit = e => {
     e.preventDefault();
 
-    first_name === "" &&
-      setAlert("first_name", "error", "Bitte gib einen Vornamen an.");
-    last_name === "" &&
-      setAlert("last_name", "error", "Bitte gib einen Nachnamen an.");
-    email === "" &&
-      setAlert("email", "error", "Bitte gib eine gültige Email an.");
-    password === "" &&
-      setAlert("password", "error", "Bitte gib ein Passwort an.");
-    password !== password2 &&
-      setAlert("password2", "error", "Passwörter stimmen nicht überein.");
-
-    register({
-      first_name,
-      last_name,
-      email,
-      password
-    });
-
-    if (error === "Dieser Benutzer existiert schon.") {
-      setAlert("allFields", "error", error);
+    if (
+      first_name === "" ||
+      last_name === "" ||
+      email === "" ||
+      password === "" ||
+      password2 === ""
+    ) {
+      setAlertMessage("Bitte alle Felder ausfüllgen!");
+    } else if (password !== password2) {
+      setAlertMessage("Passwörter stimmen nicht überein!");
+    } else if (error) {
+      setAlertMessage(error);
       clearErrors();
-      console.log("Benutzer existiert schon!! Zur Sicherheit ausgeloggt.");
-    }
-    if (!error) {
-      console.log("Neuer Benutzer angelegt!");
+    } else {
+      register({
+        first_name,
+        last_name,
+        email,
+        password
+      });
+      setAlertMessage(
+        `Neuer Beneutzer angelegt: ${first_name} ${last_name}, ${email}`
+      );
       props.setAdminState({
         register: false
       });
@@ -85,7 +82,6 @@ const Register = props => {
 
   return (
     <MainStyleWrapper>
-      <AlertBox />
       <Typography
         variant="h4"
         style={{ fontFamily: "inherit", marginBottom: "10%" }}
@@ -113,8 +109,6 @@ const Register = props => {
         fullWidth
       />
       <TextField
-        // error={true}
-        // helperText={"Achtung"}
         name="email"
         value={email}
         onChange={onChange}

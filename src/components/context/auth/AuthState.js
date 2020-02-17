@@ -1,6 +1,7 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useContext } from "react";
 import AuthContext from "./authContext";
 import authReducer from "./authReducer";
+import AlertContext from "../alert/alertContext";
 import { user_db, syncDB } from "../../../pouchdb/db";
 import bcrypt from "bcryptjs";
 import uuid4 from "uuid/v4";
@@ -30,6 +31,7 @@ const AuthState = props => {
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
   const [checkToken] = useJsonWebToken();
+  const { setAlertMessage, removeAlert } = useContext(AlertContext);
 
   // Load User
   const loadUser = async () => {
@@ -45,8 +47,8 @@ const AuthState = props => {
         syncDB();
       }
     } catch (err) {
-      dispatch({ type: AUTH_ERROR, payload: err });
-      console.log(err);
+      dispatch({ type: AUTH_ERROR, payload: err.message });
+      setAlertMessage(err.message);
     }
   };
 
@@ -88,14 +90,14 @@ const AuthState = props => {
           payload: token
         });
       } else {
-        throw new Error("Einen Benutzer mit dieser Email existiert schon!");
+        throw new Error("Ein Benutzer mit dieser Email existiert schon!");
       }
     } catch (err) {
-      console.log(err);
       dispatch({
         type: REGISTER_FAIL,
-        payload: err
+        payload: err.message
       });
+      setAlertMessage(err.message);
     }
   };
 
@@ -138,17 +140,21 @@ const AuthState = props => {
       });
 
       loadUser();
+      removeAlert();
     } catch (err) {
       dispatch({
         type: LOGIN_FAIL,
-        payload: err
+        payload: err.message
       });
-      console.log(err);
+      setAlertMessage(err.message);
     }
   };
 
   // Logout
-  const logout = () => dispatch({ type: LOGOUT });
+  const logout = () => {
+    dispatch({ type: LOGOUT });
+    removeAlert();
+  };
 
   // Clear Errors
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });

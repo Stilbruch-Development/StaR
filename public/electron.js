@@ -11,7 +11,11 @@ const log = require("electron-log");
 //-------------------------------------------------------------------
 let mainWindow;
 
-let tools = true;
+let tools = false;
+
+if (isDev) {
+  tools = true;
+}
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({

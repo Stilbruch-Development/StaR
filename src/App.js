@@ -11,8 +11,8 @@ import ExpanderState from "./components/context/expander/ExpanderState";
 
 function App() {
   return (
-    <AuthState>
-      <AlertState>
+    <AlertState>
+      <AuthState>
         <ExpanderState>
           <Router>
             <div className="App">
@@ -23,8 +23,8 @@ function App() {
             </div>
           </Router>
         </ExpanderState>
-      </AlertState>
-    </AuthState>
+      </AuthState>
+    </AlertState>
   );
 }
 

@@ -9,8 +9,6 @@ import Typography from "@material-ui/core/Typography";
 import styled from "styled-components";
 import ShortsList from "./ShortsList";
 import LongItem from "./LongItem";
-import Alerts from "../../layout/Alerts";
-import AlertContext from "../../context/alert/alertContext";
 import ExpanderContext from "../../context/expander/expanderContext";
 
 const MainStyleWrapper = styled.div`
@@ -36,8 +34,6 @@ const ExpanderShortsWrapper = styled.div`
 
 const Expander = props => {
   const [open, setOpen] = useState(false);
-
-  const { setAlert } = useContext(AlertContext);
 
   const { selectExpanderItem, lockEditor, setExpanderEditor } = useContext(
     ExpanderContext
@@ -102,12 +98,11 @@ const Expander = props => {
         id="ExpanderDialog"
       >
         <MainStyleWrapper>
-          <Alerts />
           <ExpanderShortsWrapper>
             <Typography variant="h6" style={{ padding: "16px" }}>
               KÜRZEL
             </Typography>
-            <ShortsList setAlert={setAlert} handleClose={handleClose} />
+            <ShortsList handleClose={handleClose} />
           </ExpanderShortsWrapper>
           <ExpanderEditorWrapper>
             <DialogTitle id="customized-dialog-title" onClose={handleClose}>

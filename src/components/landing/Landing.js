@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import MainLogo from "../../images/styled_images/MainLogo";
-import Message from "../layout/Message";
+import useAutoUpdater from "../../hooks/useAutoUpdater";
 
 const LandingMain = styled.div`
   height: 100vh;
@@ -33,69 +33,12 @@ const LandingSub = styled.div`
 `;
 
 const Landing = () => {
-  const [state, setState] = useState({
-    notification: false,
-    checkUpdate: false,
-    updateAvailable: null,
-    downloaded: false,
-    message: ""
-  });
+  const [autoUpdater] = useAutoUpdater();
 
-  if (state.checkUpdate === false && state.updateAvailable === null) {
-    window.ipcRenderer.on("update_available", () => {
-      window.ipcRenderer.removeAllListeners("update_available");
-      setState({
-        ...state,
-        notification: true,
-        checkUpdate: true,
-        updateAvailable: true,
-        message:
-          "Es steht ein neues Update zur Verfügung. Es wird jetzt herunter geladen..."
-      });
-    });
-
-    window.ipcRenderer.on("update_not_available", () => {
-      window.ipcRenderer.removeAllListeners("update-not-available");
-      setState({
-        ...state,
-        notification: false,
-        checkUpdate: true,
-        updateAvailable: false,
-        message: "Es steht kein neues Update zur Verfügung."
-      });
-    });
-  }
-
-  if (state.updateAvailable === true) {
-    window.ipcRenderer.on("update_downloaded", () => {
-      window.ipcRenderer.removeAllListeners("update_downloaded");
-      setState({
-        ...state,
-        downloaded: true,
-        message:
-          "Update erfolgreich geladen. Die Installation erfolg nach dem Neustart. Jetzt neu starten?"
-      });
-    });
-  }
-
-  const closeNotification = () => {
-    setState({
-      ...state,
-      notification: false
-    });
-  };
-
-  const restartApp = () => {
-    setState({
-      ...state,
-      notification: false,
-      checkUpdate: false,
-      updateAvailable: null,
-      downloaded: false,
-      message: ""
-    });
-    window.ipcRenderer.send("restart_app");
-  };
+  useEffect(() => {
+    autoUpdater();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoUpdater]);
 
   return (
     <LandingMain id="Start" data-testid="LandingComponent">
@@ -103,14 +46,6 @@ const Landing = () => {
         <MainLogo />
       </div>
       <LandingSub className="navChange">Standards der Radiologie</LandingSub>
-      {state.notification && (
-        <Message
-          message={state.message}
-          downloaded={state.downloaded}
-          closeNotification={closeNotification}
-          restartApp={restartApp}
-        />
-      )}
     </LandingMain>
   );
 };

@@ -4,7 +4,6 @@ import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import styled from "styled-components";
 import AlertContext from "../context/alert/alertContext";
-import AlertBox from "../layout/Alerts";
 import AuthContext from "../context/auth/authContext";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
@@ -32,7 +31,7 @@ const Login = props => {
   const alertContext = useContext(AlertContext);
   const authContext = useContext(AuthContext);
 
-  const { setAlert } = alertContext;
+  const { setAlertMessage } = alertContext;
 
   const { login, error, clearErrors, isAuthenticated } = authContext;
 
@@ -40,12 +39,8 @@ const Login = props => {
     if (isAuthenticated) {
       props.history.push("/workplace");
     }
-    if (error === "Ungültige Email oder Passwort!") {
-      setAlert("allFields", "error", error);
-      clearErrors();
-    }
     // eslint-disable-next-line
-  }, [error, isAuthenticated, props.history]);
+  }, [isAuthenticated, props.history]);
 
   const [user, setUser] = useState({
     email: "",
@@ -59,22 +54,25 @@ const Login = props => {
   const onSubmit = e => {
     e.preventDefault();
 
-    email === "" &&
-      setAlert("email", "error", "Bitte gib eine gültige Email an.");
-    password === "" &&
-      setAlert("password", "error", "Bitte gib ein Passwort an.");
-
-    login({
-      email,
-      password
-    });
+    if (email === "" || password === "") {
+      setAlertMessage(
+        "Bitte gib eine gültige Email und das zugehörige Password an."
+      );
+    } else if (error) {
+      setAlertMessage(error);
+      clearErrors();
+    } else {
+      login({
+        email,
+        password
+      });
+    }
   };
 
   const classes = useStyles();
 
   return (
     <MainStyleWrapper>
-      <AlertBox />
       <Typography
         variant="h4"
         style={{ fontFamily: "inherit", marginBottom: "10%" }}
@@ -83,8 +81,6 @@ const Login = props => {
       </Typography>
       <Divider />
       <TextField
-        // error={true}
-        // helperText={"Achtung"}
         name="email"
         value={email}
         onChange={onChange}
