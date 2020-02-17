@@ -11,12 +11,15 @@ const log = require("electron-log");
 //-------------------------------------------------------------------
 let mainWindow;
 
+let tools = true;
+
 const createWindow = () => {
   mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 800,
+    width: 1000,
+    height: 700,
+    resizable: false,
     webPreferences: {
-      devTools: true,
+      devTools: tools,
       nodeIntegration: true,
       preload: __dirname + "/preload.js"
     }

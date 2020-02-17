@@ -1,18 +1,12 @@
-import React, { useContext } from "react";
-import NavContext from "../context/navigation/navContext";
-import NavLogoSVG from "../../images/styled_images/MainLogoSmall";
+import React from "react";
+import NavLogoSVG from "../../images/styled_images/MainLogo";
 import StyledLink from "./../styled_components/StyledLink";
 
 const NavLogo = props => {
-  const { closeNav } = useContext(NavContext);
-
   return (
     <StyledLink
       data-testid="NavLogo"
-      onClick={() => {
-        closeNav();
-      }}
-      style={{ width: props.width, height: "100%" }}
+      style={{ width: props.width }}
       to={props.navLink}
       scroll={el => el.scrollIntoView({ behavior: "smooth", block: "end" })}
     >

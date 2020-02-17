@@ -3,14 +3,14 @@ import { createGlobalStyle } from "styled-components";
 const GlobalStyle = createGlobalStyle`
 
   html, body {
-    background-color: rgb(238, 238, 238);
+    background-color: rgb(220, 220, 220);
     font-family: "Play", Arial;
     color: black;
     margin: 0;
     padding: 0;
     border: 0;
     outline: 0;
-    font-size: 1vw;
+    font-size: 1.2vw;
     z-index: -1;
   }
 
@@ -24,12 +24,6 @@ const GlobalStyle = createGlobalStyle`
     border: 0;
     margin: 1rem 0 0 0;
     height: 2px;
-    background-image: linear-gradient(
-      to right,
-      rgba(255, 0, 0, 0),
-      red,
-      rgba(255, 0, 0, 0)
-    );
   }
 
   /* poiret-one font */

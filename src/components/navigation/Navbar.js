@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import NavItem from "./NavItem";
 import NavLogo from "./NavLogo";
-import NavMenu from "./NavMenu";
 import styled from "styled-components";
-import NavContext from "../context/navigation/navContext";
 import authContext from "../context/auth/authContext";
 import ExpanderContext from "../context/expander/expanderContext";
 
@@ -17,15 +15,10 @@ const NavMain = styled.div`
   z-index: 1;
   position: sticky;
   top: 0;
+  height: 5rem;
 
   // phone
   @media (max-width: 600px) {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: stretch;
-    padding: 1vw 15vw 1vw 15vw;
-    font-size: 0.1rem;
   }
   // tablet portrait
   @media (max-width: 900px) {
@@ -54,31 +47,9 @@ const NavRight = styled.div`
 `;
 
 const Navbar = () => {
-  const { navbarOpen, closeNav } = useContext(NavContext);
-
   const { isAuthenticated, logout, user } = useContext(authContext);
 
   const { clearExpander } = useContext(ExpanderContext);
-
-  const [mobileViewState, setMobileViewState] = useState({ mobileView: false });
-
-  const handleResize = () => {
-    var viewportWidth =
-      window.innerWidth || document.documentElement.clientWidth;
-
-    if (viewportWidth > 600) {
-      setMobileViewState({ mobileView: false });
-      closeNav();
-    } else {
-      setMobileViewState({ mobileView: true });
-      closeNav();
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("resize", handleResize, false);
-    // eslint-disable-next-line
-  }, []);
 
   window.addEventListener("load", function() {
     const body = document.querySelector("body");
@@ -110,58 +81,40 @@ const Navbar = () => {
   };
 
   return (
-    <>
-      {mobileViewState.mobileView === false || navbarOpen === true ? (
-        <NavMain id="NavMain">
-          <NavLeft data-testid="NavbarComponent">
-            <NavLogo navLink="/#Start" width={"25%"} />
-            {isAuthenticated && (
-              <>
-                <NavItem head="Arbeitsplatz" navLink="/workplace" />
-                <NavItem head="Einstellungen" navLink="/settings" />
-              </>
-            )}
-            <NavItem head="Hilfe" navLink="/help" />
-            {isAuthenticated && user && user.role && (
-              <NavItem head="Admin Panel" navLink="/admin" />
-            )}
-          </NavLeft>
-          <NavRight>
-            {isAuthenticated ? (
-              <>
-                <NavItem
-                  style={{
-                    textDecoration: "none",
-                    textShadow: "none",
-                    cursor: "default"
-                  }}
-                  head={user && `Hallo ${user.first_name}`}
-                  navLink="#!"
-                />
-                <div onClick={onLogout}>
-                  <NavItem
-                    onClick={e => onLogout()}
-                    head="Ausloggen"
-                    navLink="/"
-                  />
-                </div>
-              </>
-            ) : (
-              <>
-                <NavItem head="Anmelden" navLink="/register" />
-                <NavItem head="Login" navLink="/login" />
-              </>
-            )}
-          </NavRight>
-        </NavMain>
-      ) : null}
-
-      {mobileViewState.mobileView && (
-        <NavMain data-testid="NavbarComponent">
-          <NavMenu />
-        </NavMain>
-      )}
-    </>
+    <NavMain id="NavMain">
+      <NavLeft data-testid="NavbarComponent">
+        <NavLogo navLink="/#Start" />
+        {isAuthenticated && (
+          <>
+            <NavItem head="Arbeitsplatz" navLink="/workplace" />
+            <NavItem head="Einstellungen" navLink="/settings" />
+          </>
+        )}
+        {isAuthenticated && user && user.role && (
+          <NavItem head="Admin" navLink="/admin" />
+        )}
+      </NavLeft>
+      <NavRight>
+        {isAuthenticated ? (
+          <>
+            <NavItem
+              style={{
+                textDecoration: "none",
+                textShadow: "none",
+                cursor: "default"
+              }}
+              head={user && `Hallo ${user.first_name}`}
+              navLink="#!"
+            />
+            <div onClick={onLogout}>
+              <NavItem onClick={e => onLogout()} head="Ausloggen" navLink="/" />
+            </div>
+          </>
+        ) : (
+          <NavItem head="Login" navLink="/login" />
+        )}
+      </NavRight>
+    </NavMain>
   );
 };
 

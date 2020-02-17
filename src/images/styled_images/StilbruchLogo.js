@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { ReactComponent as StaRLogo } from "../StaR_Main_500.svg";
+import { ReactComponent as SLogo } from "../stilbruchLogo.svg";
 
 const Logo = styled.div`
   display: flex;
@@ -13,7 +13,7 @@ const Logo = styled.div`
 
   canvas {
     display: block;
-    width: 100%;
+    width: 50%;
     visibility: hidden;
   }
 
@@ -39,11 +39,11 @@ const Logo = styled.div`
   /* >1800px = wide screen */
 `;
 
-export default function MainLogo() {
+export default function StilbruchLogo() {
   return (
     <Logo>
-      <canvas width="100%" height="90%"></canvas>
-      <StaRLogo />
+      <canvas></canvas>
+      <SLogo />
     </Logo>
   );
 }

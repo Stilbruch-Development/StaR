@@ -10,11 +10,12 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 
 const MainStyleWrapper = styled.div`
-  margin: 5% 30% 10% 30%;
+  margin: 15% 35% 0% 35%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  height: 100vh;
 `;
 
 const useStyles = makeStyles(theme => ({

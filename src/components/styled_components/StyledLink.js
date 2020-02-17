@@ -21,10 +21,6 @@ const StyledLink = styled(Link)`
 
   // phone
   @media (max-width: 600px) {
-    font-size: 6rem;
-    min-width: 100%;
-    height: 6vw;
-    margin: 1vw 0 1vw 0;
   }
   // tablet portrait
   @media (max-width: 900px) {

@@ -1,6 +1,9 @@
 import PouchDB from "pouchdb";
 import PouchDBFind from "pouchdb-find";
 
+const user_db_remote_url = process.env.REACT_APP_USER_DB;
+const expander_db_remote_url = process.env.REACT_APP_EXPANDER_DB;
+
 PouchDB.plugin(PouchDBFind);
 
 const admin_user = {
@@ -12,13 +15,9 @@ const admin_user = {
 };
 
 const user_db = new PouchDB("user_db");
-const user_db_remote = new PouchDB(
-  "https://c8899f2c-6d46-4ad1-8a77-bfce08aa8acc-bluemix.cloudant.com/user_db_remote"
-);
+const user_db_remote = new PouchDB(user_db_remote_url);
 const expander_db = new PouchDB("expander_db");
-const expander_db_remote = new PouchDB(
-  "https://c8899f2c-6d46-4ad1-8a77-bfce08aa8acc-bluemix.cloudant.com/expander_db_remote"
-);
+const expander_db_remote = new PouchDB(expander_db_remote_url);
 
 const setAdmin = async () => {
   try {
@@ -56,7 +55,5 @@ const syncDB = () => {
       console.log("sync error expander_db/ expander_db_remote");
     });
 };
-
-syncDB();
 
 export { user_db, expander_db, syncDB };

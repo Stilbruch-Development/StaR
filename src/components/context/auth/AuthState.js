@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import AuthContext from "./authContext";
 import authReducer from "./authReducer";
-import { user_db } from "../../../pouchdb/db";
+import { user_db, syncDB } from "../../../pouchdb/db";
 import bcrypt from "bcryptjs";
 import uuid4 from "uuid/v4";
 import jwt from "jsonwebtoken";
@@ -42,6 +42,7 @@ const AuthState = props => {
           type: USER_LOADED,
           payload: userData
         });
+        syncDB();
       }
     } catch (err) {
       dispatch({ type: AUTH_ERROR, payload: err });
