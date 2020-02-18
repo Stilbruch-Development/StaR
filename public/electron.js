@@ -111,6 +111,15 @@ autoUpdater.logger.transports.file.level = "info";
 log.info("App starting...");
 
 //-------------------------------------------------------------------
+// Toggle Dev Tools
+//
+//
+//-------------------------------------------------------------------
+ipcMain.on("toggle-dev-tools", (event, arg) => {
+  console.log(arg); // prints "ping"
+  tools = arg;
+});
+//-------------------------------------------------------------------
 // Menu
 //
 //

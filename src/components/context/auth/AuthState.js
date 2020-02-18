@@ -16,7 +16,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  SET_DEVTOOLS
 } from "../types";
 
 const jwtSecret = process.env.REACT_APP_JWTSECRET;
@@ -27,7 +28,8 @@ const AuthState = props => {
     isAuthenticated: false,
     loading: false,
     user: null,
-    error: null
+    error: null,
+    devTools: false
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
   const [checkToken] = useJsonWebToken();
@@ -159,6 +161,14 @@ const AuthState = props => {
   // Clear Errors
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
 
+  // Set DevTools
+  const setDevTools = tools => {
+    dispatch({
+      type: SET_DEVTOOLS,
+      payload: tools
+    });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -167,11 +177,13 @@ const AuthState = props => {
         loading: state.loading,
         user: state.user,
         error: state.error,
+        devTools: state.devTools,
         register,
         loadUser,
         login,
         logout,
-        clearErrors
+        clearErrors,
+        setDevTools
       }}
     >
       {props.children}

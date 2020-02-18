@@ -6,7 +6,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  SET_DEVTOOLS
 } from "../types";
 
 export default (state, action) => {
@@ -44,6 +45,11 @@ export default (state, action) => {
       return {
         ...state,
         error: null
+      };
+    case SET_DEVTOOLS:
+      return {
+        ...state,
+        devTools: action.payload
       };
     default:
       return state;

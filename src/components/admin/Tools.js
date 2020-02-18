@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
+import useDevTools from "../../hooks/useDevTools";
+import AuthContext from "../context/auth/authContext";
 
 const MainDiv = styled.div`
   display: flex;
@@ -16,13 +18,16 @@ const MainDiv = styled.div`
   }
 `;
 
-const Tools = props => {
-  const [state, setState] = React.useState({
-    checkedDevTools: true
-  });
+const Tools = () => {
+  const authContext = useContext(AuthContext);
 
-  const handleChange = name => event => {
-    setState({ ...state, [name]: event.target.checked });
+  const { devTools, setDevTools } = authContext;
+
+  const [toggleDevTools] = useDevTools();
+
+  const handleSwitch = () => {
+    setDevTools(!devTools);
+    toggleDevTools();
   };
 
   return (
@@ -31,8 +36,8 @@ const Tools = props => {
         <FormControlLabel
           control={
             <Switch
-              checked={state.checkedB}
-              onChange={handleChange("checkedDevTools")}
+              checked={devTools}
+              onChange={handleSwitch}
               value="checkedDevTools"
               color="primary"
             />
