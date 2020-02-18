@@ -33,9 +33,13 @@ const Footer = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.version]);
 
+  const version_name = process.env.REACT_APP_VERSION;
+
   return (
     <FooterMain data-testid="FooterMain">
-      <div style={{ fontSize: "1rem" }}>{state.version}</div>
+      <div style={{ fontSize: "1rem" }}>
+        {version_name} {state.version}
+      </div>
       <NavLogo dataTestId="FooterLogo" navLink="/#Start" width={"8%"} />
       <NavItem dataTestId="FooterItemKontakt" head="Hilfe" navLink="/help" />
       <NavItem
