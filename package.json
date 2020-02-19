@@ -87,6 +87,7 @@
     "@testing-library/user-event": "^8.0.3",
     "electron": "^7.1.8",
     "electron-builder": "^21.2.0",
+    "electron-react-devtools": "^0.5.3",
     "eslint-config-prettier": "^6.9.0",
     "eslint-plugin-prettier": "^3.1.2",
     "prettier": "^1.19.1",

@@ -116,8 +116,10 @@ log.info("App starting...");
 //
 //-------------------------------------------------------------------
 ipcMain.on("toggle-dev-tools", (event, arg) => {
-  console.log(arg); // prints "ping"
+  console.log(arg);
   tools = arg;
+  // mainWindow = null;
+  // createWindow();
 });
 //-------------------------------------------------------------------
 // Menu
