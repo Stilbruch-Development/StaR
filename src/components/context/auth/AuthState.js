@@ -162,10 +162,10 @@ const AuthState = props => {
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
 
   // Set DevTools
-  const setDevTools = tools => {
+  const setDevTools = boolean => {
     dispatch({
       type: SET_DEVTOOLS,
-      payload: tools
+      payload: boolean
     });
   };
 

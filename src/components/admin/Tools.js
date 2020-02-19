@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
-import useDevTools from "../../hooks/useDevTools";
 import AuthContext from "../context/auth/authContext";
 
 const MainDiv = styled.div`
@@ -23,12 +22,14 @@ const Tools = () => {
 
   const { devTools, setDevTools } = authContext;
 
-  const [toggleDevTools] = useDevTools();
-
   const handleSwitch = () => {
     setDevTools(!devTools);
-    toggleDevTools();
   };
+
+  useEffect(() => {
+    window.ipcRenderer.send("toggle-dev-tools", devTools);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [devTools]);
 
   return (
     <MainDiv>

@@ -3,6 +3,7 @@ const { autoUpdater } = require("electron-updater");
 const path = require("path");
 const isDev = require("electron-is-dev");
 const log = require("electron-log");
+const os = require("os");
 
 //-------------------------------------------------------------------
 // Main Window
@@ -13,9 +14,9 @@ let mainWindow;
 
 let tools = false;
 
-if (isDev) {
-  tools = true;
-}
+// if (isDev) {
+//   tools = true;
+// }
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
@@ -42,16 +43,19 @@ app.on("ready", () => {
   createWindow();
   app.focus();
   autoUpdater.checkForUpdatesAndNotify();
+
+  //DevTools Extension
+  BrowserWindow.addDevToolsExtension(
+    path.join(
+      os.homedir(),
+      "/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.4.0_0" ||
+        "%LOCALAPPDATA%GoogleChromeUser DataDefaultExtensions\fmkadmapgofadopljbjfkapdkoienihi/4.4.0_0"
+    )
+  );
 });
 
 app.on("window-all-closed", () => {
   app.quit();
-});
-
-app.on("activate", () => {
-  if (mainWindow === null) {
-    createWindow();
-  }
 });
 
 //-------------------------------------------------------------------
@@ -116,10 +120,11 @@ log.info("App starting...");
 //
 //-------------------------------------------------------------------
 ipcMain.on("toggle-dev-tools", (event, arg) => {
-  console.log(arg);
   tools = arg;
-  // mainWindow = null;
-  // createWindow();
+  if (tools === true) {
+    mainWindow.hide();
+    createWindow();
+  }
 });
 //-------------------------------------------------------------------
 // Menu
