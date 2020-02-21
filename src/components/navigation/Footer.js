@@ -35,7 +35,7 @@ const Footer = () => {
 
   let version_name;
 
-  if (process.env.NODE_ENV === "development" || "test") {
+  if (process.env.NODE_ENV === "development") {
     version_name = "Dev";
   } else {
     version_name = process.env.REACT_APP_VERSION;
