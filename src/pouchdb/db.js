@@ -8,7 +8,7 @@ let expander_db_name;
 
 PouchDB.plugin(PouchDBFind);
 
-if (process.env.NODE_ENV === "development" || "test") {
+if (process.env.NODE_ENV === "development") {
   user_db_name = "dev_user_db";
   expander_db_name = "dev_expander_db";
   user_db_remote_url = process.env.REACT_APP_USER_DB_DEV;
