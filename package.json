@@ -27,7 +27,7 @@
         "repo": "StaR"
       }
     ],
-    "copyright": "Copyright © 2020 ${author}",
+    "copyright": "Copyright © 2020 Stilbruch.dev",
     "mac": {
       "icon": "./src/images/icons/mac/icon.icns",
       "category": "public.app-category.utilities"
