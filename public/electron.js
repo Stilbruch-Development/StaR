@@ -12,7 +12,7 @@ const os = require("os");
 //-------------------------------------------------------------------
 let mainWindow;
 
-let tools = true;
+let tools = false;
 
 if (isDev) {
   tools = true;
@@ -43,15 +43,6 @@ app.on("ready", () => {
   createWindow();
   app.focus();
   autoUpdater.checkForUpdatesAndNotify();
-
-  //DevTools Extension
-  BrowserWindow.addDevToolsExtension(
-    path.join(
-      os.homedir(),
-      "/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.4.0_0" ||
-        "%LOCALAPPDATA%GoogleChromeUser DataDefaultExtensions\fmkadmapgofadopljbjfkapdkoienihi/4.4.0_0"
-    )
-  );
 });
 
 app.on("window-all-closed", () => {

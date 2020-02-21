@@ -17,6 +17,13 @@ export default function useAutoUpdater() {
       );
     });
 
+    window.ipcRenderer.on("download-progress", log_message => {
+      window.ipcRenderer.removeAllListeners("download-progress");
+      setAlertMessage(
+        `Es steht ein neues Update zur Verfügung. Es wird jetzt herunter geladen: ${log_message}`
+      );
+    });
+
     window.ipcRenderer.on("update_not_available", () => {
       window.ipcRenderer.removeAllListeners("update-not-available");
       setAlertMessage("Es steht kein neues Update zur Verfügung.");

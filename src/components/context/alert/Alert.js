@@ -23,7 +23,7 @@ const Notefication = styled.div`
   width: 85vw;
   padding: 10px;
   border-radius: 5px;
-  background-color: rgba(255, 184, 191, 0.6);
+  background-color: rgba(255, 184, 191, 0.7);
   color: black;
   font-size: 2rem;
   font-weight: bold;
@@ -32,8 +32,9 @@ const Notefication = styled.div`
 
 const useStyles = makeStyles(theme => ({
   button: {
-    width: "40%",
-    fontSize: "1.5rem"
+    width: "100%",
+    fontSize: "1.5rem",
+    margin: "1rem"
   }
 }));
 
@@ -57,7 +58,7 @@ const Alert = () => {
         <Notefication>
           <p>{message}</p>
           <CancelOutlinedIcon
-            style={{ fontSize: "3rem", cursor: "pointer" }}
+            style={{ fontSize: "3rem", cursor: "pointer", margin: "1rem" }}
             onClick={removeAlert}
           />
           <ButtonWrapper>
