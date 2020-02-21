@@ -33,7 +33,13 @@ const Footer = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.version]);
 
-  const version_name = process.env.REACT_APP_VERSION;
+  let version_name;
+
+  if (process.env.NODE_ENV === "development" || "test") {
+    version_name = "Dev";
+  } else {
+    version_name = process.env.REACT_APP_VERSION;
+  }
 
   return (
     <FooterMain data-testid="FooterMain">

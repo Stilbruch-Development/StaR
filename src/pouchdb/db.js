@@ -1,10 +1,24 @@
 import PouchDB from "pouchdb";
 import PouchDBFind from "pouchdb-find";
 
-const user_db_remote_url = process.env.REACT_APP_USER_DB;
-const expander_db_remote_url = process.env.REACT_APP_EXPANDER_DB;
+let user_db_remote_url;
+let expander_db_remote_url;
+let user_db_name;
+let expander_db_name;
 
 PouchDB.plugin(PouchDBFind);
+
+if (process.env.NODE_ENV === "development" || "test") {
+  user_db_name = "dev_user_db";
+  expander_db_name = "dev_expander_db";
+  user_db_remote_url = process.env.REACT_APP_USER_DB_DEV;
+  expander_db_remote_url = process.env.REACT_APP_EXPANDER_DB_DEV;
+} else {
+  user_db_name = "user_db";
+  expander_db_name = "expander_db";
+  user_db_remote_url = process.env.REACT_APP_USER_DB;
+  expander_db_remote_url = process.env.REACT_APP_EXPANDER_DB;
+}
 
 const admin_user = {
   _id: "1",
@@ -14,9 +28,9 @@ const admin_user = {
   role: 1
 };
 
-const user_db = new PouchDB("user_db");
+const user_db = new PouchDB(user_db_name);
 const user_db_remote = new PouchDB(user_db_remote_url);
-const expander_db = new PouchDB("expander_db");
+const expander_db = new PouchDB(expander_db_name);
 const expander_db_remote = new PouchDB(expander_db_remote_url);
 
 const setAdmin = async () => {
@@ -40,19 +54,27 @@ const syncDB = () => {
   user_db
     .sync(user_db_remote)
     .on("complete", function() {
-      console.log("sync of user_db/ user_db_remote completed");
+      console.log(
+        `sync of ${user_db_name} and ${user_db_name}_remote successfully completed`
+      );
     })
     .on("error", function(err) {
-      console.log("sync error user_db/ user_db_remote");
+      console.log(
+        `sync of ${user_db_name} and ${user_db_name}_remote failed with error: ${err}`
+      );
     });
 
   expander_db
     .sync(expander_db_remote)
     .on("complete", function() {
-      console.log("sync of expander_db/ expander_db_remote completed");
+      console.log(
+        `sync of ${expander_db_name} and ${expander_db_name}_remote successfully completed`
+      );
     })
     .on("error", function(err) {
-      console.log("sync error expander_db/ expander_db_remote");
+      console.log(
+        `sync of ${expander_db_name} and ${expander_db_name}_remote failed with error: ${err}`
+      );
     });
 };
 

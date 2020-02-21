@@ -51,9 +51,7 @@ const Login = props => {
 
   const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
 
-  const onSubmit = e => {
-    e.preventDefault();
-
+  const onSubmit = () => {
     if (email === "" || password === "") {
       setAlertMessage(
         "Bitte gib eine gültige Email und das zugehörige Password an."
@@ -69,6 +67,23 @@ const Login = props => {
     }
   };
 
+  const onButtonClick = e => {
+    e.preventDefault();
+    onSubmit();
+  };
+
+  useEffect(() => {
+    const listener = event => {
+      if (event.code === "Enter" || event.code === "NumpadEnter") {
+        onSubmit();
+      }
+    };
+    document.addEventListener("keydown", listener);
+    return () => {
+      document.removeEventListener("keydown", listener);
+    };
+  });
+
   const classes = useStyles();
 
   return (
@@ -77,7 +92,7 @@ const Login = props => {
         variant="h4"
         style={{ fontFamily: "inherit", marginBottom: "10%" }}
       >
-        Bitte melde dich mit deinen Zugangsdaten an.
+        Benutzer anmelden
       </Typography>
       <Divider />
       <TextField
@@ -102,9 +117,9 @@ const Login = props => {
       <Button
         variant="contained"
         fullWidth
-        onClick={onSubmit}
         color="primary"
         className={classes.button}
+        onClick={onButtonClick}
       >
         Login
       </Button>

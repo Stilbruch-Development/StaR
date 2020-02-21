@@ -12,11 +12,11 @@ const os = require("os");
 //-------------------------------------------------------------------
 let mainWindow;
 
-let tools = false;
+let tools = true;
 
-// if (isDev) {
-//   tools = true;
-// }
+if (isDev) {
+  tools = true;
+}
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
@@ -122,7 +122,7 @@ log.info("App starting...");
 ipcMain.on("toggle-dev-tools", (event, arg) => {
   tools = arg;
   if (tools === true) {
-    mainWindow.hide();
+    mainWindow = null;
     createWindow();
   }
 });

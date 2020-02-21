@@ -156,6 +156,7 @@ const AuthState = props => {
   const logout = () => {
     dispatch({ type: LOGOUT });
     removeAlert();
+    syncDB();
   };
 
   // Clear Errors
