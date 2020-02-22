@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import styled from "styled-components";
-import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -15,18 +15,18 @@ const useStyles = makeStyles(theme => ({
 
 const ButtonWrapper = styled.div`
   height: 100%;
-  width: 1wv;
+  width: 2vw;
 
   .MuiButton-root {
     min-width: unset;
     height: 100%;
     padding: 0;
     margin: 0;
-    width: 1rem;
+    width: 100%;
   }
 `;
 
-const SidebarButton = props => {
+const RightSidebarButton = props => {
   const classes = useStyles();
 
   return (
@@ -37,10 +37,10 @@ const SidebarButton = props => {
         className={classes.button}
         onClick={props.setToggleState}
       >
-        <ArrowForwardIosIcon style={{ fontSize: "1rem" }} />
+        <ArrowBackIosIcon style={{ fontSize: "1rem", marginLeft: "10px" }} />
       </Button>
     </ButtonWrapper>
   );
 };
 
-export default SidebarButton;
+export default RightSidebarButton;

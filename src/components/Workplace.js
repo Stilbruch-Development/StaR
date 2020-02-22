@@ -1,16 +1,18 @@
 import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
-import Sidebar from "./navigation/Sidebar";
+import LeftSidebar from "./navigation/LeftSidebar";
+import RightSidebar from "./navigation/RightSidebar";
 import ExpanderContext from "./context/expander/expanderContext";
 import Draft from "./radeditor/Draft";
-import SidebarButton from "./navigation/SidebarButton";
+import LeftSidebarButton from "./navigation/LeftSidebarButton";
+import RightSidebarButton from "./navigation/RightSidebarButton";
 import useToggle from "../hooks/useToggle";
 import AuthContext from "./context/auth/authContext";
 
 const MainFlex = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   height: 100vh;
   width: 100vw;
@@ -49,16 +51,24 @@ const Radeditor = () => {
   return (
     <MainFlex>
       {toggleState ? (
-        <Sidebar
+        <LeftSidebar
           setExpanderItem={setExpanderItem}
           setToggleState={setToggleState}
         />
       ) : (
-        <SidebarButton setToggleState={setToggleState} />
+        <LeftSidebarButton setToggleState={setToggleState} />
       )}
       <Editor>
         <Draft expanderUserData={expanderUserData} />
       </Editor>
+      {toggleState ? (
+        <RightSidebar
+          setExpanderItem={setExpanderItem}
+          setToggleState={setToggleState}
+        />
+      ) : (
+        <RightSidebarButton setToggleState={setToggleState} />
+      )}
     </MainFlex>
   );
 };

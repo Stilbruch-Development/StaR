@@ -15,12 +15,12 @@ const SidebarDiv = styled.div`
 
   .MuiButton-root {
     min-width: 70%;
-    height: 2.5rem;
+    height: auto;
     margin: 2rem 1rem 0 1rem;
   }
 `;
 
-const Sidebar = props => {
+const LeftSidebar = props => {
   return (
     <SidebarDiv>
       <Button variant="outlined" color="primary" onClick={props.setToggleState}>
@@ -28,10 +28,10 @@ const Sidebar = props => {
       </Button>
       <Expander setExpanderItem={props.setExpanderItem} />
       <Button variant="outlined" color="primary">
-        Tools
+        Befund Listen
       </Button>
       <Button variant="outlined" color="primary">
-        Tools
+        Karten
       </Button>
       <Button variant="outlined" color="primary">
         Tools
@@ -40,4 +40,4 @@ const Sidebar = props => {
   );
 };
 
-export default Sidebar;
+export default LeftSidebar;
