@@ -56,7 +56,11 @@ const EditorToolBar = props => {
       >
         Unterstrichen
       </Button>
-      <ButtonGroup color="primary" aria-label="outlined primary button group">
+      <ButtonGroup
+        color="primary"
+        aria-label="outlined primary button group"
+        style={{ margin: "8px" }}
+      >
         <Button onClick={() => props._toggleBlockType("alignLeft")}>
           <FormatAlignLeftIcon />
         </Button>

@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
+import Lungenembolie from "../radtools/lists/lungenembolie/Lungenembolie";
 
 const SidebarDiv = styled.div`
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
   justify-content: flex-start;
   height: 100%;
   width: 100%;
@@ -25,16 +25,7 @@ const RightSidebar = props => {
       <Button variant="outlined" color="primary" onClick={props.setToggleState}>
         <ArrowForwardIosIcon viewBox="-5 0 24 24" />
       </Button>
-      <Button
-        variant="outlined"
-        color="primary"
-        onClick={props.onRegisterClick}
-      >
-        Benutzer
-      </Button>
-      <Button variant="outlined" color="primary" onClick={props.onToolsClick}>
-        Tools
-      </Button>
+      <Lungenembolie />
     </SidebarDiv>
   );
 };

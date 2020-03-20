@@ -3,7 +3,9 @@ import { createGlobalStyle } from "styled-components";
 const GlobalStyle = createGlobalStyle`
 
   html, body {
-    background-color: rgb(220, 220, 220);
+    --main-bg-color: rgb(220, 220, 220);
+    --editor-bg-color: white;
+    background-color: var(--main-bg-color);
     font-family: "Play", Arial;
     color: black;
     margin: 0;

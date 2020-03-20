@@ -12,7 +12,7 @@ import AuthContext from "./context/auth/authContext";
 const MainFlex = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   height: 100vh;
   width: 100vw;
@@ -22,6 +22,7 @@ const Editor = styled.div`
   width: 100%;
   margin: 2vw;
   height: 100%;
+  overflow: auto;
 `;
 
 const Radeditor = () => {

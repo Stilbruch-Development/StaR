@@ -43,6 +43,13 @@ app.on("ready", () => {
   createWindow();
   app.focus();
   autoUpdater.checkForUpdatesAndNotify();
+
+  BrowserWindow.addDevToolsExtension(
+    path.join(
+      os.homedir(),
+      "/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.5.0_0"
+    )
+  );
 });
 
 app.on("window-all-closed", () => {
