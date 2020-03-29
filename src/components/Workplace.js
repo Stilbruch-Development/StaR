@@ -8,6 +8,7 @@ import LeftSidebarButton from "./navigation/LeftSidebarButton";
 import RightSidebarButton from "./navigation/RightSidebarButton";
 import useToggle from "../hooks/useToggle";
 import AuthContext from "./context/auth/authContext";
+import LungenembolieState from "./context/lists/lungenembolie/LungenembolieState";
 
 const MainFlex = styled.div`
   display: flex;
@@ -50,27 +51,29 @@ const Radeditor = () => {
   });
 
   return (
-    <MainFlex>
-      {toggleState ? (
-        <LeftSidebar
-          setExpanderItem={setExpanderItem}
-          setToggleState={setToggleState}
-        />
-      ) : (
-        <LeftSidebarButton setToggleState={setToggleState} />
-      )}
-      <Editor>
-        <Draft expanderUserData={expanderUserData} />
-      </Editor>
-      {toggleState ? (
-        <RightSidebar
-          setExpanderItem={setExpanderItem}
-          setToggleState={setToggleState}
-        />
-      ) : (
-        <RightSidebarButton setToggleState={setToggleState} />
-      )}
-    </MainFlex>
+    <LungenembolieState>
+      <MainFlex>
+        {toggleState ? (
+          <LeftSidebar
+            setExpanderItem={setExpanderItem}
+            setToggleState={setToggleState}
+          />
+        ) : (
+          <LeftSidebarButton setToggleState={setToggleState} />
+        )}
+        <Editor>
+          <Draft expanderUserData={expanderUserData} />
+        </Editor>
+        {toggleState ? (
+          <RightSidebar
+            setExpanderItem={setExpanderItem}
+            setToggleState={setToggleState}
+          />
+        ) : (
+          <RightSidebarButton setToggleState={setToggleState} />
+        )}
+      </MainFlex>
+    </LungenembolieState>
   );
 };
 

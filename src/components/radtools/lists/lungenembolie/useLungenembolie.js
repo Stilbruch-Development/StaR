@@ -1,9 +1,18 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import LungenembolieContext from "../../../context/lists/lungenembolie/lungenembolieContext";
 
 export default function useLungenembolie() {
-  const [state, setState] = useState({});
+  const [useLungenembolieState, setUseLungenembolieState] = useState({
+    Satz_1: "",
+    Satz_2: "",
+    Satz_3: ""
+  });
 
-  const getSentence = array => {
+  const { LungenembolieState, setLungenembolieState } = useContext(
+    LungenembolieContext
+  );
+
+  const getSentence = (array, upperCase) => {
     const array_start = [];
     for (let i = 0; i < array.length - 1; i++) {
       array_start.push(array[i]);
@@ -16,15 +25,18 @@ export default function useLungenembolie() {
 
     const arrays_join = array_start + array_end;
 
-    var replacements = new Map([
-        [/,(?=[^\s])/g, ", "],
-        [
+    let matchUpperCase;
+
+    upperCase === true
+      ? (matchUpperCase = [
           /^./,
           function(match) {
             return match.toUpperCase();
           }
-        ]
-      ]),
+        ])
+      : (matchUpperCase = []);
+
+    var replacements = new Map([[/,(?=[^\s])/g, ", "], matchUpperCase]),
       result = arrays_join;
     replacements.forEach(function(value, key) {
       result = result.replace(key, value);
@@ -33,43 +45,38 @@ export default function useLungenembolie() {
     return result;
   };
 
-  // const getSonstige = listObject => {
-  //   const {
-  //     Lungenparenchym,
-  //     Pleura,
-  //     Herz_Mediastinum,
-  //     Lymphknoten,
-  //     Oberbauch,
-  //     Skelett
-  //   } = listObject;
+  const {
+    Lungenembolie,
+    Lokalisation,
+    Abschnitte,
+    Rechtsherzbelastung,
+    Rechtsherzbelastungszeichen,
+    Lungenparenchym,
+    Pleura,
+    Herz_Mediastinum,
+    Lymphknoten,
+    Oberbauch,
+    Skelett
+  } = LungenembolieState;
 
-  //   setState({
-  //     ...state,
-  //     sentence_3: Lungenparenchym,
-  //     sentence_4: Pleura,
-  //     sentence_5: Herz_Mediastinum,
-  //     sentence_6: Lymphknoten,
-  //     sentence_7: Oberbauch,
-  //     sentence_8: Skelett
-  //   });
-  // };
+  const getLungenembolie = () => {
+    Lungenembolie === "ja"
+      ? setUseLungenembolieState({
+          ...useLungenembolieState,
+          Satz_1: `Nachweis einer Lungenarterienembolie, ${getSentence(
+            Lokalisation,
+            false
+          )} im ${getSentence(Abschnitte, true)}.`
+        })
+      : Lungenembolie === "nein" &&
+        setUseLungenembolieState({
+          ...useLungenembolieState,
+          Satz_1: "Kein Nachweis einer Lungenarterienembolie."
+        });
+  };
 
-  const getReport = (listObject, setListObject) => {
-    listObject.Lungenembolie === "ja" &&
-      setListObject({
-        ...listObject,
-        Satz_1: `Nachweis einer Lungenarterienembolie ${getSentence(
-          listObject.Lokalisation
-        )} im ${getSentence(listObject.Abschnitte)}.`
-      });
-
-    listObject.Lungenembolie === "nein" &&
-      setListObject({
-        ...listObject,
-        Satz_1: `Kein Nachweis einer Lungenarterienembolie.`
-      });
-
-    const rhbz = listObject.Rechtsherzbelastungszeichen.length;
+  const getRechtsherzbelastung = () => {
+    const rhbz = Rechtsherzbelastungszeichen.length;
     let rhb_grad;
 
     if (rhbz <= 2) {
@@ -80,22 +87,54 @@ export default function useLungenembolie() {
       rhb_grad = "hochgradigen";
     }
 
-    listObject.Rechtsherzbelastung === "ja" &&
-      setListObject({
-        ...listObject,
-        Satz_2: `${getSentence(
-          listObject.Rechtsherzbelastungszeichen
-        )} als Zeichen der ${rhb_grad} Rechtsherzbelastung.`
-      });
-
-    listObject.Rechtsherzbelastung === "nein" &&
-      setListObject({
-        ...listObject,
-        Satz_2: `Keine Rechtsherzbelastungszeichen.`
-      });
+    Rechtsherzbelastung === "ja"
+      ? setUseLungenembolieState({
+          ...useLungenembolieState,
+          Satz_2: `${getSentence(
+            Rechtsherzbelastungszeichen,
+            true
+          )} als Zeichen der ${rhb_grad} Rechtsherzbelastung.`
+        })
+      : Rechtsherzbelastung === "nein" &&
+        setUseLungenembolieState({
+          ...useLungenembolieState,
+          Satz_2: `Keine Rechtsherzbelastungszeichen.`
+        });
   };
 
-  console.log(state);
+  const getSonstige = () => {
+    const sonstigeGesamt =
+      Lungenparenchym +
+      " " +
+      Pleura +
+      " " +
+      Herz_Mediastinum +
+      " " +
+      Lymphknoten +
+      " " +
+      Oberbauch +
+      " " +
+      Skelett;
+    setUseLungenembolieState({
+      ...useLungenembolieState,
+      Satz_3: sonstigeGesamt
+    });
+  };
 
-  return [getReport, state];
+  const { Satz_1, Satz_2, Satz_3 } = useLungenembolieState;
+
+  useEffect(() => {
+    setLungenembolieState({
+      ...LungenembolieState,
+      Gesamt: Satz_1 + "\n" + Satz_2 + "\n" + Satz_3
+    });
+    // eslint-disable-next-line
+  }, [Satz_1, Satz_2, Satz_3]);
+
+  return [
+    getLungenembolie,
+    getRechtsherzbelastung,
+    getSonstige,
+    useLungenembolieState
+  ];
 }

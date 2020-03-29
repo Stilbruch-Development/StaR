@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -11,6 +11,7 @@ import Collapse from "@material-ui/core/Collapse";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import LungenembolieContext from "../../../context/lists/lungenembolie/lungenembolieContext";
 
 const MainWrapper = styled.div`
   .MuiListItem-root {
@@ -19,7 +20,11 @@ const MainWrapper = styled.div`
 `;
 
 export default function ListElementRechtsherzbelastung(props) {
-  const { Rechtsherzbelastungszeichen } = props.lungenembolieState;
+  const { LungenembolieState, setLungenembolieState } = useContext(
+    LungenembolieContext
+  );
+
+  const { Rechtsherzbelastungszeichen } = LungenembolieState;
 
   const handleToggleRechtsherzbelastung = value => () => {
     const currentIndex = Rechtsherzbelastungszeichen.indexOf(value);
@@ -30,8 +35,8 @@ export default function ListElementRechtsherzbelastung(props) {
     } else {
       newRechtsherzbelastungszeichen.splice(currentIndex, 1);
     }
-    props.setLungenembolieState({
-      ...props.lungenembolieState,
+    setLungenembolieState({
+      ...LungenembolieState,
       Rechtsherzbelastungszeichen: newRechtsherzbelastungszeichen
     });
   };
@@ -45,8 +50,8 @@ export default function ListElementRechtsherzbelastung(props) {
     if (event.target.value === "nein") {
       setOpen(false);
     }
-    props.setLungenembolieState({
-      ...props.lungenembolieState,
+    setLungenembolieState({
+      ...LungenembolieState,
       Rechtsherzbelastung: event.target.value
     });
   };

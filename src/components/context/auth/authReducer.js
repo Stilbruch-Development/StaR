@@ -33,6 +33,7 @@ export default (state, action) => {
     case LOGOUT:
     case AUTH_ERROR:
       localStorage.removeItem("token");
+      localStorage.removeItem("editorState");
       return {
         ...state,
         token: null,

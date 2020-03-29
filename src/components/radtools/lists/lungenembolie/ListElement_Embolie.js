@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -11,6 +11,7 @@ import Collapse from "@material-ui/core/Collapse";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import LungenembolieContext from "../../../context/lists/lungenembolie/lungenembolieContext";
 
 const MainWrapper = styled.div`
   .MuiListItem-root {
@@ -18,8 +19,11 @@ const MainWrapper = styled.div`
   }
 `;
 
-export default function ListElementEmbolie(props) {
-  const { Lokalisation, Abschnitte } = props.lungenembolieState;
+export default function ListElementEmbolie() {
+  const { LungenembolieState, setLungenembolieState } = useContext(
+    LungenembolieContext
+  );
+  const { Lokalisation, Abschnitte } = LungenembolieState;
 
   const handleToggleLokalisation = value => () => {
     const currentIndex = Lokalisation.indexOf(value);
@@ -30,8 +34,8 @@ export default function ListElementEmbolie(props) {
     } else {
       newLokalisation.splice(currentIndex, 1);
     }
-    props.setLungenembolieState({
-      ...props.lungenembolieState,
+    setLungenembolieState({
+      ...LungenembolieState,
       Lokalisation: newLokalisation
     });
   };
@@ -45,8 +49,8 @@ export default function ListElementEmbolie(props) {
     } else {
       newAbschnitte.splice(currentIndex, 1);
     }
-    props.setLungenembolieState({
-      ...props.lungenembolieState,
+    setLungenembolieState({
+      ...LungenembolieState,
       Abschnitte: newAbschnitte
     });
   };
@@ -60,8 +64,8 @@ export default function ListElementEmbolie(props) {
     if (event.target.value === "nein") {
       setOpen(false);
     }
-    props.setLungenembolieState({
-      ...props.lungenembolieState,
+    setLungenembolieState({
+      ...LungenembolieState,
       Lungenembolie: event.target.value
     });
   };

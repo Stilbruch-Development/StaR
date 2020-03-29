@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, ipcMain } = require("electron");
+const { app, BrowserWindow, Menu, ipcMain, clipboard } = require("electron");
 const { autoUpdater } = require("electron-updater");
 const path = require("path");
 const isDev = require("electron-is-dev");
@@ -68,6 +68,10 @@ ipcMain.on("app_version", event => {
 
 ipcMain.on("restart_app", () => {
   autoUpdater.quitAndInstall();
+});
+
+ipcMain.on("copy_to_clipboard", (event, content) => {
+  clipboard.writeText(content);
 });
 
 autoUpdater.on("checking-for-update", () => {

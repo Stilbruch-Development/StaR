@@ -32,3 +32,6 @@ export const SET_ALERT_MESSAGE = "SET_ALERT_MESSAGE";
 export const SET_ALERT_BUTTON = "SET_ALERT_BUTTON";
 export const SET_ALERT_ONCLICK = "SET_ALERT_ONCLICK";
 export const REMOVE_ALERT = "REMOVE_ALERT";
+
+// lungenembolie types
+export const SET_LUNGENEMBOLIE = "SET_LUNGENEMBOLIE";

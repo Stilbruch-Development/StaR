@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -6,6 +6,7 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
 import TextField from "@material-ui/core/TextField";
+import LungenembolieContext from "../../../context/lists/lungenembolie/lungenembolieContext";
 
 const MainWrapper = styled.div`
   .MuiListItem-root {
@@ -20,7 +21,11 @@ const FormWrapper = styled.div`
   margin: 1rem;
 `;
 
-export default function ListElementSonstiges(props) {
+export default function ListElementSonstiges() {
+  const { LungenembolieState, setLungenembolieState } = useContext(
+    LungenembolieContext
+  );
+
   const {
     Pleura,
     Lungenparenchym,
@@ -28,7 +33,7 @@ export default function ListElementSonstiges(props) {
     Herz_Mediastinum,
     Oberbauch,
     Skelett
-  } = props.lungenembolieState;
+  } = LungenembolieState;
 
   const handleClick = () => {
     setOpen(!open);
@@ -39,8 +44,8 @@ export default function ListElementSonstiges(props) {
   const handleChange = event => {
     const listItem = event.target.name;
     const listValue = event.target.value;
-    props.setLungenembolieState({
-      ...props.lungenembolieState,
+    setLungenembolieState({
+      ...LungenembolieState,
       [listItem]: listValue
     });
   };

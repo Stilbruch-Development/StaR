@@ -6,6 +6,7 @@ import FormatAlignLeftIcon from "@material-ui/icons/FormatAlignLeft";
 import FormatAlignCenterIcon from "@material-ui/icons/FormatAlignCenter";
 import FormatAlignRightIcon from "@material-ui/icons/FormatAlignRight";
 import styled from "styled-components";
+import useDraftEditor from "../../hooks/useDraftEditor";
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -19,13 +20,16 @@ const useStyles = makeStyles(theme => ({
 const StyleWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: flex-start;
+  flex-wrap: wrap;
   align-items: center;
   font-size: 1.5rem;
 `;
 
 const EditorToolBar = props => {
   const classes = useStyles();
+
+  const [setEditorEmpty, copyEditorToClipboard] = useDraftEditor();
 
   return (
     <StyleWrapper>
@@ -71,6 +75,22 @@ const EditorToolBar = props => {
           <FormatAlignRightIcon />
         </Button>
       </ButtonGroup>
+      <Button
+        variant="outlined"
+        color="primary"
+        className={classes.button}
+        onClick={() => setEditorEmpty(props.editorState, props.setEditorState)}
+      >
+        Löschen
+      </Button>
+      <Button
+        variant="outlined"
+        color="primary"
+        className={classes.button}
+        onClick={() => copyEditorToClipboard(props.editorState)}
+      >
+        Kopieren
+      </Button>
     </StyleWrapper>
   );
 };

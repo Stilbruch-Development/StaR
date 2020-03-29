@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import styled from "styled-components";
 import List from "@material-ui/core/List";
 import ListSubheader from "@material-ui/core/ListSubheader";
@@ -6,6 +6,7 @@ import ListElementEmbolie from "./ListElement_Embolie";
 import ListElementRechtsherzbelastung from "./ListElement_Rechtsherzbelastung";
 import ListElementSonstiges from "./ListElement_Sonstiges";
 import useLungenembolie from "./useLungenembolie";
+import LungenembolieContext from "../../../context/lists/lungenembolie/lungenembolieContext";
 
 const MainWrapper = styled.div`
   display: flex;
@@ -55,29 +56,48 @@ const MainWrapper = styled.div`
 `;
 
 export default function Lungenembolie() {
-  const [getReport, state] = useLungenembolie();
+  const { LungenembolieState } = useContext(LungenembolieContext);
 
-  const [lungenembolieState, setLungenembolieState] = React.useState({
-    Lungenembolie: "",
-    Lokalisation: [],
-    Abschnitte: [],
-    Rechtsherzbelastung: "",
-    Rechtsherzbelastungszeichen: [],
-    Lungenparenchym: "Unauffällige Darstellung des Lungenparenchyms.",
-    Pleura: "Regelrecht anliegende Pleura.",
-    Herz_Mediastinum: "Herz und Mediastinum regelrecht.",
-    Lymphknoten: "Keine Lymphadenopathie.",
-    Oberbauch: "Mit erfasster Oberbauch unauffällig.",
-    Skelett: "Altersentsprechende Darstellung des Skeletts.",
-    Satz_1: "",
-    Satz_2: ""
-  });
+  const {
+    Lungenembolie,
+    Lokalisation,
+    Abschnitte,
+    Rechtsherzbelastung,
+    Rechtsherzbelastungszeichen,
+    Lungenparenchym,
+    Pleura,
+    Herz_Mediastinum,
+    Lymphknoten,
+    Oberbauch,
+    Skelett
+  } = LungenembolieState;
+
+  const [
+    getLungenembolie,
+    getRechtsherzbelastung,
+    getSonstige
+  ] = useLungenembolie();
 
   useEffect(() => {
-    getReport(lungenembolieState, setLungenembolieState);
-    console.log(lungenembolieState);
+    getLungenembolie();
     // eslint-disable-next-line
-  }, [lungenembolieState]);
+  }, [Lungenembolie, Lokalisation, Abschnitte]);
+
+  useEffect(() => {
+    getRechtsherzbelastung();
+    // eslint-disable-next-line
+  }, [Rechtsherzbelastung, Rechtsherzbelastungszeichen]);
+
+  useEffect(() => {
+    getSonstige();
+    // eslint-disable-next-line
+  }, [Lungenparenchym,
+    Pleura,
+    Herz_Mediastinum,
+    Lymphknoten,
+    Oberbauch,
+    Skelett
+  ]);
 
   return (
     <MainWrapper>
@@ -90,18 +110,9 @@ export default function Lungenembolie() {
           </ListSubheader>
         }
       >
-        <ListElementEmbolie
-          lungenembolieState={lungenembolieState}
-          setLungenembolieState={setLungenembolieState}
-        />
-        <ListElementRechtsherzbelastung
-          lungenembolieState={lungenembolieState}
-          setLungenembolieState={setLungenembolieState}
-        />
-        <ListElementSonstiges
-          lungenembolieState={lungenembolieState}
-          setLungenembolieState={setLungenembolieState}
-        />
+        <ListElementEmbolie />
+        <ListElementRechtsherzbelastung />
+        <ListElementSonstiges />
       </List>
     </MainWrapper>
   );
