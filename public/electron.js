@@ -47,7 +47,7 @@ app.on("ready", () => {
   BrowserWindow.addDevToolsExtension(
     path.join(
       os.homedir(),
-      "/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.5.0_0"
+      "/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.6.0_0"
     )
   );
 });

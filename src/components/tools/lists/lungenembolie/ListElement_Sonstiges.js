@@ -11,6 +11,12 @@ import LungenembolieContext from "../../../context/lists/lungenembolie/lungenemb
 const MainWrapper = styled.div`
   .MuiListItem-root {
     justify-content: space-between;
+    font-family: inherit;
+  }
+
+  .MuiFormLabel-root,
+  .MuiInputBase-root {
+    font-family: inherit;
   }
 `;
 
@@ -44,10 +50,12 @@ export default function ListElementSonstiges() {
   const handleChange = event => {
     const listItem = event.target.name;
     const listValue = event.target.value;
-    setLungenembolieState({
-      ...LungenembolieState,
-      [listItem]: listValue
-    });
+    window.setTimeout(() => {
+      setLungenembolieState({
+        ...LungenembolieState,
+        [listItem]: listValue
+      });
+    }, 100);
   };
 
   return (

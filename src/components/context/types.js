@@ -22,10 +22,9 @@ export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const SET_DEVTOOLS = "SET_DEVTOOLS";
 
 // navigation types
-export const CLOSE_NAV = "CLOSE_NAV";
-export const OPEN_NAV = "OPEN_NAV";
-export const SWITCH_NAV = "SWITCH_NAV";
-export const TOGGLE_SIDEBAR = "TOGGLE_SIDEBAR";
+export const OPEN_LIST = "OPEN_LIST";
+export const CLOSE_LIST = "CLOSE_LIST";
+export const SET_NAVSTATE = "SET_NAVSTATE";
 
 // alert types
 export const SET_ALERT_MESSAGE = "SET_ALERT_MESSAGE";

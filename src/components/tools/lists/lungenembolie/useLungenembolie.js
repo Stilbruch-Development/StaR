@@ -5,7 +5,8 @@ export default function useLungenembolie() {
   const [useLungenembolieState, setUseLungenembolieState] = useState({
     Satz_1: "",
     Satz_2: "",
-    Satz_3: ""
+    Satz_3: "",
+    Satz_4: ""
   });
 
   const { LungenembolieState, setLungenembolieState } = useContext(
@@ -46,6 +47,7 @@ export default function useLungenembolie() {
   };
 
   const {
+    Voruntersuchung,
     Lungenembolie,
     Lokalisation,
     Abschnitte,
@@ -63,7 +65,7 @@ export default function useLungenembolie() {
     Lungenembolie === "ja"
       ? setUseLungenembolieState({
           ...useLungenembolieState,
-          Satz_1: `Nachweis einer Lungenarterienembolie, ${getSentence(
+          Satz_2: `Nachweis einer Lungenarterienembolie, ${getSentence(
             Lokalisation,
             false
           )} im ${getSentence(Abschnitte, true)}.`
@@ -71,7 +73,7 @@ export default function useLungenembolie() {
       : Lungenembolie === "nein" &&
         setUseLungenembolieState({
           ...useLungenembolieState,
-          Satz_1: "Kein Nachweis einer Lungenarterienembolie."
+          Satz_2: "Kein Nachweis einer Lungenarterienembolie."
         });
   };
 
@@ -90,7 +92,7 @@ export default function useLungenembolie() {
     Rechtsherzbelastung === "ja"
       ? setUseLungenembolieState({
           ...useLungenembolieState,
-          Satz_2: `${getSentence(
+          Satz_3: `${getSentence(
             Rechtsherzbelastungszeichen,
             true
           )} als Zeichen der ${rhb_grad} Rechtsherzbelastung.`
@@ -98,7 +100,7 @@ export default function useLungenembolie() {
       : Rechtsherzbelastung === "nein" &&
         setUseLungenembolieState({
           ...useLungenembolieState,
-          Satz_2: `Keine Rechtsherzbelastungszeichen.`
+          Satz_3: `Keine Rechtsherzbelastungszeichen.`
         });
   };
 
@@ -117,21 +119,38 @@ export default function useLungenembolie() {
       Skelett;
     setUseLungenembolieState({
       ...useLungenembolieState,
-      Satz_3: sonstigeGesamt
+      Satz_4: sonstigeGesamt
     });
   };
 
-  const { Satz_1, Satz_2, Satz_3 } = useLungenembolieState;
+  const getVoruntersuchung = () => {
+    setUseLungenembolieState({
+      ...useLungenembolieState,
+      Satz_1: Voruntersuchung
+    });
+  };
+
+  const { Satz_1, Satz_2, Satz_3, Satz_4 } = useLungenembolieState;
 
   useEffect(() => {
     setLungenembolieState({
       ...LungenembolieState,
-      Gesamt: Satz_1 + "\n" + Satz_2 + "\n" + Satz_3
+      Gesamt:
+        "Befund und Beurteilung:" +
+        "\n" +
+        Satz_1 +
+        "\n\n" +
+        Satz_2 +
+        "\n" +
+        Satz_3 +
+        "\n\n" +
+        Satz_4
     });
     // eslint-disable-next-line
-  }, [Satz_1, Satz_2, Satz_3]);
+  }, [Satz_1, Satz_2, Satz_3, Satz_4]);
 
   return [
+    getVoruntersuchung,
     getLungenembolie,
     getRechtsherzbelastung,
     getSonstige,

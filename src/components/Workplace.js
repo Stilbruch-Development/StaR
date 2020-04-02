@@ -3,12 +3,13 @@ import styled from "styled-components";
 import LeftSidebar from "./navigation/LeftSidebar";
 import RightSidebar from "./navigation/RightSidebar";
 import ExpanderContext from "./context/expander/expanderContext";
-import Draft from "./radeditor/Draft";
+import Draft from "./editor/Draft";
 import LeftSidebarButton from "./navigation/LeftSidebarButton";
 import RightSidebarButton from "./navigation/RightSidebarButton";
 import useToggle from "../hooks/useToggle";
 import AuthContext from "./context/auth/authContext";
 import LungenembolieState from "./context/lists/lungenembolie/LungenembolieState";
+import NavContext from "../components/context/navigation/navContext";
 
 const MainFlex = styled.div`
   display: flex;
@@ -19,14 +20,14 @@ const MainFlex = styled.div`
   width: 100vw;
 `;
 
-const Editor = styled.div`
+const EditorWrapper = styled.div`
   width: 100%;
   margin: 2vw;
   height: 100%;
   overflow: auto;
 `;
 
-const Radeditor = () => {
+const Editor = () => {
   const {
     expanderUserData,
     getExpander,
@@ -35,6 +36,8 @@ const Radeditor = () => {
   } = useContext(ExpanderContext);
 
   const { user } = useContext(AuthContext);
+
+  const { rightSidebareOpen } = useContext(NavContext);
 
   const [toggleState, setToggleState] = useToggle(false);
 
@@ -61,20 +64,13 @@ const Radeditor = () => {
         ) : (
           <LeftSidebarButton setToggleState={setToggleState} />
         )}
-        <Editor>
+        <EditorWrapper>
           <Draft expanderUserData={expanderUserData} />
-        </Editor>
-        {toggleState ? (
-          <RightSidebar
-            setExpanderItem={setExpanderItem}
-            setToggleState={setToggleState}
-          />
-        ) : (
-          <RightSidebarButton setToggleState={setToggleState} />
-        )}
+        </EditorWrapper>
+        {rightSidebareOpen ? <RightSidebar /> : <RightSidebarButton />}
       </MainFlex>
     </LungenembolieState>
   );
 };
 
-export default Radeditor;
+export default Editor;

@@ -26,8 +26,10 @@ const EditorStyleWrapper = styled.div`
   background-color: white;
   border: 1px solid black;
   padding: 3rem;
-  font-size: 1.5rem;
-  height: 50%;
+  margin-bottom: 2rem;
+  font-size: 1.2rem;
+  min-height: 100%;
+  line-height: 2rem;
 `;
 
 const ToolBarSyleWrapper = styled.div`

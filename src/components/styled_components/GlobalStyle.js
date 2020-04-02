@@ -5,6 +5,8 @@ const GlobalStyle = createGlobalStyle`
   html, body {
     --main-bg-color: rgb(220, 220, 220);
     --editor-bg-color: white;
+    --button-color-primary: rgb(63,81,181);
+    --button-border: 1px solid rgba(63, 81, 181, 0.5);
     background-color: var(--main-bg-color);
     font-family: "Play", Arial;
     color: black;
@@ -14,6 +16,10 @@ const GlobalStyle = createGlobalStyle`
     outline: 0;
     font-size: 1.2vw;
     z-index: -1;
+
+    .MuiButton-root {
+      font-family: unset;
+    }
   }
 
   //hides all scrollbars

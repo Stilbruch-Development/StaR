@@ -10,7 +10,7 @@ import {
 import "draft-js/dist/Draft.css";
 import styled from "styled-components";
 import EditorToolBar from "./EditorToolBar";
-import blockRenderMap from "../../radeditor/blocktypes/TextAlign";
+import blockRenderMap from "../../editor/blocktypes/TextAlign";
 
 const MainStyleWrapper = styled.div`
   margin-top: 2rem;

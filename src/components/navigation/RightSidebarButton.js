@@ -1,17 +1,8 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useContext } from "react";
 import Button from "@material-ui/core/Button";
 import styled from "styled-components";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
-
-const useStyles = makeStyles(theme => ({
-  button: {
-    margin: theme.spacing(1)
-  },
-  input: {
-    display: "none"
-  }
-}));
+import NavContext from "../../components/context/navigation/navContext";
 
 const ButtonWrapper = styled.div`
   height: 100%;
@@ -26,17 +17,16 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-const RightSidebarButton = props => {
-  const classes = useStyles();
+const RightSidebarButton = () => {
+  const { setNavState, rightSidebareOpen } = useContext(NavContext);
+
+  const onButtonClick = () => {
+    setNavState("rightSidebareOpen", !rightSidebareOpen);
+  };
 
   return (
     <ButtonWrapper>
-      <Button
-        variant="outlined"
-        color="primary"
-        className={classes.button}
-        onClick={props.setToggleState}
-      >
+      <Button variant="outlined" color="primary" onClick={onButtonClick}>
         <ArrowBackIosIcon style={{ fontSize: "1rem", marginLeft: "10px" }} />
       </Button>
     </ButtonWrapper>

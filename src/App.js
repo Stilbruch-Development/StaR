@@ -8,20 +8,23 @@ import Navbar from "./components/navigation/Navbar";
 import AuthState from "./components/context/auth/AuthState";
 import AlertState from "./components/context/alert/AlertState";
 import ExpanderState from "./components/context/expander/ExpanderState";
+import NavigationState from "./components/context/navigation/navState";
 
 function App() {
   return (
     <AlertState>
       <AuthState>
         <ExpanderState>
-          <Router>
-            <div className="App">
-              <GlobalStyle />
-              <Navbar />
-              <Main />
-              <Footer />
-            </div>
-          </Router>
+          <NavigationState>
+            <Router>
+              <div className="App">
+                <GlobalStyle />
+                <Navbar />
+                <Main />
+                <Footer />
+              </div>
+            </Router>
+          </NavigationState>
         </ExpanderState>
       </AuthState>
     </AlertState>

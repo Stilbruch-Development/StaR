@@ -7,6 +7,7 @@ import { SET_LUNGENEMBOLIE } from "../../types";
 const LungenembolieState = props => {
   const initialState = {
     LungenembolieState: {
+      Voruntersuchung: "",
       Lungenembolie: "",
       Lokalisation: [],
       Abschnitte: [],
