@@ -10,6 +10,18 @@ export const SELECT_EXPANDER_ITEM = "SELECT_EXPANDER_ITEM";
 export const LOCK_EXPANDER_EDITOR = "LOCK_EXPANDER_EDITOR";
 export const SET_EXPANDER_EDITOR = "SET_EXPANDER_EDITOR";
 
+//cards types
+export const ADD_CARDS_ITEM = "ADD_CARDS_ITEM";
+export const DELETE_CARDS = "DELETE_CARD";
+export const UPDATE_CARDS = "UPDATE_CARDS";
+export const GET_CARDS = "GET_CARD";
+export const GET_CARDS_SUCCESS = "GET_CARDS_SUCCESS";
+export const CLEAR_CARDS = "CLEAR_CARDS";
+export const CARDS_ERROR = "CARDS_ERROR";
+export const SELECT_CARDS_ITEM = "SELECT_CARD_ITEM";
+export const LOCK_CARDS_EDITOR = "LOCK_CARDS_EDITOR";
+export const SET_CARDS_EDITOR = "SET_CARDS_EDITOR";
+
 // auth types
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAIL = "REGISTER_FAIL";

@@ -44,12 +44,17 @@ app.on("ready", () => {
   app.focus();
   autoUpdater.checkForUpdatesAndNotify();
 
-  BrowserWindow.addDevToolsExtension(
-    path.join(
-      os.homedir(),
-      "/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.6.0_0"
-    )
-  );
+  isDev &&
+    BrowserWindow.addDevToolsExtension(
+      path.join(
+        os.homedir(),
+        "/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.6.0_0"
+      )
+    );
+});
+
+app.on("before-quit", () => {
+  mainWindow.webContents.send("loggout");
 });
 
 app.on("window-all-closed", () => {

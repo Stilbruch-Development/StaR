@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Route, Switch } from "react-router-dom";
 import Landing from "./../components/landing/Landing";
 import Workplace from "./Workplace";
@@ -7,8 +7,14 @@ import Register from "../components/auth/Register";
 import Login from "../components/auth/Login";
 import PrivatRoute from "../utils/PrivatRoute";
 import Alert from "../components/context/alert/Alert";
+import authContext from "../components/context/auth/authContext";
 
 const Main = () => {
+  const { logout } = useContext(authContext);
+
+  window.ipcRenderer.on("loggout", () => {
+    logout();
+  });
   return (
     <>
       <Switch>

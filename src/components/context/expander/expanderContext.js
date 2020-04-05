@@ -1,5 +1,5 @@
 import { createContext } from "react";
 
-const expanderContext = createContext();
+const cardsContext = createContext();
 
-export default expanderContext;
+export default cardsContext;

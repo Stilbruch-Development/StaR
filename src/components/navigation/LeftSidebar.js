@@ -7,6 +7,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Expander from "../tools/expander/Expander";
+import Cards from "../tools/cards/Cards";
 import NavContext from "../context/navigation/navContext";
 
 const SidebarDiv = styled.div`
@@ -83,9 +84,7 @@ const LeftSidebar = props => {
           <MenuItem value={"MRT-Prostata"}>MRT-Prostata</MenuItem>
         </Select>
       </FormControl>
-      <Button variant="outlined" color="primary">
-        Karten
-      </Button>
+      <Cards />
       <Button variant="outlined" color="primary">
         Tools
       </Button>
