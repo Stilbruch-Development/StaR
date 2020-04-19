@@ -9,7 +9,7 @@ const NavState = props => {
 
   const [state, dispatch] = useReducer(navReducer, initialState);
 
-  // SET_NAVSTATE
+  // SET_NAVSTATE item as string!
   const setNavState = (item, value) => {
     dispatch({
       type: SET_NAVSTATE,

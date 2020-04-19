@@ -1,4 +1,11 @@
-const { app, BrowserWindow, Menu, ipcMain, clipboard } = require("electron");
+const {
+  app,
+  BrowserWindow,
+  Menu,
+  ipcMain,
+  clipboard,
+  shell
+} = require("electron");
 const { autoUpdater } = require("electron-updater");
 const path = require("path");
 const isDev = require("electron-is-dev");
@@ -77,6 +84,11 @@ ipcMain.on("restart_app", () => {
 
 ipcMain.on("copy_to_clipboard", (event, content) => {
   clipboard.writeText(content);
+});
+
+ipcMain.on("open_external_link", (event, link) => {
+  console.log("open");
+  shell.openExternal(link);
 });
 
 autoUpdater.on("checking-for-update", () => {

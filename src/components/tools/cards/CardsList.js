@@ -8,45 +8,38 @@ import Cancel from "@material-ui/icons/Cancel";
 import Check from "@material-ui/icons/Check";
 import Clear from "@material-ui/icons/Clear";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
-import ExpanderContext from "../../context/expander/expanderContext";
-import { convertToRaw, convertFromRaw } from "draft-js";
+import CardsContext from "../../context/cards/cardsContext";
 
 export default function ShortsList(props) {
   const {
-    expanderUserData,
-    addExpanderItem,
-    deleteExpander,
-    updateExpander,
-    selectExpanderItem,
-    lockEditor,
-    expanderEditorState,
-    setExpanderEditor,
-    editorLocked
-  } = useContext(ExpanderContext);
+    cardsUserData,
+    addCardsItem,
+    deleteCards,
+    updateCards,
+    cardsFormState,
+    setCardsState
+  } = useContext(CardsContext);
 
   const [state, setState] = useState({
     columns: [
-      { title: "Kürzel", field: "short" },
+      { title: "Name", field: "name" },
       { title: "Kategorie", field: "category" }
     ],
-    data: expanderUserData || null
+    data: cardsUserData || null
   });
 
   useEffect(() => {
-    setState(prevState => ({ ...prevState, data: expanderUserData }));
-  }, [expanderUserData]);
+    setState(prevState => ({ ...prevState, data: cardsUserData }));
+  }, [cardsUserData]);
 
   const handleItemClick = (event, rowData) => {
-    const originalRowData = convertFromRaw({ ...rowData.long, entityMap: {} });
-    selectExpanderItem(originalRowData);
+    setCardsState("selectedCardsItem", null);
+    setCardsState("selectedCardsItem", rowData);
   };
 
-  const onAddClick = editorLocked => {
-    selectExpanderItem(null);
-    if (editorLocked === false) {
-      setExpanderEditor(null);
-    }
-    lockEditor(!editorLocked);
+  const onAddClick = () => {
+    setCardsState("selectedCardsItem", null);
+    setCardsState("editingCards", true);
   };
 
   return (
@@ -56,12 +49,11 @@ export default function ShortsList(props) {
       editable={{
         onRowAdd: newData =>
           new Promise((resolve, reject) => {
-            if (newData.short || newData.category) {
+            if (newData.name || newData.category) {
               setTimeout(() => {
                 resolve();
-                const rawExpanderContent = convertToRaw(expanderEditorState);
-                addExpanderItem(newData, rawExpanderContent);
-                lockEditor(true);
+                addCardsItem(newData, cardsFormState);
+                setCardsState("editingCards", false);
               }, 600);
             } else {
               reject(
@@ -75,16 +67,17 @@ export default function ShortsList(props) {
           new Promise(resolve => {
             setTimeout(() => {
               resolve();
-              const rawExpanderContent = convertToRaw(expanderEditorState);
-              updateExpander(newData, rawExpanderContent);
-              lockEditor(true);
+              setCardsState("editingCards", false);
+              setCardsState("cardsFormState", null);
+              setCardsState("selectedCardsItem", null);
+              updateCards(newData, cardsFormState);
             }, 600);
           }),
         onRowDelete: oldData =>
           new Promise(resolve => {
             setTimeout(() => {
               resolve();
-              deleteExpander(oldData._id);
+              deleteCards(oldData._id);
             }, 600);
           })
       }}
@@ -100,7 +93,7 @@ export default function ShortsList(props) {
               const onClickElement =
                 event.target.parentNode.parentNode.parentNode.parentNode;
               onClickElement.click();
-              return lockEditor(false);
+              setCardsState("editingCards", true);
             }}
           />
         ),
@@ -109,7 +102,7 @@ export default function ShortsList(props) {
           <AddCircle
             {...props}
             onClick={() => {
-              return onAddClick(editorLocked);
+              return onAddClick();
             }}
           />
         ),
@@ -119,7 +112,8 @@ export default function ShortsList(props) {
           <Clear
             {...props}
             onClick={() => {
-              return lockEditor(true);
+              setCardsState("cardsFormState", null);
+              setCardsState("editingCards", false);
             }}
           />
         ),

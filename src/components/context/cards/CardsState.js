@@ -14,9 +14,7 @@ import {
   UPDATE_CARDS,
   CLEAR_CARDS,
   CARDS_ERROR,
-  SELECT_CARDS_ITEM,
-  LOCK_CARDS_EDITOR,
-  SET_CARDS_EDITOR
+  SET_CARDS_STATE
 } from "../types";
 
 const CardsState = props => {
@@ -24,14 +22,22 @@ const CardsState = props => {
     loading: false,
     cardsUserData: null,
     selectedCardsItem: null,
-    cardsEditorState: null,
-    editorLocked: true,
+    cardsFormState: null,
+    editingCards: false,
     error: null
   };
 
   const [state, dispatch] = useReducer(cardsReducer, initialState);
   const { setAlert } = useContext(AlertContext);
   const { user } = useContext(AuthContext);
+
+  // SET_CARDS_STATE item as string!
+  const setCardsState = (item, value) => {
+    dispatch({
+      type: SET_CARDS_STATE,
+      payload: { item, value }
+    });
+  };
 
   // GET_CARDS;
   const getCards = async () => {
@@ -52,13 +58,14 @@ const CardsState = props => {
   };
 
   // ADD_CARDS_ITEM,
-  const addCardsItem = async (itemElements, longState) => {
+  const addCardsItem = async (itemElements, formData) => {
     const item = {
       ...itemElements,
+      ...formData,
       _id: uuid4(),
-      user: user._id,
-      long: longState
+      user: user._id
     };
+
     try {
       await cards_db.put(item).then(
         dispatch({
@@ -93,8 +100,9 @@ const CardsState = props => {
   };
 
   // UPDATE_CARDS
-  const updateCards = async (itemElements, longState) => {
-    const item = { ...itemElements, long: longState };
+  const updateCards = async (newItemElements, cardsFormState) => {
+    const item = { ...newItemElements, ...cardsFormState };
+
     try {
       var doc = await cards_db.get(item._id);
       await cards_db
@@ -123,30 +131,6 @@ const CardsState = props => {
     });
   };
 
-  // SELECT_CARDS_ITEM
-  const selectCardsItem = item => {
-    dispatch({
-      type: SELECT_CARDS_ITEM,
-      payload: item
-    });
-  };
-
-  // LOCK_CARDS_EDITOR
-  const lockEditor = boolean => {
-    dispatch({
-      type: LOCK_CARDS_EDITOR,
-      payload: boolean
-    });
-  };
-
-  // SET_EDITOR_STATE
-  const setCardsEditor = state => {
-    dispatch({
-      type: SET_CARDS_EDITOR,
-      payload: state
-    });
-  };
-
   return (
     <CardsContext.Provider
       value={{
@@ -154,16 +138,14 @@ const CardsState = props => {
         loading: state.loading,
         error: state.error,
         selectedCardsItem: state.selectedCardsItem,
-        cardsEditorState: state.cardsEditorState, // expanderEditorState === ContentState !!
+        cardsFormState: state.cardsFormState,
+        editingCards: state.editingCards,
         getCards,
         addCardsItem,
         deleteCards,
         updateCards,
         clearCards,
-        selectCardsItem,
-        lockEditor,
-        setCardsEditor,
-        editorLocked: state.editorLocked
+        setCardsState
       }}
     >
       {props.children}

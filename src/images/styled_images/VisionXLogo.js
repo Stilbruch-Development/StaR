@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { ReactComponent as SLogo } from "../stilbruchLogo.svg";
+import { ReactComponent as VisionXLogo } from "../VisionX.svg";
 
 const Logo = styled.div`
   display: flex;
@@ -13,8 +13,9 @@ const Logo = styled.div`
 
   canvas {
     display: block;
-    width: 50%;
+    width: 100%;
     visibility: hidden;
+    height: 100%;
   }
 
   svg {
@@ -22,6 +23,7 @@ const Logo = styled.div`
     top: 0;
     left: 0;
     width: 100%;
+    height: 100%;
   }
 
   /* phone */
@@ -39,11 +41,11 @@ const Logo = styled.div`
   /* >1800px = wide screen */
 `;
 
-export default function StilbruchLogo() {
+export default function MainLogo() {
   return (
     <Logo>
       <canvas></canvas>
-      <SLogo />
+      <VisionXLogo />
     </Logo>
   );
 }

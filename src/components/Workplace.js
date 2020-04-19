@@ -3,6 +3,7 @@ import styled from "styled-components";
 import LeftSidebar from "./navigation/LeftSidebar";
 import RightSidebar from "./navigation/RightSidebar";
 import ExpanderContext from "./context/expander/expanderContext";
+import CardsContext from "./context/cards/cardsContext";
 import Draft from "./editor/Draft";
 import LeftSidebarButton from "./navigation/LeftSidebarButton";
 import RightSidebarButton from "./navigation/RightSidebarButton";
@@ -35,6 +36,8 @@ const Editor = () => {
     clearExpander
   } = useContext(ExpanderContext);
 
+  const { getCards, clearCards, setCardsState } = useContext(CardsContext);
+
   const { user } = useContext(AuthContext);
 
   const { rightSidebareOpen } = useContext(NavContext);
@@ -43,7 +46,11 @@ const Editor = () => {
 
   useEffect(() => {
     clearExpander();
+    clearCards();
+    setCardsState("cardsUserData", null);
     getExpander();
+    getCards();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 

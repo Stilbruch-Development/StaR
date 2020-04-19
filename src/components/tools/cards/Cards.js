@@ -8,9 +8,9 @@ import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import styled from "styled-components";
 import CardsList from "./CardsList";
-// import CardItem from "./CardItem";
+import DraftDisplay from "./DraftDisplay";
 import CardsForm from "./CardsForm";
-import ExpanderContext from "../../context/expander/expanderContext";
+import CardsContext from "../../context/cards/cardsContext";
 
 const MainStyleWrapper = styled.div`
   display: flex;
@@ -20,7 +20,7 @@ const MainStyleWrapper = styled.div`
   height: 100%;
 `;
 
-const ExpanderEditorWrapper = styled.div`
+const CardsItemWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: stretch;
@@ -28,7 +28,7 @@ const ExpanderEditorWrapper = styled.div`
   flex-grow: 3;
 `;
 
-const ExpanderShortsWrapper = styled.div`
+const CardsListWrapper = styled.div`
   min-width: 30%;
   flex-grow: 0;
 `;
@@ -36,22 +36,19 @@ const ExpanderShortsWrapper = styled.div`
 const Cards = () => {
   const [open, setOpen] = useState(false);
 
-  const { selectExpanderItem, lockEditor, setExpanderEditor } = useContext(
-    ExpanderContext
+  const { selectedCardsItem, editingCards, clearCards } = useContext(
+    CardsContext
   );
 
   const handleClickOpen = () => {
     setOpen(true);
-    lockEditor(true);
   };
 
   const handleClose = () => {
     setOpen(false);
 
     setTimeout(() => {
-      selectExpanderItem(null);
-      lockEditor(true);
-      setExpanderEditor(null);
+      clearCards();
     }, 60);
   };
 
@@ -99,19 +96,24 @@ const Cards = () => {
         id="ExpanderDialog"
       >
         <MainStyleWrapper>
-          <ExpanderShortsWrapper>
+          <CardsListWrapper>
             <Typography variant="h6" style={{ padding: "16px" }}>
               Kartenliste
             </Typography>
             <CardsList handleClose={handleClose} />
-          </ExpanderShortsWrapper>
-          <ExpanderEditorWrapper>
+          </CardsListWrapper>
+          <CardsItemWrapper>
             <DialogTitle id="customized-dialog-title" onClose={handleClose}>
               Ausgewählte Karte
             </DialogTitle>
-            {/* <CardItem /> */}
-            <CardsForm />
-          </ExpanderEditorWrapper>
+            {selectedCardsItem === null && editingCards === false ? (
+              <div>Bitte Auswahl treffen</div>
+            ) : editingCards === false ? (
+              <DraftDisplay />
+            ) : (
+              <CardsForm formPreset={selectedCardsItem} />
+            )}
+          </CardsItemWrapper>
         </MainStyleWrapper>
       </Dialog>
     </>

@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
-import ExpanderContext from "../../context/expander/expanderContext";
+import CardsContext from "../../context/cards/cardsContext";
 
 import {
   Editor,
   EditorState,
   RichUtils,
-  DefaultDraftBlockRenderMap
+  DefaultDraftBlockRenderMap,
+  convertToRaw,
+  convertFromRaw
 } from "draft-js";
 import "draft-js/dist/Draft.css";
 import styled from "styled-components";
@@ -13,9 +15,9 @@ import EditorToolBar from "./EditorToolBar";
 import blockRenderMap from "../../editor/blocktypes/TextAlign";
 
 const MainStyleWrapper = styled.div`
-  margin-top: 2rem;
   width: 100%;
-  margin: unset;
+  height: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.2);
 `;
 
 const EditorStyleWrapper = styled.div`
@@ -31,12 +33,10 @@ const ToolBarSyleWrapper = styled.div`
 
 const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap);
 
-const Draft = () => {
+const Draft = props => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const contentState = editorState.getCurrentContent();
-  const { selectedExpanderItem, editorLocked, setExpanderEditor } = useContext(
-    ExpanderContext
-  );
+  const { selectedCardsItem, editorLocked } = useContext(CardsContext);
 
   const _toggleBlockType = blockType => {
     const toggleBlock = RichUtils.toggleBlockType(editorState, blockType);
@@ -52,19 +52,21 @@ const Draft = () => {
   };
 
   useEffect(() => {
-    if (selectedExpanderItem !== null) {
+    if (selectedCardsItem !== null && selectedCardsItem !== undefined) {
+      const convertedItem = convertFromRaw(selectedCardsItem.rawEditorState);
       setEditorState(
-        EditorState.push(editorState, selectedExpanderItem, "insert-characters")
+        EditorState.push(editorState, convertedItem, "insert-characters")
       );
     } else {
       setEditorState(EditorState.createEmpty());
     }
 
     //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedExpanderItem]);
+  }, [selectedCardsItem]);
 
   useEffect(() => {
-    setExpanderEditor(contentState);
+    var rawEditorState = convertToRaw(contentState);
+    props.setCardsFormEditorState(rawEditorState);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contentState]);
@@ -88,8 +90,8 @@ const Draft = () => {
           editorState={editorState}
           onChange={setEditorState}
           blockRenderMap={extendedBlockRenderMap}
-          readOnly={editorLocked}
-          placeholder="Bitte klicke auf ein Expander-Element."
+          // readOnly={editorLocked}
+          placeholder="Bitte klicke auf ein Karten-Element."
         />
       </EditorStyleWrapper>
     </MainStyleWrapper>

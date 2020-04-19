@@ -18,9 +18,7 @@ export const GET_CARDS = "GET_CARD";
 export const GET_CARDS_SUCCESS = "GET_CARDS_SUCCESS";
 export const CLEAR_CARDS = "CLEAR_CARDS";
 export const CARDS_ERROR = "CARDS_ERROR";
-export const SELECT_CARDS_ITEM = "SELECT_CARD_ITEM";
-export const LOCK_CARDS_EDITOR = "LOCK_CARDS_EDITOR";
-export const SET_CARDS_EDITOR = "SET_CARDS_EDITOR";
+export const SET_CARDS_STATE = "SET_CARDS_STATE";
 
 // auth types
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";

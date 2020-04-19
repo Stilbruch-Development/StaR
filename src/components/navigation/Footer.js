@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import NavItem from "./NavItem";
 import NavLogo from "./NavLogo";
-import StilbruchLogo from "../../images/styled_images/StilbruchLogo";
+import VisionXLogo from "./VisionXLogo";
 
 const FooterMain = styled.div`
   display: flex;
@@ -13,10 +13,6 @@ const FooterMain = styled.div`
   border-top: 2px solid white;
   height: 1rem;
   background-color: rgba(150, 150, 150, 0.5);
-`;
-
-const FooterVersion = styled.div`
-  width: 20%;
 `;
 
 const Footer = () => {
@@ -46,7 +42,7 @@ const Footer = () => {
       <div style={{ fontSize: "1rem" }}>
         {version_name} {state.version}
       </div>
-      <NavLogo dataTestId="FooterLogo" navLink="/#Start" width={"8%"} />
+      <NavLogo dataTestId="FooterLogo" navLink="/#Start" width={"9%"} />
       <NavItem dataTestId="FooterItemKontakt" head="Hilfe" navLink="/help" />
       <NavItem
         dataTestId="FooterItemDatenschutz"
@@ -58,9 +54,7 @@ const Footer = () => {
         head="Impressum"
         navLink="/impressum/#top"
       />
-      <FooterVersion>
-        <StilbruchLogo />
-      </FooterVersion>
+      <VisionXLogo width={"10%"} />
     </FooterMain>
   );
 };

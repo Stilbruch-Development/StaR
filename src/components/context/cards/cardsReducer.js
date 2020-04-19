@@ -6,13 +6,17 @@ import {
   UPDATE_CARDS,
   CLEAR_CARDS,
   CARDS_ERROR,
-  SELECT_CARDS_ITEM,
-  LOCK_CARDS_EDITOR,
-  SET_CARDS_EDITOR
+  SET_CARDS_STATE
 } from "../types";
 
 export default function(state, action) {
   switch (action.type) {
+    case SET_CARDS_STATE:
+      const { item, value } = action.payload;
+      return {
+        ...state,
+        [item]: value
+      };
     case ADD_CARDS_ITEM:
       return {
         ...state,
@@ -54,24 +58,9 @@ export default function(state, action) {
     case CLEAR_CARDS:
       return {
         ...state,
-        cardsUserData: null,
         error: null,
-        selectedCardsItem: null
-      };
-    case SELECT_CARDS_ITEM:
-      return {
-        ...state,
-        selectedCardsItem: action.payload
-      };
-    case LOCK_CARDS_EDITOR:
-      return {
-        ...state,
-        editorLocked: action.payload
-      };
-    case SET_CARDS_EDITOR:
-      return {
-        ...state,
-        cardsEditorState: action.payload
+        selectedCardsItem: null,
+        editingCards: false
       };
     default:
       return state;
