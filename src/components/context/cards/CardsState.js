@@ -14,17 +14,17 @@ import {
   UPDATE_CARDS,
   CLEAR_CARDS,
   CARDS_ERROR,
-  SET_CARDS_STATE
+  SET_CARDS_STATE,
 } from "../types";
 
-const CardsState = props => {
+const CardsState = (props) => {
   const initialState = {
-    loading: false,
+    loadingCards: false,
     cardsUserData: null,
     selectedCardsItem: null,
     cardsFormState: null,
     editingCards: false,
-    error: null
+    error: null,
   };
 
   const [state, dispatch] = useReducer(cardsReducer, initialState);
@@ -35,7 +35,7 @@ const CardsState = props => {
   const setCardsState = (item, value) => {
     dispatch({
       type: SET_CARDS_STATE,
-      payload: { item, value }
+      payload: { item, value },
     });
   };
 
@@ -45,11 +45,11 @@ const CardsState = props => {
     if (user !== null) {
       try {
         const data = await cards_db.find({
-          selector: { user: user._id }
+          selector: { user: user._id },
         });
         dispatch({
           type: GET_CARDS_SUCCESS,
-          payload: data.docs
+          payload: data.docs,
         });
       } catch (err) {
         dispatch({ type: CARDS_ERROR, payload: err });
@@ -63,14 +63,14 @@ const CardsState = props => {
       ...itemElements,
       ...formData,
       _id: uuid4(),
-      user: user._id
+      user: user._id,
     };
 
     try {
       await cards_db.put(item).then(
         dispatch({
           type: ADD_CARDS_ITEM,
-          payload: item
+          payload: item,
         })
       );
     } catch (err) {
@@ -82,13 +82,13 @@ const CardsState = props => {
   };
 
   //DELETE_CARDS
-  const deleteCards = async id => {
+  const deleteCards = async (id) => {
     try {
       var doc = await cards_db.get(id);
       await cards_db.remove(doc).then(
         dispatch({
           type: DELETE_CARDS,
-          payload: id
+          payload: id,
         })
       );
     } catch (err) {
@@ -108,12 +108,12 @@ const CardsState = props => {
       await cards_db
         .put({
           ...item,
-          _rev: doc._rev
+          _rev: doc._rev,
         })
         .then(
           dispatch({
             type: UPDATE_CARDS,
-            payload: item
+            payload: item,
           })
         );
     } catch (err) {
@@ -127,7 +127,7 @@ const CardsState = props => {
   // CLEAR_CARDS
   const clearCards = () => {
     dispatch({
-      type: CLEAR_CARDS
+      type: CLEAR_CARDS,
     });
   };
 
@@ -135,7 +135,7 @@ const CardsState = props => {
     <CardsContext.Provider
       value={{
         cardsUserData: state.cardsUserData,
-        loading: state.loading,
+        loadingCards: state.loadingCards,
         error: state.error,
         selectedCardsItem: state.selectedCardsItem,
         cardsFormState: state.cardsFormState,
@@ -145,7 +145,7 @@ const CardsState = props => {
         deleteCards,
         updateCards,
         clearCards,
-        setCardsState
+        setCardsState,
       }}
     >
       {props.children}

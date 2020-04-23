@@ -8,13 +8,13 @@ import FormatAlignRightIcon from "@material-ui/icons/FormatAlignRight";
 import styled from "styled-components";
 import useDraftEditor from "../../hooks/useDraftEditor";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   button: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   input: {
-    display: "none"
-  }
+    display: "none",
+  },
 }));
 
 const StyleWrapper = styled.div`
@@ -26,7 +26,7 @@ const StyleWrapper = styled.div`
   font-size: 1.5rem;
 `;
 
-const EditorToolBar = props => {
+const EditorToolBar = (props) => {
   const classes = useStyles();
 
   const [setEditorEmpty, copyEditorToClipboard] = useDraftEditor();

@@ -15,6 +15,7 @@ const Main = () => {
   window.ipcRenderer.on("loggout", () => {
     logout();
   });
+
   return (
     <>
       <Switch>

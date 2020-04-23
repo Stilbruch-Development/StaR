@@ -5,7 +5,8 @@ import {
   RichUtils,
   DefaultDraftBlockRenderMap,
   convertFromRaw,
-  convertToRaw
+  convertToRaw,
+  CompositeDecorator,
 } from "draft-js";
 import "draft-js/dist/Draft.css";
 import styled from "styled-components";
@@ -15,6 +16,8 @@ import ExpanderContext from "../context/expander/expanderContext";
 import useExpander from "../../hooks/useExpander";
 import LungenembolieContext from "../context/lists/lungenembolie/lungenembolieContext";
 import useLists from "../../hooks/useLists";
+import useCards from "../../hooks/useCards";
+import CardsContext from "../context/cards/cardsContext";
 
 const MainStyleWrapper = styled.div`
   margin-top: 2rem;
@@ -41,13 +44,41 @@ const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap);
 
 const Draft = () => {
   const getLocalStorage = JSON.parse(localStorage.getItem("editorState"));
+  const { cardsUserData } = useContext(CardsContext);
+
+  const { findCards, getEntityAtSelection } = useCards();
+
+  const CardsSpan = (props) => {
+    return (
+      <span {...props} style={{ backgroundColor: "red" }}>
+        {props.children}
+      </span>
+    );
+  };
+
+  const cardsStrategy = (contentBlock, callback, contentState) => {
+    findCards(contentBlock, cardsUserData, callback);
+  };
+
+  console.log();
+
+  const compositeDecorator = new CompositeDecorator([
+    {
+      strategy: cardsStrategy,
+      component: CardsSpan,
+      props: { hallo: "hallo" },
+    },
+  ]);
 
   const editorStateLocalStore = () => {
     if (getLocalStorage !== null) {
-      return EditorState.createWithContent(convertFromRaw(getLocalStorage));
+      return EditorState.createWithContent(
+        convertFromRaw(getLocalStorage),
+        compositeDecorator
+      );
     }
 
-    return EditorState.createEmpty();
+    return EditorState.createEmpty(compositeDecorator);
   };
 
   const [editorState, setEditorState] = useState(editorStateLocalStore);
@@ -62,12 +93,12 @@ const Draft = () => {
     LungenembolieContext
   );
 
-  const _toggleBlockType = blockType => {
+  const _toggleBlockType = (blockType) => {
     const toggleBlock = RichUtils.toggleBlockType(editorState, blockType);
     setEditorState(toggleBlock);
   };
 
-  const _toggleInlineStyle = inlineStyle => {
+  const _toggleInlineStyle = (inlineStyle) => {
     const toggleInlineStyle = RichUtils.toggleInlineStyle(
       editorState,
       inlineStyle
@@ -82,6 +113,11 @@ const Draft = () => {
     localStorage.setItem("editorState", JSON.stringify(rawEditorState));
     // eslint-disable-next-line
   }, [editorState, expanderUserData]);
+
+  useEffect(() => {
+    // getEntityAtSelection(editorState);
+    // eslint-disable-next-line
+  }, [editorState]);
 
   useEffect(() => {
     const { send } = LungenembolieState;

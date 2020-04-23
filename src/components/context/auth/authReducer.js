@@ -16,7 +16,7 @@ export default (state, action) => {
       return {
         ...state,
         isAuthenticated: true,
-        loading: false,
+        loadingAuth: false,
         user: action.payload
       };
     case REGISTER_SUCCESS:
@@ -26,7 +26,7 @@ export default (state, action) => {
         ...state,
         token: action.payload,
         isAuthenticated: true,
-        loading: false
+        loadingAuth: false
       };
     case REGISTER_FAIL:
     case LOGIN_FAIL:
@@ -38,7 +38,7 @@ export default (state, action) => {
         ...state,
         token: null,
         isAuthenticated: false,
-        loading: false,
+        loadingAuth: false,
         user: null,
         error: action.payload
       };

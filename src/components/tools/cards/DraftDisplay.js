@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import CardsContext from "../../context/cards/cardsContext";
+import useExternalLink from "../../../hooks/useExternalLink";
+import AlertContext from "../../context/alert/alertContext";
 
 import { Editor, EditorState, convertFromRaw } from "draft-js";
 import "draft-js/dist/Draft.css";
@@ -13,9 +15,11 @@ const MainStyleWrapper = styled.div`
   font-size: 1.5rem;
 `;
 
-const Draft = () => {
+const Draft = props => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const { selectedCardsItem } = useContext(CardsContext);
+  const [goToExternalLink] = useExternalLink();
+  const { setAlertMessage } = useContext(AlertContext);
 
   useEffect(() => {
     if (selectedCardsItem !== null && selectedCardsItem !== undefined) {
@@ -30,6 +34,16 @@ const Draft = () => {
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCardsItem]);
 
+  const onClickLogo = url => {
+    goToExternalLink(url);
+  };
+
+  window.ipcRenderer.on("open_external_link_error", (event, msg) => {
+    window.ipcRenderer.removeAllListeners("open_external_link_error");
+    setAlertMessage(msg);
+    props.handleClose();
+  });
+
   return (
     <MainStyleWrapper>
       <Editor
@@ -38,12 +52,21 @@ const Draft = () => {
         readOnly={true}
       />
       <div>
-        <h1>Schlagworte:</h1>
+        <p style={{ textDecoration: "underline", fontWeight: "bold" }}>
+          Schlagworte:
+        </p>
         <p>{selectedCardsItem.keywords}</p>
       </div>
       <div>
-        <h1>Link:</h1>
-        <p>{selectedCardsItem.url}</p>
+        <p style={{ textDecoration: "underline", fontWeight: "bold" }}>Link:</p>
+        <p
+          style={{ textDecoration: "underline", cursor: "pointer" }}
+          onClick={() => {
+            onClickLogo(selectedCardsItem.url);
+          }}
+        >
+          {selectedCardsItem.url}
+        </p>
       </div>
     </MainStyleWrapper>
   );

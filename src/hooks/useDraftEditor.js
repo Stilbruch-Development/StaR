@@ -11,7 +11,7 @@ export default function useDraftEditor() {
     );
   };
 
-  const copyEditorToClipboard = editorState => {
+  const copyEditorToClipboard = (editorState) => {
     const content = editorState.getCurrentContent().getPlainText("\u0001");
     window.ipcRenderer.send("copy_to_clipboard", content);
     setAlertMessage("Inhalt zur Zwischenablage kopiert!");

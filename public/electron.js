@@ -87,8 +87,12 @@ ipcMain.on("copy_to_clipboard", (event, content) => {
 });
 
 ipcMain.on("open_external_link", (event, link) => {
-  console.log("open");
-  shell.openExternal(link);
+  shell.openExternal(link).catch(e => {
+    event.reply(
+      "open_external_link_error",
+      'Fehlerhafter oder inkompletter Link. Bitte immer "http://" oder "https://" anführen!'
+    );
+  });
 });
 
 autoUpdater.on("checking-for-update", () => {

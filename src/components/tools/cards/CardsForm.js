@@ -18,19 +18,29 @@ const MainStyleWrapper = styled.div`
 `;
 
 export default function CardsForm(props) {
+  let keywords = [];
+  let url = "";
+  let rawEditorState = null;
+
+  if (props.formPreset) {
+    keywords = props.formPreset.keywords;
+    url = props.formPreset.url;
+    rawEditorState = props.formPreset.rawEditorState;
+  }
+
   const [value, setValue] = React.useState({
-    keywords: props.formPreset.keywords || [],
-    url: props.formPreset.url || "",
-    rawEditorState: props.formPreset.rawEditorState || null
+    keywords: keywords,
+    url: url,
+    rawEditorState: rawEditorState,
   });
 
   const { setCardsState } = useContext(CardsContext);
 
-  const setCardsFormEditorState = rawEditorState => {
+  const setCardsFormEditorState = (rawEditorState) => {
     setValue({ ...value, rawEditorState: rawEditorState });
   };
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     const event_name = event.target.name;
     const event_value = event.target.value;
     setValue({ ...value, [event_name]: event_value });
@@ -47,7 +57,7 @@ export default function CardsForm(props) {
       <form noValidate autoComplete="off">
         <TextField
           name="keywords"
-          label="Schlagworte - Komma getrennt"
+          label="Schlagworte - durch ein Leerzeichen getrennt!"
           variant="outlined"
           value={value.keywords}
           onChange={handleChange}

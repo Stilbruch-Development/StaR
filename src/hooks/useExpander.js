@@ -2,12 +2,12 @@ import {
   EditorState,
   Modifier,
   SelectionState,
-  convertFromRaw
+  convertFromRaw,
 } from "draft-js";
 
 export default function useExpander() {
   // GET THE CURRENT/SELECTED TEXT
-  const getTextSelection = editorState => {
+  const getTextSelection = (editorState) => {
     const selectionState = editorState.getSelection();
     const anchorKey = selectionState.getAnchorKey();
     const contentState = editorState.getCurrentContent();
@@ -19,7 +19,7 @@ export default function useExpander() {
       anchorKey: anchorKey,
       anchorOffset: end,
       isBackward: true,
-      hasFocus: true
+      hasFocus: true,
     });
 
     const blockDelimiter = "/n";
@@ -29,10 +29,10 @@ export default function useExpander() {
 
     var lastWasEnd = false;
     var selectedBlock = blocks
-      .skipUntil(function(block) {
+      .skipUntil(function (block) {
         return block.getKey() === startKey;
       })
-      .takeUntil(function(block) {
+      .takeUntil(function (block) {
         var result = lastWasEnd;
 
         if (block.getKey() === endKey) {
@@ -42,7 +42,7 @@ export default function useExpander() {
         return result;
       });
     return selectedBlock
-      .map(function(block) {
+      .map(function (block) {
         var key = block.getKey();
         var text = block.getText();
 
@@ -69,7 +69,7 @@ export default function useExpander() {
     const selectionText = selectionArray.slice(-2, -1)[0];
 
     if (expanderUserData) {
-      let matchData = expanderUserData.find(val => {
+      let matchData = expanderUserData.find((val) => {
         if (val.short && val.long) {
           return val.short === selectionText;
         }
@@ -95,7 +95,7 @@ export default function useExpander() {
 
       const originalMatchData = convertFromRaw({
         ...matchData.long,
-        entityMap: {}
+        entityMap: {},
       });
 
       const blockLength = selectionState.getFocusOffset();
@@ -110,7 +110,7 @@ export default function useExpander() {
         focusKey: blockKey,
         focusOffset: focus - 1,
         isBackward: true,
-        hasFocus: true
+        hasFocus: true,
       });
 
       const insertLongContentState = Modifier.replaceWithFragment(

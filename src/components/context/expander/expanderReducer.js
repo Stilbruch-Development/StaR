@@ -17,7 +17,7 @@ export default function(state, action) {
       return {
         ...state,
         expanderUserData: [...state.expanderUserData, action.payload],
-        loading: false
+        loadingExpander: false
       };
     case UPDATE_EXPANDER:
       return {
@@ -25,7 +25,7 @@ export default function(state, action) {
         expanderUserData: state.expanderUserData.map(expander =>
           expander._id === action.payload._id ? action.payload : expander
         ),
-        loading: false
+        loadingExpander: false
       };
     case DELETE_EXPANDER:
       return {
@@ -33,7 +33,7 @@ export default function(state, action) {
         expanderUserData: state.expanderUserData.filter(
           expander => expander._id !== action.payload
         ),
-        loading: false
+        loadingExpander: false
       };
     case EXPANDER_ERROR:
       return {
@@ -43,13 +43,13 @@ export default function(state, action) {
     case GET_EXPANDER:
       return {
         ...state,
-        loading: true
+        loadingExpander: true
       };
     case GET_EXPANDER_SUCCESS:
       return {
         ...state,
         expanderUserData: action.payload,
-        loading: false
+        loadingExpander: false
       };
     case CLEAR_EXPANDER:
       return {

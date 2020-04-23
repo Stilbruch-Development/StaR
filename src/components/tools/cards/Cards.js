@@ -36,7 +36,7 @@ const CardsListWrapper = styled.div`
 const Cards = () => {
   const [open, setOpen] = useState(false);
 
-  const { selectedCardsItem, editingCards, clearCards } = useContext(
+  const { selectedCardsItem, editingCards, setCardsState } = useContext(
     CardsContext
   );
 
@@ -48,24 +48,27 @@ const Cards = () => {
     setOpen(false);
 
     setTimeout(() => {
-      clearCards();
+      setCardsState("editingCards", false);
+      setCardsState("cardsFormState", null);
+      setCardsState("selectedCardsItem", null);
+      setCardsState("error", null);
     }, 60);
   };
 
-  const styles = theme => ({
+  const styles = (theme) => ({
     root: {
       margin: 0,
-      padding: theme.spacing(2)
+      padding: theme.spacing(2),
     },
     closeButton: {
       position: "absolute",
       right: theme.spacing(1),
       top: theme.spacing(1),
-      color: theme.palette.grey[500]
-    }
+      color: theme.palette.grey[500],
+    },
   });
 
-  const DialogTitle = withStyles(styles)(props => {
+  const DialogTitle = withStyles(styles)((props) => {
     const { children, classes, onClose, ...other } = props;
     return (
       <MuiDialogTitle disableTypography className={classes.root} {...other}>
@@ -109,7 +112,7 @@ const Cards = () => {
             {selectedCardsItem === null && editingCards === false ? (
               <div>Bitte Auswahl treffen</div>
             ) : editingCards === false ? (
-              <DraftDisplay />
+              <DraftDisplay handleClose={handleClose} />
             ) : (
               <CardsForm formPreset={selectedCardsItem} />
             )}

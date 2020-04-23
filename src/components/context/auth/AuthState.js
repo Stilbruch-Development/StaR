@@ -17,19 +17,19 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   CLEAR_ERRORS,
-  SET_DEVTOOLS
+  SET_DEVTOOLS,
 } from "../types";
 
 const jwtSecret = process.env.REACT_APP_JWTSECRET;
 
-const AuthState = props => {
+const AuthState = (props) => {
   const initialState = {
     token: localStorage.getItem("token"),
     isAuthenticated: false,
-    loading: false,
+    loadingAuth: false,
     user: null,
     error: null,
-    devTools: false
+    devTools: false,
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
   const [checkToken] = useJsonWebToken();
@@ -44,7 +44,7 @@ const AuthState = props => {
 
         dispatch({
           type: USER_LOADED,
-          payload: userData
+          payload: userData,
         });
         syncDB();
       }
@@ -55,7 +55,7 @@ const AuthState = props => {
   };
 
   // Register New User
-  const register = async formData => {
+  const register = async (formData) => {
     const { email, password } = formData;
 
     const salt = await bcrypt.genSalt(10);
@@ -64,10 +64,10 @@ const AuthState = props => {
 
     formData._id = uuid4();
 
-    const getEmail = email => {
+    const getEmail = (email) => {
       return user_db.find({
         selector: { email: email },
-        fields: ["email"]
+        fields: ["email"],
       });
     };
 
@@ -79,17 +79,17 @@ const AuthState = props => {
 
         const payload = {
           user: {
-            _id: formData._id
-          }
+            _id: formData._id,
+          },
         };
 
         const token = jwt.sign(payload, jwtSecret, {
-          expiresIn: 7200
+          expiresIn: 7200,
         });
 
         dispatch({
           type: REGISTER_SUCCESS,
-          payload: token
+          payload: token,
         });
       } else {
         throw new Error("Ein Benutzer mit dieser Email existiert schon!");
@@ -97,17 +97,17 @@ const AuthState = props => {
     } catch (err) {
       dispatch({
         type: REGISTER_FAIL,
-        payload: err.message
+        payload: err.message,
       });
       setAlertMessage(err.message);
     }
   };
 
   // Login User
-  const login = async formData => {
+  const login = async (formData) => {
     try {
       const dbResponse = await user_db.find({
-        selector: { email: formData.email }
+        selector: { email: formData.email },
       });
 
       if (dbResponse.docs.length === 0) {
@@ -128,17 +128,17 @@ const AuthState = props => {
       const payload = {
         user: {
           _id: userData._id,
-          role: userData.role || null
-        }
+          role: userData.role || null,
+        },
       };
 
       const token = jwt.sign(payload, jwtSecret, {
-        expiresIn: 7200
+        expiresIn: 7200,
       });
 
       dispatch({
         type: LOGIN_SUCCESS,
-        payload: token
+        payload: token,
       });
 
       loadUser();
@@ -146,7 +146,7 @@ const AuthState = props => {
     } catch (err) {
       dispatch({
         type: LOGIN_FAIL,
-        payload: err.message
+        payload: err.message,
       });
       setAlertMessage(err.message);
     }
@@ -163,10 +163,10 @@ const AuthState = props => {
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
 
   // Set DevTools
-  const setDevTools = boolean => {
+  const setDevTools = (boolean) => {
     dispatch({
       type: SET_DEVTOOLS,
-      payload: boolean
+      payload: boolean,
     });
   };
 
@@ -175,7 +175,7 @@ const AuthState = props => {
       value={{
         token: state.token,
         isAuthenticated: state.isAuthenticated,
-        loading: state.loading,
+        loadingAuth: state.loadingAuth,
         user: state.user,
         error: state.error,
         devTools: state.devTools,
@@ -184,7 +184,7 @@ const AuthState = props => {
         login,
         logout,
         clearErrors,
-        setDevTools
+        setDevTools,
       }}
     >
       {props.children}

@@ -6,61 +6,63 @@ import {
   UPDATE_CARDS,
   CLEAR_CARDS,
   CARDS_ERROR,
-  SET_CARDS_STATE
+  SET_CARDS_STATE,
 } from "../types";
 
-export default function(state, action) {
+export default function (state, action) {
   switch (action.type) {
     case SET_CARDS_STATE:
       const { item, value } = action.payload;
       return {
         ...state,
-        [item]: value
+        [item]: value,
       };
     case ADD_CARDS_ITEM:
       return {
         ...state,
         cardsUserData: [...state.cardsUserData, action.payload],
-        loading: false
+        loadingCards: false,
       };
     case UPDATE_CARDS:
       return {
         ...state,
-        cardsUserData: state.cardsUserData.map(cards =>
+        cardsUserData: state.cardsUserData.map((cards) =>
           cards._id === action.payload._id ? action.payload : cards
         ),
-        loading: false
+        loadingCards: false,
       };
     case DELETE_CARDS:
       return {
         ...state,
         cardsUserData: state.cardsUserData.filter(
-          cards => cards._id !== action.payload
+          (cards) => cards._id !== action.payload
         ),
-        loading: false
+        loadingCards: false,
       };
     case CARDS_ERROR:
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
       };
     case GET_CARDS:
       return {
         ...state,
-        loading: true
+        loadingCards: true,
       };
     case GET_CARDS_SUCCESS:
       return {
         ...state,
         cardsUserData: action.payload,
-        loading: false
+        loadingCards: false,
       };
     case CLEAR_CARDS:
       return {
         ...state,
         error: null,
         selectedCardsItem: null,
-        editingCards: false
+        editingCards: false,
+        cardsFormState: null,
+        cardsUserData: null,
       };
     default:
       return state;

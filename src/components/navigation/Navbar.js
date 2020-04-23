@@ -4,6 +4,7 @@ import NavLogo from "./NavLogo";
 import styled from "styled-components";
 import authContext from "../context/auth/authContext";
 import ExpanderContext from "../context/expander/expanderContext";
+import CardsContext from "../context/cards/cardsContext";
 
 const NavMain = styled.div`
   display: flex;
@@ -51,7 +52,9 @@ const Navbar = () => {
 
   const { clearExpander } = useContext(ExpanderContext);
 
-  window.addEventListener("load", function() {
+  const { getCards, clearCards, setCardsState } = useContext(CardsContext);
+
+  window.addEventListener("load", function () {
     const body = document.querySelector("body");
     const navbar = document.querySelector(NavMain);
 
@@ -76,6 +79,8 @@ const Navbar = () => {
   });
 
   const onLogout = () => {
+    setCardsState("cardsUserData", null);
+    clearCards();
     clearExpander();
     logout();
   };
@@ -101,13 +106,17 @@ const Navbar = () => {
               style={{
                 textDecoration: "none",
                 textShadow: "none",
-                cursor: "default"
+                cursor: "default",
               }}
               head={user && `Hallo ${user.first_name}`}
               navLink="#!"
             />
             <div onClick={onLogout}>
-              <NavItem onClick={e => onLogout()} head="Ausloggen" navLink="/" />
+              <NavItem
+                onClick={(e) => onLogout()}
+                head="Ausloggen"
+                navLink="/"
+              />
             </div>
           </>
         ) : (

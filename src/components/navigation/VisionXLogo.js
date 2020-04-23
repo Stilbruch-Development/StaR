@@ -7,7 +7,6 @@ const VisionXLogo = props => {
   const [goToExternalLink] = useExternalLink();
 
   const onClickLogo = () => {
-    console.log("clicked Logo");
     goToExternalLink("https://www.visionx.dev");
   };
 

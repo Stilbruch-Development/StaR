@@ -33,10 +33,13 @@ const Editor = () => {
     expanderUserData,
     getExpander,
     setExpanderItem,
-    clearExpander
+    clearExpander,
+    loadingExpander,
   } = useContext(ExpanderContext);
 
-  const { getCards, clearCards, setCardsState } = useContext(CardsContext);
+  const { getCards, clearCards, setCardsState, loadingCards } = useContext(
+    CardsContext
+  );
 
   const { user } = useContext(AuthContext);
 
@@ -45,9 +48,9 @@ const Editor = () => {
   const [toggleState, setToggleState] = useToggle(false);
 
   useEffect(() => {
+    setCardsState("cardsUserData", null);
     clearExpander();
     clearCards();
-    setCardsState("cardsUserData", null);
     getExpander();
     getCards();
 
@@ -57,7 +60,7 @@ const Editor = () => {
   window.scroll({
     top: 0,
     left: 0,
-    behavior: "instant"
+    behavior: "instant",
   });
 
   return (
@@ -72,7 +75,9 @@ const Editor = () => {
           <LeftSidebarButton setToggleState={setToggleState} />
         )}
         <EditorWrapper>
-          <Draft expanderUserData={expanderUserData} />
+          {!loadingCards && !loadingExpander && (
+            <Draft expanderUserData={expanderUserData} />
+          )}
         </EditorWrapper>
         {rightSidebareOpen ? <RightSidebar /> : <RightSidebarButton />}
       </MainFlex>
