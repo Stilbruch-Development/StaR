@@ -4,6 +4,7 @@ const GlobalStyle = createGlobalStyle`
 
   html, body {
     --main-bg-color: rgb(220, 220, 220);
+    --theme-color: rgba(0, 80, 120, 0.8);
     --editor-bg-color: white;
     --button-color-primary: rgb(63,81,181);
     --button-border: 1px solid rgba(63, 81, 181, 0.5);

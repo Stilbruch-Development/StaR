@@ -1,21 +1,19 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
+import styled from "styled-components";
 import Draft from "./Draft";
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    padding: theme.spacing(0, 0),
-    width: "100%"
-  }
-}));
+const MainWrapper = styled.div`
+  margin: 0 1vw 1vw 1vw;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: white;
+  padding: 1vw;
+  font-size: 1.5rem;
+`;
 
 export default function LongItem() {
-  const classes = useStyles();
-
   return (
-    <Paper className={classes.root}>
+    <MainWrapper>
       <Draft />
-    </Paper>
+    </MainWrapper>
   );
 }

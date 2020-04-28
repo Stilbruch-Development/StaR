@@ -7,7 +7,7 @@ import {
   RichUtils,
   DefaultDraftBlockRenderMap,
   convertToRaw,
-  convertFromRaw
+  convertFromRaw,
 } from "draft-js";
 import "draft-js/dist/Draft.css";
 import styled from "styled-components";
@@ -33,17 +33,17 @@ const ToolBarSyleWrapper = styled.div`
 
 const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap);
 
-const Draft = props => {
+const Draft = (props) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const contentState = editorState.getCurrentContent();
   const { selectedCardsItem, editorLocked } = useContext(CardsContext);
 
-  const _toggleBlockType = blockType => {
+  const _toggleBlockType = (blockType) => {
     const toggleBlock = RichUtils.toggleBlockType(editorState, blockType);
     setEditorState(toggleBlock);
   };
 
-  const _toggleInlineStyle = inlineStyle => {
+  const _toggleInlineStyle = (inlineStyle) => {
     const toggleInlineStyle = RichUtils.toggleInlineStyle(
       editorState,
       inlineStyle

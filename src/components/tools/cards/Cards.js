@@ -17,7 +17,10 @@ const MainStyleWrapper = styled.div`
   flex-direction: row;
   justify-content: strech;
   margin: 0;
-  height: 100%;
+
+  .MuiPaper-root {
+    height: 100%;
+  }
 `;
 
 const CardsItemWrapper = styled.div`
@@ -29,8 +32,18 @@ const CardsItemWrapper = styled.div`
 `;
 
 const CardsListWrapper = styled.div`
-  min-width: 30%;
+  min-width: 40%;
   flex-grow: 0;
+`;
+
+const UnselectedWrapper = styled.div`
+  margin: 0 1vw 1vw 1vw;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: white;
+  padding: 1vw;
+  font-size: 1.5rem;
+  padding: 3rem;
+  color: rgba(0, 0, 0, 0.5);
 `;
 
 const Cards = () => {
@@ -89,7 +102,7 @@ const Cards = () => {
   return (
     <>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Cards
+        Karten
       </Button>
 
       <Dialog
@@ -100,7 +113,12 @@ const Cards = () => {
       >
         <MainStyleWrapper>
           <CardsListWrapper>
-            <Typography variant="h6" style={{ padding: "16px" }}>
+            <Typography
+              variant="h6"
+              style={{
+                padding: "16px",
+              }}
+            >
               Kartenliste
             </Typography>
             <CardsList handleClose={handleClose} />
@@ -110,7 +128,9 @@ const Cards = () => {
               Ausgewählte Karte
             </DialogTitle>
             {selectedCardsItem === null && editingCards === false ? (
-              <div>Bitte Auswahl treffen</div>
+              <UnselectedWrapper>
+                Bitte klicke auf ein Karten-Element.
+              </UnselectedWrapper>
             ) : editingCards === false ? (
               <DraftDisplay handleClose={handleClose} />
             ) : (

@@ -11,7 +11,7 @@ const NavMain = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background: rgba(0, 80, 120, 0.8);
+  background: var(--theme-color);
   padding: 0.3rem 0.7rem 0.3rem 0.7rem;
   z-index: 1;
   position: sticky;
@@ -52,7 +52,7 @@ const Navbar = () => {
 
   const { clearExpander } = useContext(ExpanderContext);
 
-  const { getCards, clearCards, setCardsState } = useContext(CardsContext);
+  const { clearCards, setCardsState } = useContext(CardsContext);
 
   window.addEventListener("load", function () {
     const body = document.querySelector("body");

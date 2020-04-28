@@ -7,7 +7,7 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   CLEAR_ERRORS,
-  SET_DEVTOOLS
+  SET_DEVTOOLS,
 } from "../types";
 
 export default (state, action) => {
@@ -17,7 +17,7 @@ export default (state, action) => {
         ...state,
         isAuthenticated: true,
         loadingAuth: false,
-        user: action.payload
+        user: action.payload,
       };
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
@@ -26,7 +26,7 @@ export default (state, action) => {
         ...state,
         token: action.payload,
         isAuthenticated: true,
-        loadingAuth: false
+        loadingAuth: false,
       };
     case REGISTER_FAIL:
     case LOGIN_FAIL:
@@ -40,17 +40,17 @@ export default (state, action) => {
         isAuthenticated: false,
         loadingAuth: false,
         user: null,
-        error: action.payload
+        error: action.payload,
       };
     case CLEAR_ERRORS:
       return {
         ...state,
-        error: null
+        error: null,
       };
     case SET_DEVTOOLS:
       return {
         ...state,
-        devTools: action.payload
+        devTools: action.payload,
       };
     default:
       return state;

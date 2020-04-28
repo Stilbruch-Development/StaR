@@ -18,20 +18,18 @@ import LungenembolieContext from "../context/lists/lungenembolie/lungenembolieCo
 import useLists from "../../hooks/useLists";
 import useCards from "../../hooks/useCards";
 import CardsContext from "../context/cards/cardsContext";
+import NavContext from "../context/navigation/navContext";
 
 const MainStyleWrapper = styled.div`
-  margin-top: 2rem;
   width: 100%;
-  height: 100%;
 `;
 
 const EditorStyleWrapper = styled.div`
   background-color: white;
   border: 1px solid black;
   padding: 3rem;
-  margin-bottom: 2rem;
   font-size: 1.2rem;
-  min-height: 100%;
+  min-height: 60vh;
   line-height: 2rem;
 `;
 
@@ -44,31 +42,55 @@ const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap);
 
 const Draft = () => {
   const getLocalStorage = JSON.parse(localStorage.getItem("editorState"));
-  const { cardsUserData } = useContext(CardsContext);
 
-  const { findCards, getEntityAtSelection } = useCards();
+  //------ Editor Cards Implementation -----------------------------------------------------
+  const { cardsUserData } = useContext(CardsContext);
+  const { findCardsDecorators } = useCards();
 
   const CardsSpan = (props) => {
+    const { setNavState } = useContext(NavContext);
+    const { setCardsState } = useContext(CardsContext);
+
+    var matchElement = props.cardsUserData.filter((element) => {
+      const keywordsArray = element.keywords.split(" ");
+      return keywordsArray.includes(props.decoratedText) && element;
+    });
+
+    const handleOnClick = () => {
+      if (matchElement) {
+        setCardsState("selectedCardsItem", matchElement[0]);
+        setNavState("display", "Cards");
+        setNavState("rightSidebareOpen", true);
+      }
+    };
     return (
-      <span {...props} style={{ backgroundColor: "red" }}>
+      <span
+        {...props}
+        style={{
+          fontStyle: "italic",
+          color: "rgba(0, 80, 120, 1)",
+          cursor: "pointer",
+        }}
+        onClick={handleOnClick}
+      >
         {props.children}
       </span>
     );
   };
 
   const cardsStrategy = (contentBlock, callback, contentState) => {
-    findCards(contentBlock, cardsUserData, callback);
+    findCardsDecorators(contentBlock, cardsUserData, callback);
   };
-
-  console.log();
 
   const compositeDecorator = new CompositeDecorator([
     {
       strategy: cardsStrategy,
       component: CardsSpan,
-      props: { hallo: "hallo" },
+      props: { cardsUserData },
     },
   ]);
+
+  //------ Set Up Editor -----------------------------------------------------
 
   const editorStateLocalStore = () => {
     if (getLocalStorage !== null) {
@@ -81,18 +103,16 @@ const Draft = () => {
     return EditorState.createEmpty(compositeDecorator);
   };
 
+  //------ Context and Hooks-----------------------------------------------------
   const [editorState, setEditorState] = useState(editorStateLocalStore);
-
   const { expanderUserData } = useContext(ExpanderContext);
-
   const [checkExpander] = useExpander();
-
   const [setList] = useLists();
-
   const { LungenembolieState, setLungenembolieState } = useContext(
     LungenembolieContext
   );
 
+  //------ BlockType Style -----------------------------------------------------
   const _toggleBlockType = (blockType) => {
     const toggleBlock = RichUtils.toggleBlockType(editorState, blockType);
     setEditorState(toggleBlock);
@@ -106,6 +126,7 @@ const Draft = () => {
     setEditorState(toggleInlineStyle);
   };
 
+  //------ useEffect -----------------------------------------------------
   useEffect(() => {
     checkExpander(editorState, setEditorState, expanderUserData);
     const contentState = editorState.getCurrentContent();
@@ -113,11 +134,6 @@ const Draft = () => {
     localStorage.setItem("editorState", JSON.stringify(rawEditorState));
     // eslint-disable-next-line
   }, [editorState, expanderUserData]);
-
-  useEffect(() => {
-    // getEntityAtSelection(editorState);
-    // eslint-disable-next-line
-  }, [editorState]);
 
   useEffect(() => {
     const { send } = LungenembolieState;

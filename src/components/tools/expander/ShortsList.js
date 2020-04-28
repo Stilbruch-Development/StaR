@@ -21,19 +21,19 @@ export default function ShortsList(props) {
     lockEditor,
     expanderEditorState,
     setExpanderEditor,
-    editorLocked
+    editorLocked,
   } = useContext(ExpanderContext);
 
   const [state, setState] = useState({
     columns: [
       { title: "Kürzel", field: "short" },
-      { title: "Kategorie", field: "category" }
+      { title: "Kategorie", field: "category" },
     ],
-    data: expanderUserData || null
+    data: expanderUserData || null,
   });
 
   useEffect(() => {
-    setState(prevState => ({ ...prevState, data: expanderUserData }));
+    setState((prevState) => ({ ...prevState, data: expanderUserData }));
   }, [expanderUserData]);
 
   const handleItemClick = (event, rowData) => {
@@ -41,7 +41,7 @@ export default function ShortsList(props) {
     selectExpanderItem(originalRowData);
   };
 
-  const onAddClick = editorLocked => {
+  const onAddClick = (editorLocked) => {
     selectExpanderItem(null);
     if (editorLocked === false) {
       setExpanderEditor(null);
@@ -54,7 +54,7 @@ export default function ShortsList(props) {
       columns={state.columns}
       data={state.data}
       editable={{
-        onRowAdd: newData =>
+        onRowAdd: (newData) =>
           new Promise((resolve, reject) => {
             if (newData.short || newData.category) {
               setTimeout(() => {
@@ -65,14 +65,14 @@ export default function ShortsList(props) {
               }, 600);
             } else {
               reject(
-                setState(prevState => {
+                setState((prevState) => {
                   return { ...prevState };
                 })
               );
             }
           }),
         onRowUpdate: (newData, oldData) =>
-          new Promise(resolve => {
+          new Promise((resolve) => {
             setTimeout(() => {
               resolve();
               const rawExpanderContent = convertToRaw(expanderEditorState);
@@ -80,23 +80,23 @@ export default function ShortsList(props) {
               lockEditor(true);
             }, 600);
           }),
-        onRowDelete: oldData =>
-          new Promise(resolve => {
+        onRowDelete: (oldData) =>
+          new Promise((resolve) => {
             setTimeout(() => {
               resolve();
               deleteExpander(oldData._id);
             }, 600);
-          })
+          }),
       }}
       onRowClick={(event, rowData) => {
         handleItemClick(event, rowData);
       }}
       icons={{
         Search: Search,
-        Edit: props => (
+        Edit: (props) => (
           <Edit
             {...props}
-            onClick={event => {
+            onClick={(event) => {
               const onClickElement =
                 event.target.parentNode.parentNode.parentNode.parentNode;
               onClickElement.click();
@@ -105,7 +105,7 @@ export default function ShortsList(props) {
           />
         ),
         Delete: Delete,
-        Add: props => (
+        Add: (props) => (
           <AddCircle
             {...props}
             onClick={() => {
@@ -115,7 +115,7 @@ export default function ShortsList(props) {
         ),
         Cancel: Cancel,
         Check: Check,
-        Clear: props => (
+        Clear: (props) => (
           <Clear
             {...props}
             onClick={() => {
@@ -124,7 +124,7 @@ export default function ShortsList(props) {
           />
         ),
         SortArrow: ArrowUpward,
-        ResetSearch: Clear
+        ResetSearch: Clear,
       }}
       localization={{
         body: {
@@ -134,22 +134,22 @@ export default function ShortsList(props) {
           editRow: {
             deleteText: "Element wirklich löschen?",
             cancelTooltip: "Abbrechen",
-            saveTooltip: "Speichern"
+            saveTooltip: "Speichern",
           },
-          emptyDataSourceMessage: "Keine Elemente gefunden."
+          emptyDataSourceMessage: "Keine Elemente gefunden.",
         },
         toolbar: {
           searchPlaceholder: "Suchen",
-          searchTooltip: "Suchen"
+          searchTooltip: "Suchen",
         },
         header: {
-          actions: "Bearbeiten"
-        }
+          actions: "Bearbeiten",
+        },
       }}
       options={{
         pageSize: 100,
         paging: false,
-        showTitle: false
+        showTitle: false,
       }}
     />
   );

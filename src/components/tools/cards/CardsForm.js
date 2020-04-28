@@ -9,7 +9,6 @@ const MainStyleWrapper = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   margin: 0 1rem;
-  height: 100%;
 
   .MuiTextField-root {
     width: 100%;

@@ -15,7 +15,6 @@ const SidebarDiv = styled.div`
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: flex-start;
-  height: 100%;
   width: 15vw;
   border-right: 2px solid white;
 
@@ -23,7 +22,7 @@ const SidebarDiv = styled.div`
   .MuiFormControl-root {
     min-width: 70%;
     height: auto;
-    margin: 2rem 1rem 0 1rem;
+    margin: 1vw 1vw 1vw 1vw;
   }
 
   .MuiOutlinedInput-notchedOutline {
@@ -50,14 +49,14 @@ const SidebarDiv = styled.div`
   }
 `;
 
-const LeftSidebar = props => {
+const LeftSidebar = (props) => {
   const [lists, setLists] = React.useState("");
 
   const { setNavState } = useContext(NavContext);
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     setLists(event.target.value);
-    setNavState("reportList", event.target.value);
+    setNavState("display", event.target.value);
     event.target.value !== "" && setNavState("rightSidebareOpen", true);
   };
 
@@ -77,7 +76,7 @@ const LeftSidebar = props => {
           label="Liste"
         >
           <MenuItem value="">
-            <em>None</em>
+            <em>Keine</em>
           </MenuItem>
           <MenuItem value={"CT-Pulmonalis"}>CT-Pulmonalis</MenuItem>
           <MenuItem value={"CT-COVID-19"}>CT-COVID-19</MenuItem>
@@ -86,7 +85,7 @@ const LeftSidebar = props => {
       </FormControl>
       <Cards />
       <Button variant="outlined" color="primary">
-        Tools
+        Werkzeuge
       </Button>
     </SidebarDiv>
   );

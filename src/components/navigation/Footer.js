@@ -17,7 +17,7 @@ const FooterMain = styled.div`
 
 const Footer = () => {
   const [state, setState] = useState({
-    version: ""
+    version: "",
   });
 
   useEffect(() => {

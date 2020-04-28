@@ -5,7 +5,7 @@ import {
   Editor,
   EditorState,
   RichUtils,
-  DefaultDraftBlockRenderMap
+  DefaultDraftBlockRenderMap,
 } from "draft-js";
 import "draft-js/dist/Draft.css";
 import styled from "styled-components";
@@ -27,6 +27,7 @@ const EditorStyleWrapper = styled.div`
 const ToolBarSyleWrapper = styled.div`
   background-color: white;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  font-size: 1.5rem;
 `;
 
 const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap);
@@ -38,12 +39,12 @@ const Draft = () => {
     ExpanderContext
   );
 
-  const _toggleBlockType = blockType => {
+  const _toggleBlockType = (blockType) => {
     const toggleBlock = RichUtils.toggleBlockType(editorState, blockType);
     setEditorState(toggleBlock);
   };
 
-  const _toggleInlineStyle = inlineStyle => {
+  const _toggleInlineStyle = (inlineStyle) => {
     const toggleInlineStyle = RichUtils.toggleInlineStyle(
       editorState,
       inlineStyle
@@ -77,12 +78,14 @@ const Draft = () => {
 
   return (
     <MainStyleWrapper>
-      <ToolBarSyleWrapper>
-        <EditorToolBar
-          _toggleInlineStyle={_toggleInlineStyle}
-          _toggleBlockType={_toggleBlockType}
-        />
-      </ToolBarSyleWrapper>
+      {!editorLocked && (
+        <ToolBarSyleWrapper>
+          <EditorToolBar
+            _toggleInlineStyle={_toggleInlineStyle}
+            _toggleBlockType={_toggleBlockType}
+          />
+        </ToolBarSyleWrapper>
+      )}
       <EditorStyleWrapper>
         <Editor
           editorState={editorState}

@@ -7,13 +7,13 @@ import FormatAlignCenterIcon from "@material-ui/icons/FormatAlignCenter";
 import FormatAlignRightIcon from "@material-ui/icons/FormatAlignRight";
 import styled from "styled-components";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   button: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   input: {
-    display: "none"
-  }
+    display: "none",
+  },
 }));
 
 const StyleWrapper = styled.div`
@@ -21,10 +21,9 @@ const StyleWrapper = styled.div`
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  font-size: 1.5rem;
 `;
 
-const EditorToolBar = props => {
+const EditorToolBar = (props) => {
   const classes = useStyles();
 
   return (

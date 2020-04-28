@@ -4,8 +4,11 @@ import navReducer from "./navReducer";
 
 import { SET_NAVSTATE } from "../types";
 
-const NavState = props => {
-  const initialState = { rightSidebareOpen: false, reportList: "" };
+const NavState = (props) => {
+  const initialState = {
+    rightSidebareOpen: false,
+    display: "",
+  };
 
   const [state, dispatch] = useReducer(navReducer, initialState);
 
@@ -13,7 +16,7 @@ const NavState = props => {
   const setNavState = (item, value) => {
     dispatch({
       type: SET_NAVSTATE,
-      payload: { item, value }
+      payload: { item, value },
     });
   };
 
@@ -21,8 +24,8 @@ const NavState = props => {
     <NavContext.Provider
       value={{
         rightSidebareOpen: state.rightSidebareOpen,
-        reportList: state.reportList,
-        setNavState
+        display: state.display,
+        setNavState,
       }}
     >
       {props.children}

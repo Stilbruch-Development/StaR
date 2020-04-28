@@ -8,14 +8,14 @@ import "draft-js/dist/Draft.css";
 import styled from "styled-components";
 
 const MainStyleWrapper = styled.div`
-  width: 100%;
+  margin: 0 1vw 1vw 1vw;
   border: 1px solid rgba(0, 0, 0, 0.2);
   background-color: white;
-  padding: 3rem;
+  padding: 1vw;
   font-size: 1.5rem;
 `;
 
-const Draft = props => {
+const DraftDisplay = (props) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const { selectedCardsItem } = useContext(CardsContext);
   const [goToExternalLink] = useExternalLink();
@@ -34,7 +34,7 @@ const Draft = props => {
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCardsItem]);
 
-  const onClickLogo = url => {
+  const onClickLogo = (url) => {
     goToExternalLink(url);
   };
 
@@ -44,12 +44,13 @@ const Draft = props => {
     props.handleClose();
   });
 
-  return (
+  return selectedCardsItem ? (
     <MainStyleWrapper>
       <Editor
         editorState={editorState}
         onChange={setEditorState}
         readOnly={true}
+        placeholder="Bitte klicke auf ein Cards-Element."
       />
       <div>
         <p style={{ textDecoration: "underline", fontWeight: "bold" }}>
@@ -69,7 +70,9 @@ const Draft = props => {
         </p>
       </div>
     </MainStyleWrapper>
+  ) : (
+    <></>
   );
 };
 
-export default Draft;
+export default DraftDisplay;

@@ -29,7 +29,13 @@ const StyleWrapper = styled.div`
 const EditorToolBar = (props) => {
   const classes = useStyles();
 
-  const [setEditorEmpty, copyEditorToClipboard] = useDraftEditor();
+  const {
+    setEditorEmpty,
+    copyEditorToClipboard,
+    saveEditorUserIndependent,
+    deleteLokalstore,
+    loadFromLokalStore,
+  } = useDraftEditor();
 
   return (
     <StyleWrapper>
@@ -79,20 +85,49 @@ const EditorToolBar = (props) => {
         variant="outlined"
         color="primary"
         className={classes.button}
-        onClick={() => setEditorEmpty(props.editorState, props.setEditorState)}
+        onClick={() => {
+          setEditorEmpty(props.editorState, props.setEditorState);
+        }}
       >
-        Löschen
+        Inhalt Löschen
       </Button>
       <Button
         variant="outlined"
         color="primary"
         className={classes.button}
-        onClick={() => copyEditorToClipboard(props.editorState)}
+        onClick={() => {
+          copyEditorToClipboard(props.editorState);
+        }}
       >
         Kopieren
+      </Button>
+      <Button
+        variant="outlined"
+        color="primary"
+        className={classes.button}
+        onClick={() => saveEditorUserIndependent(props.editorState)}
+      >
+        Inhalt kurzspeichern
+      </Button>
+      <Button
+        variant="outlined"
+        color="primary"
+        className={classes.button}
+        onClick={() =>
+          loadFromLokalStore(props.editorState, props.setEditorState)
+        }
+      >
+        Kurzspeicher laden
+      </Button>
+      <Button
+        variant="outlined"
+        color="primary"
+        className={classes.button}
+        onClick={deleteLokalstore}
+      >
+        Kurzspeicher löschen
       </Button>
     </StyleWrapper>
   );
 };
-
 export default EditorToolBar;

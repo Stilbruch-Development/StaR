@@ -16,15 +16,13 @@ const MainFlex = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
+  align-items: stretch;
 `;
 
 const EditorWrapper = styled.div`
   width: 100%;
-  margin: 2vw;
-  height: 100%;
+  margin: 1vw;
+  height: 85vh;
   overflow: auto;
 `;
 

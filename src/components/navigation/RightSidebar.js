@@ -4,31 +4,38 @@ import Button from "@material-ui/core/Button";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import Lungenembolie from "../tools/lists/lungenembolie/Lungenembolie";
 import NavContext from "../../components/context/navigation/navContext";
+import CardsDisplay from "../../components/tools/cards/DraftDisplay";
+import CardsContext from "../../components/context/cards/cardsContext";
 
 const SidebarDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-
-  height: 100%;
   width: 100%;
   border-left: 2px solid white;
 
   .MuiButton-root {
     height: 2.5rem;
-    margin: 1rem 1rem 0 1rem;
+    margin: 1vw 1vw 1vw 1vw;
   }
 `;
 
 const RightSidebar = () => {
-  const { reportList, rightSidebareOpen, setNavState } = useContext(NavContext);
+  const { display, rightSidebareOpen, setNavState } = useContext(NavContext);
+  const { setCardsState } = useContext(CardsContext);
 
   const onButtonClick = () => {
     setNavState("rightSidebareOpen", !rightSidebareOpen);
+    setCardsState("selectedCardsItem", null);
   };
 
-  const getList = () => {
-    switch (reportList) {
+  const handleClose = () => {
+    setNavState("rightSidebareOpen", false);
+    setCardsState("selectedCardsItem", null);
+  };
+
+  const getDisplay = () => {
+    switch (display) {
       case "":
         return <></>;
       case "CT-Pulmonalis":
@@ -37,6 +44,8 @@ const RightSidebar = () => {
         return <></>;
       case "MRT-Prostata":
         return <></>;
+      case "Cards":
+        return <CardsDisplay handleClose={handleClose} />;
       default:
         return <></>;
     }
@@ -47,7 +56,7 @@ const RightSidebar = () => {
       <Button variant="outlined" color="primary" onClick={onButtonClick}>
         <ArrowForwardIosIcon viewBox="-5 0 24 24" />
       </Button>
-      {getList()}
+      {getDisplay()}
     </SidebarDiv>
   );
 };

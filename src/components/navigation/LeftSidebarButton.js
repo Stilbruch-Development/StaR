@@ -4,18 +4,19 @@ import Button from "@material-ui/core/Button";
 import styled from "styled-components";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   button: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   input: {
-    display: "none"
-  }
+    display: "none",
+  },
 }));
 
 const ButtonWrapper = styled.div`
-  height: 100%;
   width: 2vw;
+  margin-top: 1vw;
+  margin-bottom: 1vw;
 
   .MuiButton-root {
     min-width: unset;
@@ -26,7 +27,7 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-const LeftSidebarButton = props => {
+const LeftSidebarButton = (props) => {
   const classes = useStyles();
 
   return (

@@ -5,8 +5,9 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import NavContext from "../../components/context/navigation/navContext";
 
 const ButtonWrapper = styled.div`
-  height: 100%;
   width: 2vw;
+  margin-top: 1vw;
+  margin-bottom: 1vw;
 
   .MuiButton-root {
     min-width: unset;
