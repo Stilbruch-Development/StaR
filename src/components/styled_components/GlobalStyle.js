@@ -35,27 +35,12 @@ const GlobalStyle = createGlobalStyle`
     height: 2px;
   }
 
-  /* poiret-one font */
-  @font-face {
-    font-family: 'Poiret One';
-    font-style: normal;
-    font-weight: 400;
-    src: url(${require("../../fonts/poiret-one/poiret-one-v7-latin-regular.eot")});  // IE9 Compat Modes
-    src: local('Poiret One'), local('PoiretOne-Regular'),
-        url(${require("../../fonts/poiret-one/poiret-one-v7-latin-regular.eot")}) format('embedded-opentype'), // IE6-IE8
-        url(${require("../../fonts/poiret-one/poiret-one-v7-latin-regular.woff2")}) format('woff2'), // Super Modern Browsers
-        url(${require("../../fonts/poiret-one/poiret-one-v7-latin-regular.woff")}) format('woff'), // Modern Browsers
-        url(${require("../../fonts/poiret-one/poiret-one-v7-latin-regular.ttf")}) format('truetype'), // Safari, Android, iOS
-        url(${require("../../fonts/poiret-one/poiret-one-v7-latin-regular.svg")}) format('svg'); // Legacy iOS
-  }
-
   .Dialog {
     .MuiDialog-paper {
       max-width: unset;
       width: 80%;
     }
   }
-
 
   // phone
   @media (max-width: 600px) {
