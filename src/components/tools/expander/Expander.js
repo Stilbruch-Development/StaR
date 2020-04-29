@@ -14,9 +14,9 @@ import ExpanderContext from "../../context/expander/expanderContext";
 const MainStyleWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: strech;
+  justify-content: space-evenly;
   margin: 0;
-  height: 100%;
+  padding: 1rem;
 `;
 
 const ExpanderEditorWrapper = styled.div`
@@ -30,9 +30,10 @@ const ExpanderEditorWrapper = styled.div`
 const ExpanderShortsWrapper = styled.div`
   min-width: 30%;
   flex-grow: 0;
+  margin: 0 1rem;
 `;
 
-const Expander = props => {
+const Expander = (props) => {
   const [open, setOpen] = useState(false);
 
   const { selectExpanderItem, lockEditor, setExpanderEditor } = useContext(
@@ -54,20 +55,20 @@ const Expander = props => {
     }, 60);
   };
 
-  const styles = theme => ({
+  const styles = (theme) => ({
     root: {
       margin: 0,
-      padding: theme.spacing(2)
+      padding: theme.spacing(2),
     },
     closeButton: {
       position: "absolute",
       right: theme.spacing(1),
       top: theme.spacing(1),
-      color: theme.palette.grey[500]
-    }
+      color: theme.palette.grey[500],
+    },
   });
 
-  const DialogTitle = withStyles(styles)(props => {
+  const DialogTitle = withStyles(styles)((props) => {
     const { children, classes, onClose, ...other } = props;
     return (
       <MuiDialogTitle disableTypography className={classes.root} {...other}>
@@ -95,7 +96,7 @@ const Expander = props => {
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
-        id="ExpanderDialog"
+        className="Dialog"
       >
         <MainStyleWrapper>
           <ExpanderShortsWrapper>

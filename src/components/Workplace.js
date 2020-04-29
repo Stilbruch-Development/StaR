@@ -22,7 +22,6 @@ const MainFlex = styled.div`
 const EditorWrapper = styled.div`
   width: 100%;
   margin: 1vw;
-  height: 85vh;
   overflow: auto;
 `;
 

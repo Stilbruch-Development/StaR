@@ -49,16 +49,10 @@ const GlobalStyle = createGlobalStyle`
         url(${require("../../fonts/poiret-one/poiret-one-v7-latin-regular.svg")}) format('svg'); // Legacy iOS
   }
 
-  #ExpanderDialog {
+  .Dialog {
     .MuiDialog-paper {
       max-width: unset;
       width: 80%;
-    }
-    .MuiPaper-root {
-      height: 100%;
-    }
-    .MuiTableCell-root  {
-      padding: unset;
     }
   }
 

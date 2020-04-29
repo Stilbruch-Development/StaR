@@ -15,12 +15,9 @@ import CardsContext from "../../context/cards/cardsContext";
 const MainStyleWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: strech;
+  justify-content: space-evenly;
   margin: 0;
-
-  .MuiPaper-root {
-    height: 100%;
-  }
+  padding: 1rem;
 `;
 
 const CardsItemWrapper = styled.div`
@@ -34,6 +31,7 @@ const CardsItemWrapper = styled.div`
 const CardsListWrapper = styled.div`
   min-width: 40%;
   flex-grow: 0;
+  margin: 0 1rem;
 `;
 
 const UnselectedWrapper = styled.div`
@@ -109,7 +107,7 @@ const Cards = () => {
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
-        id="ExpanderDialog"
+        className="Dialog"
       >
         <MainStyleWrapper>
           <CardsListWrapper>
