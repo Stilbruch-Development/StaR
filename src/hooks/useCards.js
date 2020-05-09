@@ -3,15 +3,17 @@ export default function useCards() {
     const finalArray = [];
     if (cardsUserData) {
       cardsUserData.forEach((element) => {
-        const elementId = element._id;
-        const keywordsArray = element.keywords.split(" ");
-        keywordsArray.forEach((element) => {
-          const keyObject = {
-            keyword: element,
-            keyId: elementId,
-          };
-          finalArray.push(keyObject);
-        });
+        if (element.keywords.length !== 0) {
+          const elementId = element._id;
+          const keywordsArray = element.keywords.split(" ");
+          keywordsArray.forEach((element) => {
+            const keyObject = {
+              keyword: element,
+              keyId: elementId,
+            };
+            finalArray.push(keyObject);
+          });
+        }
       });
       return finalArray;
     }

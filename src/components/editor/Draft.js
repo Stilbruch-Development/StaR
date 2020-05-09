@@ -15,6 +15,7 @@ import blockRenderMap from "./blocktypes/TextAlign";
 import ExpanderContext from "../context/expander/expanderContext";
 import useExpander from "../../hooks/useExpander";
 import LungenembolieContext from "../context/lists/lungenembolie/lungenembolieContext";
+import Covid19Context from "../context/lists/covid19/covid19Context";
 import useLists from "../../hooks/useLists";
 import useCards from "../../hooks/useCards";
 import CardsContext from "../context/cards/cardsContext";
@@ -111,6 +112,7 @@ const Draft = () => {
   const { LungenembolieState, setLungenembolieState } = useContext(
     LungenembolieContext
   );
+  const { Covid19Report, setCovid19Report } = useContext(Covid19Context);
 
   //------ BlockType Style -----------------------------------------------------
   const _toggleBlockType = (blockType) => {
@@ -143,6 +145,19 @@ const Draft = () => {
     }
     // eslint-disable-next-line
   }, [LungenembolieState.send]);
+
+  useEffect(() => {
+    const { send } = Covid19Report;
+    if (send === true) {
+      setList(editorState, setEditorState, Covid19Report.Gesamt);
+      setCovid19Report({
+        ...Covid19Report,
+        Gesamt: "",
+        send: false,
+      });
+    }
+    // eslint-disable-next-line
+  }, [Covid19Report.send]);
 
   return (
     <MainStyleWrapper>

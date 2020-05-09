@@ -3,7 +3,7 @@ import VisionXLogoSVG from "../../images/styled_images/VisionXLogo";
 import StyledLink from "../styled_components/StyledLink";
 import useExternalLink from "../../hooks/useExternalLink";
 
-const VisionXLogo = props => {
+const VisionXLogo = (props) => {
   const [goToExternalLink] = useExternalLink();
 
   const onClickLogo = () => {
@@ -16,7 +16,7 @@ const VisionXLogo = props => {
       style={{ width: props.width }}
       // to={props.navLink}
       to={"/"}
-      scroll={el => el.scrollIntoView({ behavior: "smooth", block: "end" })}
+      scroll={(el) => el.scrollIntoView({ behavior: "smooth", block: "end" })}
       onClick={() => {
         onClickLogo();
       }}

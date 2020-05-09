@@ -3,11 +3,10 @@ import styled from "styled-components";
 import List from "@material-ui/core/List";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import ListElementVoruntersuchung from "./ListElement_Voruntersuchung";
-import ListElementEmbolie from "./ListElement_Embolie";
-import ListElementRechtsherzbelastung from "./ListElement_Rechtsherzbelastung";
+import ListElementCovid19 from "./ListElement_Covid19";
 import ListElementSonstiges from "./ListElement_Sonstiges";
-import useLungenembolie from "./useLungenembolie";
-import LungenembolieContext from "../../../context/lists/lungenembolie/lungenembolieContext";
+import useCovid19 from "./useCOVID19";
+import Covid19Context from "../../../context/lists/covid19/covid19Context";
 import Button from "@material-ui/core/Button";
 
 const MainWrapper = styled.div`
@@ -17,13 +16,9 @@ const MainWrapper = styled.div`
   height: 100%;
   margin: 1rem;
   background-color: var(--editor-bg-color);
-  overflow: auto;
+  overflow: hidden;
   position: relativ;
   font-family: inherit;
-
-  .MuiList-root {
-    width: 100%;
-  }
 
   .MuiListItemText-root {
     flex: 0 0 auto;
@@ -71,6 +66,11 @@ const MainWrapper = styled.div`
   .MuiListSubheader-sticky {
     z-index: unset;
   }
+
+  .MuiListItem-gutters {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
 `;
 
 const ButtonWrapper = styled.div`
@@ -85,39 +85,35 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-export default function Lungenembolie() {
-  const { LungenembolieState, setLungenembolieState } = useContext(
-    LungenembolieContext
+export default function Covid19() {
+  const { Covid19State, Covid19Report, setCovid19Report } = useContext(
+    Covid19Context
   );
-
-  const handleSubmit = () => () => {
-    setLungenembolieState({
-      ...LungenembolieState,
-      send: true,
-    });
-  };
 
   const {
     Voruntersuchung,
-    Lungenembolie,
+    Kategorie,
     Lokalisation,
-    Abschnitte,
-    Rechtsherzbelastung,
-    Rechtsherzbelastungszeichen,
+    Ausdehnung,
+    CTVeränderungen,
     Lungenparenchym,
     Pleura,
     Herz_Mediastinum,
     Lymphknoten,
     Oberbauch,
     Skelett,
-  } = LungenembolieState;
+  } = Covid19State;
 
-  const [
+  const {
     getVoruntersuchung,
-    getLungenembolie,
-    getRechtsherzbelastung,
+    getKategorie,
     getSonstige,
-  ] = useLungenembolie();
+    setGesamt,
+  } = useCovid19();
+
+  const handleSubmit = () => () => {
+    setGesamt();
+  };
 
   useEffect(() => {
     getVoruntersuchung();
@@ -125,14 +121,9 @@ export default function Lungenembolie() {
   }, [Voruntersuchung]);
 
   useEffect(() => {
-    getLungenembolie();
+    getKategorie();
     // eslint-disable-next-line
-  }, [Lungenembolie, Lokalisation, Abschnitte]);
-
-  useEffect(() => {
-    getRechtsherzbelastung();
-    // eslint-disable-next-line
-  }, [Rechtsherzbelastung, Rechtsherzbelastungszeichen]);
+  }, [Kategorie, Lokalisation, CTVeränderungen, Ausdehnung]);
 
   useEffect(() => {
     getSonstige();
@@ -152,13 +143,12 @@ export default function Lungenembolie() {
         aria-labelledby="nested-list-subheader"
         subheader={
           <ListSubheader component="div" id="nested-list-subheader">
-            CT-Thorax Lungenarterienembolie
+            CT-Thorax COVID19
           </ListSubheader>
         }
       >
         <ListElementVoruntersuchung />
-        <ListElementEmbolie />
-        <ListElementRechtsherzbelastung />
+        <ListElementCovid19 />
         <ListElementSonstiges />
         <ButtonWrapper>
           <Button variant="outlined" color="primary" onClick={handleSubmit()}>

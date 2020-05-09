@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Button from "@material-ui/core/Button";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import Lungenembolie from "../tools/lists/lungenembolie/Lungenembolie";
+import Covid19 from "../tools/lists/covid19/Covid19";
 import NavContext from "../../components/context/navigation/navContext";
 import CardsDisplay from "../../components/tools/cards/DraftDisplay";
 import CardsContext from "../../components/context/cards/cardsContext";
@@ -11,8 +12,8 @@ const SidebarDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: 100%;
   border-left: 2px solid white;
+  width: 100%;
 
   .MuiButton-root {
     height: 2.5rem;
@@ -41,7 +42,7 @@ const RightSidebar = () => {
       case "CT-Pulmonalis":
         return <Lungenembolie />;
       case "CT-COVID-19":
-        return <></>;
+        return <Covid19 />;
       case "MRT-Prostata":
         return <></>;
       case "Cards":

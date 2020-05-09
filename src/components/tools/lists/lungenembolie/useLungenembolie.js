@@ -6,7 +6,7 @@ export default function useLungenembolie() {
     Satz_1: "",
     Satz_2: "",
     Satz_3: "",
-    Satz_4: ""
+    Satz_4: "",
   });
 
   const { LungenembolieState, setLungenembolieState } = useContext(
@@ -31,15 +31,15 @@ export default function useLungenembolie() {
     upperCase === true
       ? (matchUpperCase = [
           /^./,
-          function(match) {
+          function (match) {
             return match.toUpperCase();
-          }
+          },
         ])
       : (matchUpperCase = []);
 
     var replacements = new Map([[/,(?=[^\s])/g, ", "], matchUpperCase]),
       result = arrays_join;
-    replacements.forEach(function(value, key) {
+    replacements.forEach(function (value, key) {
       result = result.replace(key, value);
     });
 
@@ -58,7 +58,7 @@ export default function useLungenembolie() {
     Herz_Mediastinum,
     Lymphknoten,
     Oberbauch,
-    Skelett
+    Skelett,
   } = LungenembolieState;
 
   const getLungenembolie = () => {
@@ -68,12 +68,12 @@ export default function useLungenembolie() {
           Satz_2: `Nachweis einer Lungenarterienembolie, ${getSentence(
             Lokalisation,
             false
-          )} im ${getSentence(Abschnitte, true)}.`
+          )} im ${getSentence(Abschnitte, true)}.`,
         })
       : Lungenembolie === "nein" &&
         setUseLungenembolieState({
           ...useLungenembolieState,
-          Satz_2: "Kein Nachweis einer Lungenarterienembolie."
+          Satz_2: "Kein Nachweis einer Lungenarterienembolie.",
         });
   };
 
@@ -95,12 +95,12 @@ export default function useLungenembolie() {
           Satz_3: `${getSentence(
             Rechtsherzbelastungszeichen,
             true
-          )} als Zeichen der ${rhb_grad} Rechtsherzbelastung.`
+          )} als Zeichen der ${rhb_grad} Rechtsherzbelastung.`,
         })
       : Rechtsherzbelastung === "nein" &&
         setUseLungenembolieState({
           ...useLungenembolieState,
-          Satz_3: `Keine Rechtsherzbelastungszeichen.`
+          Satz_3: `Keine Rechtsherzbelastungszeichen.`,
         });
   };
 
@@ -119,14 +119,14 @@ export default function useLungenembolie() {
       Skelett;
     setUseLungenembolieState({
       ...useLungenembolieState,
-      Satz_4: sonstigeGesamt
+      Satz_4: sonstigeGesamt,
     });
   };
 
   const getVoruntersuchung = () => {
     setUseLungenembolieState({
       ...useLungenembolieState,
-      Satz_1: Voruntersuchung
+      Satz_1: Voruntersuchung,
     });
   };
 
@@ -144,7 +144,7 @@ export default function useLungenembolie() {
         "\n" +
         Satz_3 +
         "\n\n" +
-        Satz_4
+        Satz_4,
     });
     // eslint-disable-next-line
   }, [Satz_1, Satz_2, Satz_3, Satz_4]);
@@ -154,6 +154,6 @@ export default function useLungenembolie() {
     getLungenembolie,
     getRechtsherzbelastung,
     getSonstige,
-    useLungenembolieState
+    useLungenembolieState,
   ];
 }

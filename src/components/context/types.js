@@ -44,3 +44,7 @@ export const REMOVE_ALERT = "REMOVE_ALERT";
 
 // lungenembolie types
 export const SET_LUNGENEMBOLIE = "SET_LUNGENEMBOLIE";
+
+// covid19 types
+export const SET_COVID19_STATE = "SET_COVID19_STATE";
+export const SET_COVID19_REPORT = "SET_COVID19_REPORT";

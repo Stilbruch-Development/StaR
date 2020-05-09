@@ -19,45 +19,31 @@ const MainWrapper = styled.div`
   }
 `;
 
-export default function ListElementEmbolie() {
+export default function ListElementRechtsherzbelastung(props) {
   const { LungenembolieState, setLungenembolieState } = useContext(
     LungenembolieContext
   );
-  const { Lokalisation, Abschnitte } = LungenembolieState;
 
-  const handleToggleLokalisation = (value) => () => {
-    const currentIndex = Lokalisation.indexOf(value);
-    const newLokalisation = [...Lokalisation];
+  const { Rechtsherzbelastungszeichen } = LungenembolieState;
+
+  const handleToggleRechtsherzbelastung = value => () => {
+    const currentIndex = Rechtsherzbelastungszeichen.indexOf(value);
+    const newRechtsherzbelastungszeichen = [...Rechtsherzbelastungszeichen];
 
     if (currentIndex === -1) {
-      newLokalisation.push(value);
+      newRechtsherzbelastungszeichen.push(value);
     } else {
-      newLokalisation.splice(currentIndex, 1);
+      newRechtsherzbelastungszeichen.splice(currentIndex, 1);
     }
     setLungenembolieState({
       ...LungenembolieState,
-      Lokalisation: newLokalisation,
-    });
-  };
-
-  const handleToggleAbschnitte = (value) => () => {
-    const currentIndex = Abschnitte.indexOf(value);
-    const newAbschnitte = [...Abschnitte];
-
-    if (currentIndex === -1) {
-      newAbschnitte.push(value);
-    } else {
-      newAbschnitte.splice(currentIndex, 1);
-    }
-    setLungenembolieState({
-      ...LungenembolieState,
-      Abschnitte: newAbschnitte,
+      Rechtsherzbelastungszeichen: newRechtsherzbelastungszeichen
     });
   };
 
   const [open, setOpen] = React.useState(false);
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     if (event.target.value === "ja") {
       setOpen(true);
     }
@@ -66,18 +52,18 @@ export default function ListElementEmbolie() {
     }
     setLungenembolieState({
       ...LungenembolieState,
-      Lungenembolie: event.target.value,
+      Rechtsherzbelastung: event.target.value
     });
   };
 
   return (
     <MainWrapper>
       <ListItem button>
-        <ListItemText primary="Lungenembolie?" />
+        <ListItemText primary="Rechtsherzbelastung?" />
 
         <RadioGroup
-          aria-label="Lungenembolie"
-          name="Lungenembolie?"
+          aria-label="Rechtsherzbelastung"
+          name="Rechtsherzbelastung?"
           onChange={handleChange}
           row
         >
@@ -100,48 +86,13 @@ export default function ListElementEmbolie() {
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItem>
-            <ListItemText primary={`Lokalisation: `} />
-            <List>
-              {["zentral", "lobär", "segmental", "subsegmental"].map(
-                (value) => {
-                  const labelId = `${value}`;
-
-                  return (
-                    <ListItem
-                      key={value}
-                      dense
-                      button
-                      onClick={handleToggleLokalisation(value)}
-                    >
-                      <ListItemText id={labelId} primary={`${value}`} />
-                      <ListItemIcon>
-                        <Checkbox
-                          edge="start"
-                          checked={Lokalisation.indexOf(value) !== -1}
-                          tabIndex={-1}
-                          disableRipple
-                          inputProps={{ "aria-labelledby": labelId }}
-                        />
-                      </ListItemIcon>
-                    </ListItem>
-                  );
-                }
-              )}
-            </List>
-          </ListItem>
-          <ListItem>
-            <ListItemText primary={`Abschnitte: `} />
-
             <List>
               {[
-                "Tr. pulmonalis rechts",
-                "Tr. pulmonalis links",
-                "Oberlappen rechts",
-                "Oberlappen links",
-                "Unterlappen rechts",
-                "Unterlappen links",
-                "Mittellappen",
-              ].map((value) => {
+                "erweiterter rechter Vorhof",
+                "erweiterter rechter Ventrikel",
+                "Kontrastmittel Rückstrom in die Lebervenen",
+                "erweiterter Tr. pulmonalis/ Pulmonalarterien"
+              ].map(value => {
                 const labelId = `${value}`;
 
                 return (
@@ -149,13 +100,15 @@ export default function ListElementEmbolie() {
                     key={value}
                     dense
                     button
-                    onClick={handleToggleAbschnitte(value)}
+                    onClick={handleToggleRechtsherzbelastung(value)}
                   >
                     <ListItemText id={labelId} primary={`${value}`} />
                     <ListItemIcon>
                       <Checkbox
                         edge="start"
-                        checked={Abschnitte.indexOf(value) !== -1}
+                        checked={
+                          Rechtsherzbelastungszeichen.indexOf(value) !== -1
+                        }
                         tabIndex={-1}
                         disableRipple
                         inputProps={{ "aria-labelledby": labelId }}
