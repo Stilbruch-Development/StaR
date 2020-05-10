@@ -37,7 +37,7 @@ export default function ListElementSonstiges() {
     Herz_Mediastinum,
     Oberbauch,
     Skelett,
-  } = setCovid19State;
+  } = Covid19State;
 
   const handleClick = () => {
     setOpen(!open);

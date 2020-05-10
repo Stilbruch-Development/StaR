@@ -86,9 +86,7 @@ const ButtonWrapper = styled.div`
 `;
 
 export default function Covid19() {
-  const { Covid19State, Covid19Report, setCovid19Report } = useContext(
-    Covid19Context
-  );
+  const { Covid19State } = useContext(Covid19Context);
 
   const {
     Voruntersuchung,

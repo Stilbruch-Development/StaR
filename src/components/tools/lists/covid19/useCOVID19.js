@@ -57,7 +57,7 @@ export default function useCOVID19() {
     Kategorie === "1"
       ? setCovid19Report({
           ...Covid19Report,
-          Satz_2: `CT-Veränderungen passend zu einer viralen Pneumonie mit ${Ausdehnung} Ausdehnung. Bei hoher individueller Prätestwahscheinlichkeit suggestiv für eine COVID-19-Pneumonie [Cov19Typ]`,
+          Satz_2: `CT-Veränderungen passend zu einer viralen Pneumonie mit ${Ausdehnung}er Ausdehnung. Bei hoher individueller Prätestwahscheinlichkeit suggestiv für eine COVID-19-Pneumonie [Cov19Typ].`,
           Satz_3: `${getSentence(
             CTVeränderungen.Kategorie1,
             true
@@ -69,7 +69,7 @@ export default function useCOVID19() {
       : Kategorie === "2"
       ? setCovid19Report({
           ...Covid19Report,
-          Satz_2: `CT-Veränderungen passend zu einer viral-entzündlichen Pneumonie mit ${Ausdehnung} Ausdehnung. Bei hoher individueller Prätestwahrscheinlichkeit suggestiv COVID-19-Pneumonie möglich, CT-Veränderungen aber nicht charakteristisch [Cov19Ind]`,
+          Satz_2: `CT-Veränderungen passend zu einer viral-entzündlichen Pneumonie mit ${Ausdehnung}er Ausdehnung. Bei hoher individueller Prätestwahrscheinlichkeit suggestiv COVID-19-Pneumonie möglich, CT-Veränderungen aber nicht charakteristisch [Cov19Ind].`,
           Satz_3: `${getSentence(
             CTVeränderungen.Kategorie2,
             false
@@ -81,7 +81,7 @@ export default function useCOVID19() {
       : Kategorie === "3"
       ? setCovid19Report({
           ...Covid19Report,
-          Satz_2: `CT-Veränderungen des Lungenparenchyms vereinbar mit einer alternativen Diagnose. CT-Veränderungen ohne Hinweis auf COVID-19-Pneumonie [Cov19Aty].`,
+          Satz_2: `CT-Veränderungen des Lungenparenchyms vereinbar mit einer alternativen Diagnose, a.e. XXX. CT-Veränderungen ohne Hinweis auf COVID-19-Pneumonie [Cov19Aty].`,
           Satz_3: `${getSentence(
             CTVeränderungen.Kategorie3,
             true

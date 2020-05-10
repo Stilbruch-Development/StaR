@@ -16,9 +16,10 @@ const Covid19State = (props) => {
         Kategorie4: [],
       },
       Lokalisation: [],
-      Ausdehnung: "unspezifisch",
-      Lungenparenchym: "Unauffällige Darstellung des Lungenparenchyms.",
-      Pleura: "Regelrecht anliegende Pleura.",
+      Ausdehnung: "unklar",
+      Lungenparenchym:
+        "Darüber hinaus unauffällige Darstellung des Lungenparenchyms.",
+      Pleura: "Im Übrigen regelrecht anliegende Pleura.",
       Herz_Mediastinum: "Herz und Mediastinum regelrecht.",
       Lymphknoten: "Keine Lymphadenopathie.",
       Oberbauch: "Mit erfasster Oberbauch unauffällig.",

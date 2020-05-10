@@ -38,7 +38,7 @@ export default function ListElementSonstiges() {
     Lymphknoten,
     Herz_Mediastinum,
     Oberbauch,
-    Skelett
+    Skelett,
   } = LungenembolieState;
 
   const handleClick = () => {
@@ -47,13 +47,13 @@ export default function ListElementSonstiges() {
 
   const [open, setOpen] = React.useState(false);
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     const listItem = event.target.name;
     const listValue = event.target.value;
     window.setTimeout(() => {
       setLungenembolieState({
         ...LungenembolieState,
-        [listItem]: listValue
+        [listItem]: listValue,
       });
     }, 100);
   };

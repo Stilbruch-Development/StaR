@@ -57,8 +57,8 @@ export default function ListElementCovid19() {
     }
 
     if (Kategorie === "2") {
-      const currentIndex = CTVeränderungen.Kategorie1.indexOf(value);
-      const newLokalisation = [...CTVeränderungen.Kategorie1];
+      const currentIndex = CTVeränderungen.Kategorie2.indexOf(value);
+      const newLokalisation = [...CTVeränderungen.Kategorie2];
 
       if (currentIndex === -1) {
         newLokalisation.push(value);
@@ -76,8 +76,8 @@ export default function ListElementCovid19() {
       });
     }
     if (Kategorie === "3") {
-      const currentIndex = CTVeränderungen.Kategorie1.indexOf(value);
-      const newLokalisation = [...CTVeränderungen.Kategorie1];
+      const currentIndex = CTVeränderungen.Kategorie3.indexOf(value);
+      const newLokalisation = [...CTVeränderungen.Kategorie3];
 
       if (currentIndex === -1) {
         newLokalisation.push(value);
@@ -95,8 +95,8 @@ export default function ListElementCovid19() {
       });
     }
     if (Kategorie === "4") {
-      const currentIndex = CTVeränderungen.Kategorie1.indexOf(value);
-      const newLokalisation = [...CTVeränderungen.Kategorie1];
+      const currentIndex = CTVeränderungen.Kategorie4.indexOf(value);
+      const newLokalisation = [...CTVeränderungen.Kategorie4];
 
       if (currentIndex === -1) {
         newLokalisation.push(value);
@@ -203,10 +203,10 @@ export default function ListElementCovid19() {
             <ListItem>
               <List>
                 {[
-                  `früh dominante Milchglasverdichtungen ("ground glas")`,
-                  `später dominant "Crazy Paving"/Konsolidierungen`,
-                  `Zeichen der organisierten Pneumonie (z.B. arkadenförmige Konsolidierungen/Milchglastrübung, umgekehrtes Halo-Zeichen)`,
-                  `periphere sowie posteriore Betonung, ohne subpleurale Aussparung`,
+                  `früh dominante Milchglasverdichtungen ("Ground Glas")`,
+                  `später dominante Konsolidierung/ "Crazy Paving"`,
+                  `Zeichen der organisierten Pneumonie (arkadenförmige Konsolidierungen/ Milchglastrübung, umgekehrtes Halo-Zeichen)`,
+                  `periphere sowie posteriore betonte Verdichtungen ohne subpleurale Aussparung`,
                   `Veränderungen rund oder geographisch konfiguriert`,
                   `Veränderungen zeigen sich bilateral sowie multifokal`,
                   `intraläsional zeigen sich erweiternde Gefäße`,
@@ -243,7 +243,7 @@ export default function ListElementCovid19() {
             <ListItem>
               <List>
                 {[
-                  `Milchglas/"crazy paving"/Konsolidierung anders verteilt als unter Kategorie 1`,
+                  `Milchglas, "Crazy Paving" oder Konsolidierung anders verteilt als bei [Cov19Typ]-Kategorie`,
                   `zentrale Betonung der Veränderungen`,
                   `nicht rund oder geographisch konfigurierte Veränderungen`,
                 ].map((value) => {
