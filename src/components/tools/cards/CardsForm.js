@@ -69,7 +69,7 @@ export default function CardsForm(props) {
         />
         <TextField
           name="url"
-          label="URL"
+          label="URL - inkl. https://"
           variant="outlined"
           value={value.url}
           onChange={handleChange}

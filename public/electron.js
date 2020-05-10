@@ -4,13 +4,14 @@ const {
   Menu,
   ipcMain,
   clipboard,
-  shell
+  shell,
+  screen,
 } = require("electron");
 const { autoUpdater } = require("electron-updater");
 const path = require("path");
 const isDev = require("electron-is-dev");
 const log = require("electron-log");
-const os = require("os");
+// const os = require("os");
 
 //-------------------------------------------------------------------
 // Main Window
@@ -26,15 +27,20 @@ if (isDev) {
 }
 
 const createWindow = () => {
+  var mainScreen = screen.getPrimaryDisplay();
+  var dimensions = mainScreen.size;
+
   mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 700,
-    resizable: false,
+    width: dimensions.width * 0.8,
+    height: dimensions.height * 0.8,
+    minWidth: dimensions.width * 0.8,
+    minHeight: dimensions.height * 0.8,
+    resizable: true,
     webPreferences: {
       devTools: tools,
       nodeIntegration: true,
-      preload: __dirname + "/preload.js"
-    }
+      preload: __dirname + "/preload.js",
+    },
   });
 
   mainWindow.loadURL(
@@ -74,7 +80,7 @@ app.on("window-all-closed", () => {
 //
 //-------------------------------------------------------------------
 
-ipcMain.on("app_version", event => {
+ipcMain.on("app_version", (event) => {
   event.sender.send("app_version", { version: app.getVersion() });
 });
 
@@ -87,7 +93,7 @@ ipcMain.on("copy_to_clipboard", (event, content) => {
 });
 
 ipcMain.on("open_external_link", (event, link) => {
-  shell.openExternal(link).catch(e => {
+  shell.openExternal(link).catch((e) => {
     event.reply(
       "open_external_link_error",
       'Fehlerhafter oder inkompletter Link. Bitte immer "http://" oder "https://" anführen!'
@@ -103,7 +109,7 @@ autoUpdater.on("update-available", () => {
   mainWindow.webContents.send("update_available");
 });
 
-autoUpdater.on("update-not-available", info => {
+autoUpdater.on("update-not-available", (info) => {
   mainWindow.webContents.send("update_not_available");
   console.log("update not available");
 });
@@ -112,11 +118,11 @@ autoUpdater.on("update-downloaded", () => {
   mainWindow.webContents.send("update_downloaded");
 });
 
-autoUpdater.on("update-downloaded", info => {
+autoUpdater.on("update-downloaded", (info) => {
   mainWindow.webContents.send("Update downloaded");
 });
 
-autoUpdater.on("error", err => {
+autoUpdater.on("error", (err) => {
   mainWindow.webContents.send("Error in auto-updater. " + err);
 });
 
