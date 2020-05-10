@@ -51,13 +51,13 @@ app.on("ready", () => {
   app.focus();
   autoUpdater.checkForUpdatesAndNotify();
 
-  isDev &&
-    BrowserWindow.addDevToolsExtension(
-      path.join(
-        os.homedir(),
-        "/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.6.0_0"
-      )
-    );
+  // isDev &&
+  //   BrowserWindow.addDevToolsExtension(
+  //     path.join(
+  //       os.homedir(),
+  //       "/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.6.0_0"
+  //     )
+  //   );
 });
 
 app.on("before-quit", () => {
