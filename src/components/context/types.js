@@ -37,10 +37,8 @@ export const CLOSE_DISPLAY = "CLOSE_DISPLAY";
 export const SET_NAVSTATE = "SET_NAVSTATE";
 
 // alert types
-export const SET_ALERT_MESSAGE = "SET_ALERT_MESSAGE";
-export const SET_ALERT_BUTTON = "SET_ALERT_BUTTON";
-export const SET_ALERT_ONCLICK = "SET_ALERT_ONCLICK";
 export const REMOVE_ALERT = "REMOVE_ALERT";
+export const SET_ALERT_STATE = "SET_ALERT_STATE";
 
 // lungenembolie types
 export const SET_LUNGENEMBOLIE = "SET_LUNGENEMBOLIE";

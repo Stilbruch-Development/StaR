@@ -68,11 +68,11 @@ const ExpanderState = (props) => {
       );
     } catch (err) {
       dispatch({ type: EXPANDER_ERROR, payload: err });
-      setAlert(
-        "",
-        "",
-        "Login-Berrechtigung ist abgelaufen. Bitte melde dich erneut an."
-      );
+      setAlert({
+        item: "message",
+        value:
+          "Login-Berrechtigung ist abgelaufen. Bitte melde dich erneut an.",
+      });
     }
   };
 
@@ -88,11 +88,11 @@ const ExpanderState = (props) => {
       );
     } catch (err) {
       dispatch({ type: EXPANDER_ERROR, payload: err });
-      setAlert(
-        "",
-        "",
-        "Login-Berrechtigung ist abgelaufen. Bitte melde dich erneut an."
-      );
+      setAlert({
+        item: "message",
+        value:
+          "Login-Berrechtigung ist abgelaufen. Bitte melde dich erneut an.",
+      });
     }
   };
 
@@ -114,11 +114,11 @@ const ExpanderState = (props) => {
         );
     } catch (err) {
       dispatch({ type: EXPANDER_ERROR, payload: err });
-      setAlert(
-        "",
-        "",
-        "Login-Berrechtigung ist abgelaufen. Bitte melde dich erneut an."
-      );
+      setAlert({
+        item: "message",
+        value:
+          "Login-Berrechtigung ist abgelaufen. Bitte melde dich erneut an.",
+      });
     }
   };
 

@@ -7,7 +7,7 @@ const VisionXLogo = (props) => {
   const [goToExternalLink] = useExternalLink();
 
   const onClickLogo = () => {
-    // goToExternalLink("https://www.visionx.dev");
+    goToExternalLink("https://www.visionx.dev");
   };
 
   return (

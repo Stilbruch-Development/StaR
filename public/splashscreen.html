@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      body {
+        font-family: "Play", Arial;
+        color: black;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        outline: 0;
+        font-size: 1vw;
+        z-index: -1;
+        background-color: rgb(220, 220, 220);
+      }
+
+      ::-webkit-scrollbar {
+        display: none !important;
+      }
+
+      #landingMain {
+        /* height: 100vh; */
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+      }
+
+      #logo {
+        width: 50%;
+        height: 50%;
+      }
+
+      #landingSub {
+        font-size: 2rem;
+        letter-spacing: 1rem;
+        margin: 2rem;
+      }
+
+      #splash-progress-bar {
+        width: 1%;
+        height: 2px;
+        text-align: center;
+        line-height: 32px;
+        background-color: black;
+      }
+    </style>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="../src/images/StaR_Main.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="StaR" content="Standards der Radiologie" />
+    <link rel="apple-touch-icon" href="../src/images/StaR_Main.svg" />
+
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <title>StaR -Standards der Radiologie</title>
+  </head>
+  <body>
+    <div id="landingMain">
+      <div id="logo">
+        <img src="../src/images/StaR_Main_500.svg" alt="MDN" />
+      </div>
+      <div id="landingSub">
+        Standards der Radiologie
+      </div>
+    </div>
+    <div id="splash-progress-bar"></div>
+
+    <script>
+      function update() {
+        var element = document.getElementById("splash-progress-bar");
+        var width = 1;
+        var identity = setInterval(scene, 60);
+        function scene() {
+          if (width >= 100) {
+            var ipcRenderer = require("electron").ipcRenderer;
+            ipcRenderer.send("showMainWindow");
+            clearInterval(identity);
+          } else {
+            width++;
+            element.style.width = width + "%";
+          }
+        }
+      }
+      update();
+    </script>
+  </body>
+</html>

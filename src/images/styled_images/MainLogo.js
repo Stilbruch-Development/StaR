@@ -14,6 +14,7 @@ const Logo = styled.div`
   canvas {
     display: block;
     width: 100%;
+    height: 80%;
     visibility: hidden;
   }
 
@@ -39,10 +40,10 @@ const Logo = styled.div`
   /* >1800px = wide screen */
 `;
 
-export default function MainLogo() {
+export default function MainLogo(props) {
   return (
     <Logo>
-      <canvas width="100%" height="90%"></canvas>
+      <canvas width="100" height="80%"></canvas>
       <StaRLogo />
     </Logo>
   );

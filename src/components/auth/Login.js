@@ -1,37 +1,32 @@
 import React, { useState, useContext, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import { makeStyles } from "@material-ui/core/styles";
 import styled from "styled-components";
 import AlertContext from "../context/alert/alertContext";
 import AuthContext from "../context/auth/authContext";
-import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
+import Logo from "../../images/styled_images/MainLogo";
 
 const MainStyleWrapper = styled.div`
-  margin: 15% 35% 0% 35%;
+  margin: 0% 35% 0% 35%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   height: 100vh;
+
+  button {
+    font-size: 1.6rem;
+    font-family: inherit;
+    margin-top: 5rem;
+  }
 `;
 
-const useStyles = makeStyles(theme => ({
-  button: {
-    margin: theme.spacing(1),
-    marginTop: "10%"
-  },
-  input: {
-    display: "none"
-  }
-}));
-
-const Login = props => {
+const Login = (props) => {
   const alertContext = useContext(AlertContext);
   const authContext = useContext(AuthContext);
 
-  const { setAlertMessage } = alertContext;
+  const { setAlert } = alertContext;
 
   const { login, error, clearErrors, isAuthenticated } = authContext;
 
@@ -44,36 +39,40 @@ const Login = props => {
 
   const [user, setUser] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
   const { email, password } = user;
 
-  const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
+  const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
 
   const onSubmit = () => {
     if (email === "" || password === "") {
-      setAlertMessage(
-        "Bitte gib eine gültige Email und das zugehörige Password an."
-      );
+      setAlert({
+        item: "message",
+        value: "Bitte gib eine gültige Email und das zugehörige Password ein.",
+      });
     } else if (error) {
-      setAlertMessage(error);
+      setAlert({
+        item: "message",
+        value: error,
+      });
       clearErrors();
     } else {
       login({
         email,
-        password
+        password,
       });
     }
   };
 
-  const onButtonClick = e => {
+  const onButtonClick = (e) => {
     e.preventDefault();
     onSubmit();
   };
 
   useEffect(() => {
-    const listener = event => {
+    const listener = (event) => {
       if (event.code === "Enter" || event.code === "NumpadEnter") {
         onSubmit();
       }
@@ -84,16 +83,11 @@ const Login = props => {
     };
   });
 
-  const classes = useStyles();
-
   return (
     <MainStyleWrapper>
-      <Typography
-        variant="h4"
-        style={{ fontFamily: "inherit", marginBottom: "10%" }}
-      >
-        Benutzer anmelden
-      </Typography>
+      <div style={{ width: "80%", padding: "2rem" }}>
+        <Logo />
+      </div>
       <Divider />
       <TextField
         name="email"
@@ -118,7 +112,6 @@ const Login = props => {
         variant="contained"
         fullWidth
         color="primary"
-        className={classes.button}
         onClick={onButtonClick}
       >
         Login

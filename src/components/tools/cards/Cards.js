@@ -15,7 +15,7 @@ import CardsContext from "../../context/cards/cardsContext";
 const MainStyleWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   margin: 0;
   padding: 1rem;
 `;
@@ -25,13 +25,14 @@ const CardsItemWrapper = styled.div`
   flex-direction: column;
   justify-content: stretch;
   margin: 0;
-  flex-grow: 3;
+  flex: 3 1 auto;
+  max-width: 60%;
+  word-wrap: break-word;
 `;
 
 const CardsListWrapper = styled.div`
-  min-width: 40%;
-  flex-grow: 0;
   margin: 0 1rem;
+  flex: 0 1 auto;
 `;
 
 const UnselectedWrapper = styled.div`
@@ -39,7 +40,6 @@ const UnselectedWrapper = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.2);
   background-color: white;
   padding: 1vw;
-  font-size: 1.5rem;
   padding: 3rem;
   color: rgba(0, 0, 0, 0.5);
 `;

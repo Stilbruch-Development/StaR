@@ -2,18 +2,18 @@ import { useContext } from "react";
 import AlertContext from "../components/context/alert/alertContext";
 
 export default function useAutoUpdater() {
-  const {
-    setAlertMessage,
-    setAlertButton,
-    setAlertOnClick,
-    removeAlert
-  } = useContext(AlertContext);
+  const { removeAlert, setAlert } = useContext(AlertContext);
 
   const autoUpdater = () => {
     window.ipcRenderer.on("update_available", () => {
       window.ipcRenderer.removeAllListeners("update_available");
-      setAlertMessage(
-        "Es steht ein neues Update zur Verfügung. Bitte etwas Gedult, es wird jetzt herunter geladen..."
+      setAlert(
+        {
+          item: "message",
+          value:
+            "Es steht ein neues Update zur Verfügung. Bitte etwas Gedult, es wird jetzt herunter geladen...",
+        },
+        { item: "color", value: "rgba(244, 255, 184, 0.8)" }
       );
     });
 
@@ -29,11 +29,16 @@ export default function useAutoUpdater() {
 
     window.ipcRenderer.on("update_downloaded", () => {
       window.ipcRenderer.removeAllListeners("update_downloaded");
-      setAlertMessage(
-        "Update erfolgreich geladen. Die Installation erfolg nach dem Neustart. Jetzt neu starten?"
+      setAlert(
+        {
+          item: "message",
+          value:
+            "Update erfolgreich geladen. Die Installation erfolg nach dem Neustart. Jetzt neu starten?",
+        },
+        { item: "color", value: "rgba(191, 255, 184, 0.8)" },
+        { item: "button", value: "Neustart" },
+        { item: "onClickButton", value: restartApp }
       );
-      setAlertButton("Neustart");
-      setAlertOnClick(restartApp);
     });
   };
 

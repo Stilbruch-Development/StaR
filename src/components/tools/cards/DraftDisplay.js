@@ -19,7 +19,7 @@ const DraftDisplay = (props) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const { selectedCardsItem } = useContext(CardsContext);
   const [goToExternalLink] = useExternalLink();
-  const { setAlertMessage } = useContext(AlertContext);
+  const { setAlert } = useContext(AlertContext);
 
   useEffect(() => {
     if (selectedCardsItem !== null && selectedCardsItem !== undefined) {
@@ -40,7 +40,10 @@ const DraftDisplay = (props) => {
 
   window.ipcRenderer.on("open_external_link_error", (event, msg) => {
     window.ipcRenderer.removeAllListeners("open_external_link_error");
-    setAlertMessage(msg);
+    setAlert({
+      item: "message",
+      value: msg,
+    });
     props.handleClose();
   });
 

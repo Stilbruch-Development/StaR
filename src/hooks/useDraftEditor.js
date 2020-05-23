@@ -9,7 +9,7 @@ import AlertContext from "../components/context/alert/alertContext";
 import AuthContext from "../components/context/auth/authContext";
 
 export default function useDraftEditor() {
-  const { setAlertMessage } = useContext(AlertContext);
+  const { setAlertState, removeAlert } = useContext(AlertContext);
   const { user } = useContext(AuthContext);
 
   const setEditorEmpty = (editorState, setEditorState) => {
@@ -21,7 +21,9 @@ export default function useDraftEditor() {
   const copyEditorToClipboard = (editorState) => {
     const content = editorState.getCurrentContent().getPlainText("\u0001");
     window.ipcRenderer.send("copy_to_clipboard", content);
-    setAlertMessage("Inhalt zur Zwischenablage kopiert!");
+    setAlertState("message", "Inhalt zur Zwischenablage kopiert!");
+    setAlertState("color", "rgba(191, 255, 184, 0.8)");
+    removeAlert();
   };
 
   const saveEditorUserIndependent = (editorState) => {
@@ -30,14 +32,18 @@ export default function useDraftEditor() {
       var rawContentState = convertToRaw(contentState);
       var storageItem = { rawContentState: rawContentState, userId: user._id };
       localStorage.setItem("editorState_user", JSON.stringify(storageItem));
-      setAlertMessage("Inhalt im Kurzspeicher gespeichert.");
+      setAlertState("message", "Inhalt im Kurzspeicher gespeichert.");
+      setAlertState("color", "rgba(191, 255, 184, 0.8)");
+      removeAlert();
     }
   };
 
   const deleteLokalstore = () => {
     localStorage.removeItem("editorState");
     localStorage.removeItem("editorState_user");
-    setAlertMessage("Lokaler Speicher gelöscht.");
+    setAlertState("message", "Lokaler Speicher gelöscht.");
+    setAlertState("color", "rgba(191, 255, 184, 0.8)");
+    removeAlert();
   };
 
   const loadFromLokalStore = (editorState, setEditorState, decorator) => {
@@ -52,7 +58,9 @@ export default function useDraftEditor() {
         EditorState.push(editorState, newContentState, "change-block-data")
       );
     } else {
-      setAlertMessage("Leerer lokaler Speicher. Laden nicht möglich.");
+      setAlertState("message", "Leerer lokaler Speicher. Laden nicht möglich.");
+      setAlertState("color", "rgba(255, 184, 191, 0.8)");
+      removeAlert();
     }
   };
 

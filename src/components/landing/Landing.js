@@ -8,14 +8,14 @@ const LandingMain = styled.div`
   width: 100vw;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   align-items: center;
 `;
 
 const LandingSub = styled.div`
-  font-size: 2rem;
+  font-size: 3rem;
   letter-spacing: 1rem;
-  margin: 3rem;
+  margin: 2rem;
 
   // phone
   @media (max-width: 600px) {
@@ -42,7 +42,7 @@ const Landing = () => {
 
   return (
     <LandingMain id="Start" data-testid="LandingComponent">
-      <div className="navChange" style={{ width: "40%" }}>
+      <div className="navChange" style={{ width: "40%", padding: "4rem" }}>
         <MainLogo />
       </div>
       <LandingSub className="navChange">Standards der Radiologie</LandingSub>

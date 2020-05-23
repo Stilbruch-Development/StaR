@@ -1,23 +1,19 @@
-import {
-  SET_ALERT_MESSAGE,
-  SET_ALERT_BUTTON,
-  SET_ALERT_ONCLICK,
-  REMOVE_ALERT
-} from "../types";
+import { REMOVE_ALERT, SET_ALERT_STATE } from "../types";
 
 export default (state, action) => {
   switch (action.type) {
-    case SET_ALERT_MESSAGE:
-      return { ...state, message: action.payload };
-    case SET_ALERT_BUTTON:
-      return { ...state, button: action.payload };
-    case SET_ALERT_ONCLICK:
-      return { ...state, onClickButton: action.payload };
+    case SET_ALERT_STATE:
+      const { item, value } = action.payload;
+      return {
+        ...state,
+        [item]: value,
+      };
     case REMOVE_ALERT:
       return {
         message: "",
         button: "",
-        onClickButton: null
+        color: "rgba(255, 184, 191, 0.8)",
+        onClickButton: null,
       };
     default:
       return state;

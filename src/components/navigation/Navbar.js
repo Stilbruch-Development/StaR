@@ -54,30 +54,6 @@ const Navbar = () => {
 
   const { clearCards, setCardsState } = useContext(CardsContext);
 
-  window.addEventListener("load", function () {
-    const body = document.querySelector("body");
-    const navbar = document.querySelector(NavMain);
-
-    function logScroll() {
-      const navBottom = navbar.getBoundingClientRect().bottom;
-
-      const element = document.getElementsByClassName("navChange");
-      for (let i = 0; i < element.length; i += 1) {
-        const elementTop = element[i].getBoundingClientRect().top;
-        const elementBottom = element[i].getBoundingClientRect().bottom;
-
-        if (elementTop <= navBottom && elementBottom >= 0) {
-          navbar.style.background = "rgba(0, 80, 120, 0.2)";
-          break;
-        }
-
-        navbar.style.background = "rgba(0, 80, 120, 0.8)";
-      }
-    }
-
-    body.onscroll = logScroll;
-  });
-
   const onLogout = () => {
     setCardsState("cardsUserData", null);
     clearCards();

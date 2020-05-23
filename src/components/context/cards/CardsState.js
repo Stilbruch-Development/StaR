@@ -75,9 +75,11 @@ const CardsState = (props) => {
       );
     } catch (err) {
       dispatch({ type: CARDS_ERROR, payload: err });
-      setAlert(
-        "Login-Berrechtigung ist abgelaufen. Bitte melde dich erneut an."
-      );
+      setAlert({
+        item: "message",
+        value:
+          "Login-Berrechtigung ist abgelaufen. Bitte melde dich erneut an.",
+      });
     }
   };
 
@@ -93,9 +95,11 @@ const CardsState = (props) => {
       );
     } catch (err) {
       dispatch({ type: CARDS_ERROR, payload: err });
-      setAlert(
-        "Login-Berrechtigung ist abgelaufen. Bitte melde dich erneut an."
-      );
+      setAlert({
+        item: "message",
+        value:
+          "Login-Berrechtigung ist abgelaufen. Bitte melde dich erneut an.",
+      });
     }
   };
 
@@ -118,9 +122,11 @@ const CardsState = (props) => {
         );
     } catch (err) {
       dispatch({ type: CARDS_ERROR, payload: err });
-      setAlert(
-        "Login-Berrechtigung ist abgelaufen. Bitte melde dich erneut an."
-      );
+      setAlert({
+        item: "message",
+        value:
+          "Login-Berrechtigung ist abgelaufen. Bitte melde dich erneut an.",
+      });
     }
   };
 

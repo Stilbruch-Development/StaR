@@ -16,21 +16,21 @@ const MainStyleWrapper = styled.div`
   align-items: center;
 `;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1),
-    marginTop: "10%"
+    marginTop: "10%",
   },
   input: {
-    display: "none"
-  }
+    display: "none",
+  },
 }));
 
-const Register = props => {
+const Register = (props) => {
   const alertContext = useContext(AlertContext);
   const authContext = useContext(AuthContext);
 
-  const { setAlertMessage } = alertContext;
+  const { setAlert } = alertContext;
 
   const { register, error, clearErrors } = authContext;
 
@@ -39,14 +39,14 @@ const Register = props => {
     last_name: "",
     email: "",
     password: "",
-    password2: ""
+    password2: "",
   });
 
   const { first_name, last_name, email, password, password2 } = user;
 
-  const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
+  const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
 
     if (
@@ -56,24 +56,34 @@ const Register = props => {
       password === "" ||
       password2 === ""
     ) {
-      setAlertMessage("Bitte alle Felder ausfüllgen!");
+      setAlert({ item: "message", value: "Bitte alle Felder ausfüllen!" });
     } else if (password !== password2) {
-      setAlertMessage("Passwörter stimmen nicht überein!");
+      setAlert({
+        item: "message",
+        value: "Passwörter stimmen nicht überein!",
+      });
     } else if (error) {
-      setAlertMessage(error);
+      setAlert({
+        item: "message",
+        value: error,
+      });
       clearErrors();
     } else {
       register({
         first_name,
         last_name,
         email,
-        password
+        password,
       });
-      setAlertMessage(
-        `Neuer Beneutzer angelegt: ${first_name} ${last_name}, ${email}`
+      setAlert(
+        {
+          item: "message",
+          value: `Neuer Beneutzer angelegt: ${first_name} ${last_name}, ${email}`,
+        },
+        { item: "color", value: "rgba(191, 255, 184, 0.8)" }
       );
       props.setAdminState({
-        register: false
+        register: false,
       });
     }
   };

@@ -33,7 +33,7 @@ const AuthState = (props) => {
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
   const [checkToken] = useJsonWebToken();
-  const { setAlertMessage, removeAlert } = useContext(AlertContext);
+  const { removeAlert, setAlert } = useContext(AlertContext);
 
   // Load User
   const loadUser = async () => {
@@ -50,7 +50,10 @@ const AuthState = (props) => {
       }
     } catch (err) {
       dispatch({ type: AUTH_ERROR, payload: err.message });
-      setAlertMessage(err.message);
+      setAlert({
+        item: "message",
+        value: err.message,
+      });
     }
   };
 
@@ -99,7 +102,10 @@ const AuthState = (props) => {
         type: REGISTER_FAIL,
         payload: err.message,
       });
-      setAlertMessage(err.message);
+      setAlert({
+        item: "message",
+        value: err.message,
+      });
     }
   };
 
@@ -148,7 +154,10 @@ const AuthState = (props) => {
         type: LOGIN_FAIL,
         payload: err.message,
       });
-      setAlertMessage(err.message);
+      setAlert({
+        item: "message",
+        value: err.message,
+      });
     }
   };
 

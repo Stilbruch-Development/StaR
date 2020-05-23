@@ -23,19 +23,18 @@ const Notefication = styled.div`
   width: 85vw;
   padding: 10px;
   border-radius: 5px;
-  background-color: rgba(255, 184, 191, 0.7);
   color: black;
   font-size: 2rem;
   font-weight: bold;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 `;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   button: {
     width: "100%",
     fontSize: "1.5rem",
-    margin: "1rem"
-  }
+    margin: "1rem",
+  },
 }));
 
 const ButtonWrapper = styled.div`
@@ -48,14 +47,18 @@ const ButtonWrapper = styled.div`
 const Alert = () => {
   const classes = useStyles();
 
-  const { message, button, onClickButton, removeAlert } = useContext(
-    AlertContext
-  );
+  const {
+    message,
+    button,
+    onClickButton,
+    removeAlert,
+    alertState,
+  } = useContext(AlertContext);
 
   return (
     <AlertWrapper>
       {message !== "" && (
-        <Notefication>
+        <Notefication style={{ backgroundColor: alertState.color }}>
           <p>{message}</p>
           <CancelOutlinedIcon
             style={{ fontSize: "3rem", cursor: "pointer", margin: "1rem" }}
