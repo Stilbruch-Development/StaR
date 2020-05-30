@@ -7,14 +7,20 @@ import FormatAlignCenterIcon from "@material-ui/icons/FormatAlignCenter";
 import FormatAlignRightIcon from "@material-ui/icons/FormatAlignRight";
 import styled from "styled-components";
 import useDraftEditor from "../../hooks/useDraftEditor";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import SaveIcon from "@material-ui/icons/Save";
+import FileCopyIcon from "@material-ui/icons/FileCopy";
+import BackupIcon from "@material-ui/icons/Backup";
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import CloudOffIcon from "@material-ui/icons/CloudOff";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   button: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(1)
   },
   input: {
-    display: "none",
-  },
+    display: "none"
+  }
 }));
 
 const StyleWrapper = styled.div`
@@ -23,10 +29,10 @@ const StyleWrapper = styled.div`
   justify-content: flex-start;
   flex-wrap: wrap;
   align-items: center;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
 `;
 
-const EditorToolBar = (props) => {
+const EditorToolBar = props => {
   const classes = useStyles();
 
   const {
@@ -34,7 +40,7 @@ const EditorToolBar = (props) => {
     copyEditorToClipboard,
     saveEditorUserIndependent,
     deleteLokalstore,
-    loadFromLokalStore,
+    loadFromLokalStore
   } = useDraftEditor();
 
   return (
@@ -44,7 +50,7 @@ const EditorToolBar = (props) => {
         color="primary"
         className={classes.button}
         onClick={() => props._toggleInlineStyle("BOLD")}
-        style={{ fontWeight: "bolder" }}
+        style={{ fontWeight: "bolder", fontSize: "inherit" }}
       >
         Fett
       </Button>
@@ -53,7 +59,7 @@ const EditorToolBar = (props) => {
         color="primary"
         className={classes.button}
         onClick={() => props._toggleInlineStyle("ITALIC")}
-        style={{ fontStyle: "italic" }}
+        style={{ fontStyle: "italic", fontSize: "inherit" }}
       >
         Kursiv
       </Button>
@@ -62,14 +68,14 @@ const EditorToolBar = (props) => {
         color="primary"
         className={classes.button}
         onClick={() => props._toggleInlineStyle("UNDERLINE")}
-        style={{ textDecoration: "underline" }}
+        style={{ textDecoration: "underline", fontSize: "inherit" }}
       >
         Unterstrichen
       </Button>
       <ButtonGroup
         color="primary"
         aria-label="outlined primary button group"
-        style={{ margin: "8px" }}
+        style={{ margin: "8px", fontSize: "inherit" }}
       >
         <Button onClick={() => props._toggleBlockType("alignLeft")}>
           <FormatAlignLeftIcon />
@@ -88,8 +94,9 @@ const EditorToolBar = (props) => {
         onClick={() => {
           setEditorEmpty(props.editorState, props.setEditorState);
         }}
+        style={{ fontSize: "inherit" }}
       >
-        Inhalt Löschen
+        <DeleteForeverIcon />
       </Button>
       <Button
         variant="outlined"
@@ -98,16 +105,18 @@ const EditorToolBar = (props) => {
         onClick={() => {
           copyEditorToClipboard(props.editorState);
         }}
+        style={{ fontSize: "inherit" }}
       >
-        Kopieren
+        <FileCopyIcon />
       </Button>
       <Button
         variant="outlined"
         color="primary"
         className={classes.button}
         onClick={() => saveEditorUserIndependent(props.editorState)}
+        style={{ fontSize: "inherit" }}
       >
-        Inhalt kurzspeichern
+        <SaveIcon />
       </Button>
       <Button
         variant="outlined"
@@ -116,16 +125,18 @@ const EditorToolBar = (props) => {
         onClick={() =>
           loadFromLokalStore(props.editorState, props.setEditorState)
         }
+        style={{ fontSize: "inherit" }}
       >
-        Kurzspeicher laden
+        <CloudUploadIcon />
       </Button>
       <Button
         variant="outlined"
         color="primary"
         className={classes.button}
         onClick={deleteLokalstore}
+        style={{ fontSize: "inherit" }}
       >
-        Kurzspeicher löschen
+        <CloudOffIcon />
       </Button>
     </StyleWrapper>
   );

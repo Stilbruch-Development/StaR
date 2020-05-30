@@ -68,7 +68,7 @@ const Navbar = () => {
         {isAuthenticated && (
           <>
             <NavItem head="Arbeitsplatz" navLink="/workplace" />
-            <NavItem head="Einstellungen" navLink="/settings" />
+            {/* <NavItem head="Einstellungen" navLink="/settings" /> */}
           </>
         )}
         {isAuthenticated && user && user.role && (
@@ -82,17 +82,13 @@ const Navbar = () => {
               style={{
                 textDecoration: "none",
                 textShadow: "none",
-                cursor: "default",
+                cursor: "default"
               }}
               head={user && `Hallo ${user.first_name}`}
               navLink="#!"
             />
             <div onClick={onLogout}>
-              <NavItem
-                onClick={(e) => onLogout()}
-                head="Ausloggen"
-                navLink="/"
-              />
+              <NavItem onClick={e => onLogout()} head="Ausloggen" navLink="/" />
             </div>
           </>
         ) : (

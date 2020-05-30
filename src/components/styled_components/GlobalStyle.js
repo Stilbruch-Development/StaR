@@ -10,6 +10,7 @@ const GlobalStyle = createGlobalStyle`
     src: local('Play'), local('Play-Regular'),
         url(${require("../../fonts/Play/Play-Regular.ttf")}) format('truetype')
   }
+
   @font-face {
     font-family: 'Play';
     font-style: bold;

@@ -18,11 +18,14 @@ const MainStyleWrapper = styled.div`
   button {
     font-size: 1.6rem;
     font-family: inherit;
-    margin-top: 5rem;
+    margin-top: 4rem;
+  }
+  .MuiTextField-root {
+    font-family: Play;
   }
 `;
 
-const Login = (props) => {
+const Login = props => {
   const alertContext = useContext(AlertContext);
   const authContext = useContext(AuthContext);
 
@@ -39,40 +42,40 @@ const Login = (props) => {
 
   const [user, setUser] = useState({
     email: "",
-    password: "",
+    password: ""
   });
 
   const { email, password } = user;
 
-  const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
+  const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
 
   const onSubmit = () => {
     if (email === "" || password === "") {
       setAlert({
         item: "message",
-        value: "Bitte gib eine gültige Email und das zugehörige Password ein.",
+        value: "Bitte gib eine gültige Email und das zugehörige Password ein."
       });
     } else if (error) {
       setAlert({
         item: "message",
-        value: error,
+        value: error
       });
       clearErrors();
     } else {
       login({
         email,
-        password,
+        password
       });
     }
   };
 
-  const onButtonClick = (e) => {
+  const onButtonClick = e => {
     e.preventDefault();
     onSubmit();
   };
 
   useEffect(() => {
-    const listener = (event) => {
+    const listener = event => {
       if (event.code === "Enter" || event.code === "NumpadEnter") {
         onSubmit();
       }
@@ -107,7 +110,6 @@ const Login = (props) => {
         type="password"
         fullWidth
       />
-
       <Button
         variant="contained"
         fullWidth

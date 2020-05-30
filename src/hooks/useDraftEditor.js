@@ -3,13 +3,13 @@ import {
   EditorState,
   ContentState,
   convertToRaw,
-  convertFromRaw,
+  convertFromRaw
 } from "draft-js";
 import AlertContext from "../components/context/alert/alertContext";
 import AuthContext from "../components/context/auth/authContext";
 
 export default function useDraftEditor() {
-  const { setAlertState, removeAlert } = useContext(AlertContext);
+  const { setAlert } = useContext(AlertContext);
   const { user } = useContext(AuthContext);
 
   const setEditorEmpty = (editorState, setEditorState) => {
@@ -18,32 +18,35 @@ export default function useDraftEditor() {
     );
   };
 
-  const copyEditorToClipboard = (editorState) => {
+  const copyEditorToClipboard = editorState => {
     const content = editorState.getCurrentContent().getPlainText("\u0001");
     window.ipcRenderer.send("copy_to_clipboard", content);
-    setAlertState("message", "Inhalt zur Zwischenablage kopiert!");
-    setAlertState("color", "rgba(191, 255, 184, 0.8)");
-    removeAlert();
+    setAlert(
+      { item: "message", value: "Inhalt zur Zwischenablage kopiert!" },
+      { item: "color", value: "rgba(191, 255, 184, 0.8" }
+    );
   };
 
-  const saveEditorUserIndependent = (editorState) => {
+  const saveEditorUserIndependent = editorState => {
     if (user) {
       const contentState = editorState.getCurrentContent();
       var rawContentState = convertToRaw(contentState);
       var storageItem = { rawContentState: rawContentState, userId: user._id };
       localStorage.setItem("editorState_user", JSON.stringify(storageItem));
-      setAlertState("message", "Inhalt im Kurzspeicher gespeichert.");
-      setAlertState("color", "rgba(191, 255, 184, 0.8)");
-      removeAlert();
+      setAlert(
+        { item: "message", value: "Inhalt im Kurzspeicher gespeichert." },
+        { item: "color", value: "rgba(191, 255, 184, 0.8" }
+      );
     }
   };
 
   const deleteLokalstore = () => {
     localStorage.removeItem("editorState");
     localStorage.removeItem("editorState_user");
-    setAlertState("message", "Lokaler Speicher gelöscht.");
-    setAlertState("color", "rgba(191, 255, 184, 0.8)");
-    removeAlert();
+    setAlert(
+      { item: "message", value: "Kurzspeicher gelöscht." },
+      { item: "color", value: "rgba(191, 255, 184, 0.8" }
+    );
   };
 
   const loadFromLokalStore = (editorState, setEditorState, decorator) => {
@@ -58,9 +61,10 @@ export default function useDraftEditor() {
         EditorState.push(editorState, newContentState, "change-block-data")
       );
     } else {
-      setAlertState("message", "Leerer lokaler Speicher. Laden nicht möglich.");
-      setAlertState("color", "rgba(255, 184, 191, 0.8)");
-      removeAlert();
+      setAlert({
+        item: "message",
+        value: "Leerer lokaler Speicher. Laden nicht möglich."
+      });
     }
   };
 
@@ -69,6 +73,6 @@ export default function useDraftEditor() {
     copyEditorToClipboard,
     saveEditorUserIndependent,
     deleteLokalstore,
-    loadFromLokalStore,
+    loadFromLokalStore
   };
 }

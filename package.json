@@ -1,6 +1,6 @@
 {
   "name": "star",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Support for your clinical radiological workflow.",
   "author": "visionx.dev",
   "private": true,
@@ -18,7 +18,9 @@
     "appId": "StaR - Standards der Radiologie",
     "productName": "StaR - Standards der Radiologie",
     "extraResources": [
-      ".env"
+      ".env",
+      "./src/images/StaR_Main_500.svg",
+      "./src/fonts/Play/Play-Regular.ttf"
     ],
     "publish": [
       {

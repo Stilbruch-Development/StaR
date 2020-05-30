@@ -5,7 +5,7 @@ const {
   ipcMain,
   clipboard,
   shell,
-  screen,
+  screen
 } = require("electron");
 const { autoUpdater } = require("electron-updater");
 const path = require("path");
@@ -44,8 +44,8 @@ const createWindow = () => {
     webPreferences: {
       devTools: tools,
       nodeIntegration: true,
-      preload: __dirname + "/preload.js",
-    },
+      preload: __dirname + "/preload.js"
+    }
   });
 
   mainWindow.loadURL(
@@ -54,27 +54,30 @@ const createWindow = () => {
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
 
-  splashScreen = new BrowserWindow({
-    minWidth: width,
-    minHeight: height,
-    width: width,
-    height: height,
-    center: true,
-    webPreferences: {
-      nodeIntegration: true,
-      webSecurity: false,
-    },
-    frame: false,
-    skipTaskbar: true,
-    resizable: false,
-    alwaysOnTop: true,
-  });
+  if (isDev === false) {
+    splashScreen = new BrowserWindow({
+      minWidth: Math.floor(width * 0.8),
+      minHeight: Math.floor(height * 0.8),
+      width: Math.floor(width * 0.8),
+      height: Math.floor(height * 0.8),
+      center: true,
+      show: false,
+      webPreferences: {
+        devTools: false,
+        nodeIntegration: true,
+        preload: __dirname + "/preload.js"
+      },
+      frame: false,
+      skipTaskbar: false,
+      resizable: false,
+      alwaysOnTop: true
+    });
 
-  splashScreen.loadURL(
-    isDev
-      ? `file://${path.join(__dirname, "../public/splashscreen.html")}`
-      : `file://${path.join(__dirname, "../build/splashscreen.html")}`
-  );
+    splashScreen.loadURL(
+      `file://${path.join(__dirname, "../build/splashscreen.html")}`
+      // `file://${path.join(__dirname, "../public/splashscreen.html")}`
+    );
+  }
 
   mainWindow.on("closed", () => (mainWindow = null));
 };
@@ -84,6 +87,21 @@ app.on("ready", () => {
   app.focus();
   autoUpdater.checkForUpdatesAndNotify();
 
+  !isDev &&
+    splashScreen.once("ready-to-show", () => {
+      splashScreen.show();
+    });
+
+  mainWindow.once("ready-to-show", () => {
+    console.log("loaded");
+    isDev
+      ? mainWindow.show()
+      : setTimeout(() => {
+          splashScreen.destroy();
+          mainWindow.show();
+        }, 5000);
+  });
+
   // isDev &&
   //   BrowserWindow.addDevToolsExtension(
   //     path.join(
@@ -91,11 +109,6 @@ app.on("ready", () => {
   //       "/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.6.0_0"
   //     )
   //   );
-});
-
-ipcMain.on("showMainWindow", () => {
-  splashScreen.destroy();
-  mainWindow.show();
 });
 
 app.on("before-quit", () => {
@@ -112,7 +125,7 @@ app.on("window-all-closed", () => {
 //
 //-------------------------------------------------------------------
 
-ipcMain.on("app_version", (event) => {
+ipcMain.on("app_version", event => {
   event.sender.send("app_version", { version: app.getVersion() });
 });
 
@@ -125,7 +138,7 @@ ipcMain.on("copy_to_clipboard", (event, content) => {
 });
 
 ipcMain.on("open_external_link", (event, link) => {
-  shell.openExternal(link).catch((e) => {
+  shell.openExternal(link).catch(e => {
     event.reply(
       "open_external_link_error",
       'Fehlerhafter oder inkompletter Link. Bitte immer "http://" oder "https://" anführen!'
@@ -141,7 +154,7 @@ autoUpdater.on("update-available", () => {
   mainWindow.webContents.send("update_available");
 });
 
-autoUpdater.on("update-not-available", (info) => {
+autoUpdater.on("update-not-available", info => {
   mainWindow.webContents.send("update_not_available");
   console.log("update not available");
 });
@@ -150,11 +163,11 @@ autoUpdater.on("update-downloaded", () => {
   mainWindow.webContents.send("update_downloaded");
 });
 
-autoUpdater.on("update-downloaded", (info) => {
+autoUpdater.on("update-downloaded", info => {
   mainWindow.webContents.send("Update downloaded");
 });
 
-autoUpdater.on("error", (err) => {
+autoUpdater.on("error", err => {
   mainWindow.webContents.send("Error in auto-updater. " + err);
 });
 
