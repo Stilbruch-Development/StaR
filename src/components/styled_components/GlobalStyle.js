@@ -38,8 +38,8 @@ const GlobalStyle = createGlobalStyle`
     font-size: 1vw;
     z-index: -1;
 
-    .MuiButton-root {
-      font-family: unset;
+    .MuiInputLabel-root, .MuiButton-root {
+      font-family: inherit;
     }
   }
 

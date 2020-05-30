@@ -17,14 +17,9 @@ const MainStyleWrapper = styled.div`
 
   button {
     font-size: 1.6rem;
-    font-family: inherit;
     margin-top: 4rem;
   }
-  .MuiTextField-root {
-    font-family: Play;
-  }
 `;
-
 const Login = props => {
   const alertContext = useContext(AlertContext);
   const authContext = useContext(AuthContext);
