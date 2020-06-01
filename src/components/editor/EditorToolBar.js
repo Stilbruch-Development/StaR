@@ -10,17 +10,16 @@ import useDraftEditor from "../../hooks/useDraftEditor";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import SaveIcon from "@material-ui/icons/Save";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
-import BackupIcon from "@material-ui/icons/Backup";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import CloudOffIcon from "@material-ui/icons/CloudOff";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   button: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   input: {
-    display: "none"
-  }
+    display: "none",
+  },
 }));
 
 const StyleWrapper = styled.div`
@@ -32,7 +31,7 @@ const StyleWrapper = styled.div`
   font-size: 1.1rem;
 `;
 
-const EditorToolBar = props => {
+const EditorToolBar = (props) => {
   const classes = useStyles();
 
   const {
@@ -40,7 +39,7 @@ const EditorToolBar = props => {
     copyEditorToClipboard,
     saveEditorUserIndependent,
     deleteLokalstore,
-    loadFromLokalStore
+    loadFromLokalStore,
   } = useDraftEditor();
 
   return (
