@@ -14,7 +14,6 @@ const StyledLink = styled(Link)`
   padding: 0rem 1rem 0rem 1rem;
 
   :hover {
-    text-decoration: underline;
     text-shadow: 4px 3px 5px rgba(0, 0, 0, 0.4);
     cursor: pointer;
   }

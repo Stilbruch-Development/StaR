@@ -5,13 +5,13 @@ const {
   ipcMain,
   clipboard,
   shell,
-  screen
+  screen,
 } = require("electron");
 const { autoUpdater } = require("electron-updater");
 const path = require("path");
 const isDev = require("electron-is-dev");
 const log = require("electron-log");
-// const os = require("os");
+const os = require("os");
 
 //-------------------------------------------------------------------
 // Main Window
@@ -44,8 +44,8 @@ const createWindow = () => {
     webPreferences: {
       devTools: tools,
       nodeIntegration: true,
-      preload: __dirname + "/preload.js"
-    }
+      preload: __dirname + "/preload.js",
+    },
   });
 
   mainWindow.loadURL(
@@ -65,12 +65,12 @@ const createWindow = () => {
       webPreferences: {
         devTools: false,
         nodeIntegration: true,
-        preload: __dirname + "/preload.js"
+        preload: __dirname + "/preload.js",
       },
       frame: false,
       skipTaskbar: false,
       resizable: false,
-      alwaysOnTop: true
+      alwaysOnTop: true,
     });
 
     splashScreen.loadURL(
@@ -81,6 +81,8 @@ const createWindow = () => {
 
   mainWindow.on("closed", () => (mainWindow = null));
 };
+
+app.allowRendererProcessReuse = true;
 
 app.on("ready", () => {
   createWindow();
@@ -102,13 +104,13 @@ app.on("ready", () => {
         }, 5000);
   });
 
-  // isDev &&
-  //   BrowserWindow.addDevToolsExtension(
-  //     path.join(
-  //       os.homedir(),
-  //       "/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.6.0_0"
-  //     )
-  //   );
+  isDev &&
+    BrowserWindow.addDevToolsExtension(
+      path.join(
+        os.homedir(),
+        "/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.7.0_0"
+      )
+    );
 });
 
 app.on("before-quit", () => {
@@ -125,7 +127,7 @@ app.on("window-all-closed", () => {
 //
 //-------------------------------------------------------------------
 
-ipcMain.on("app_version", event => {
+ipcMain.on("app_version", (event) => {
   event.sender.send("app_version", { version: app.getVersion() });
 });
 
@@ -138,7 +140,7 @@ ipcMain.on("copy_to_clipboard", (event, content) => {
 });
 
 ipcMain.on("open_external_link", (event, link) => {
-  shell.openExternal(link).catch(e => {
+  shell.openExternal(link).catch((e) => {
     event.reply(
       "open_external_link_error",
       'Fehlerhafter oder inkompletter Link. Bitte immer "http://" oder "https://" anführen!'
@@ -154,7 +156,7 @@ autoUpdater.on("update-available", () => {
   mainWindow.webContents.send("update_available");
 });
 
-autoUpdater.on("update-not-available", info => {
+autoUpdater.on("update-not-available", (info) => {
   mainWindow.webContents.send("update_not_available");
   console.log("update not available");
 });
@@ -163,11 +165,11 @@ autoUpdater.on("update-downloaded", () => {
   mainWindow.webContents.send("update_downloaded");
 });
 
-autoUpdater.on("update-downloaded", info => {
+autoUpdater.on("update-downloaded", (info) => {
   mainWindow.webContents.send("Update downloaded");
 });
 
-autoUpdater.on("error", err => {
+autoUpdater.on("error", (err) => {
   mainWindow.webContents.send("Error in auto-updater. " + err);
 });
 

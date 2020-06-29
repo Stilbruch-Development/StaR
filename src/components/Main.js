@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import Landing from "./../components/landing/Landing";
 import Workplace from "./Workplace";
 import AdminPanel from "./admin/AdminPanel";
-import Register from "../components/auth/Register";
+import User from "../components/user/User";
 import Login from "../components/auth/Login";
 import PrivatRoute from "../utils/PrivatRoute";
 import Alert from "../components/context/alert/Alert";
@@ -20,8 +20,8 @@ const Main = () => {
     <>
       <Switch>
         <PrivatRoute exact path="/workplace" component={Workplace} />
+        <PrivatRoute exact path="/user" component={User} />
         <PrivatRoute exact path="/admin" component={AdminPanel} />
-        <Route exact path="/register" component={Register} />
         <Route exact path="/landing" component={Landing} />
         <Route path="/*" component={Login} />
       </Switch>

@@ -153,7 +153,7 @@ const Register = (props) => {
         color="primary"
         className={classes.button}
       >
-        Neuen Benutzer anlegen.
+        Neuen Benutzer anlegen
       </Button>
     </MainStyleWrapper>
   );

@@ -62,6 +62,15 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
+  .formError {
+    color: rgb(255,0,0);
+    background-color: rgba(255,0,0,0.1);
+    padding: 5px;
+    font-weight: bolder;
+    font-size: 1.1em;
+    border-radius: 0.5rem;
+  }
+
   // phone
   @media (max-width: 600px) {
     html, body {

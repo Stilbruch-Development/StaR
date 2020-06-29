@@ -31,7 +31,7 @@ const admin_user = {
   email: "admin",
   first_name: "Admin",
   password: "$2y$12$VgcgxTY.At3i8mTQyFF7Lu6xuzZdfuiuo6dKuiSLF8rj26VqQXb1a",
-  role: 1
+  role: 1,
 };
 
 const user_db = new PouchDB(user_db_name);
@@ -61,12 +61,12 @@ const syncDB = () => {
   // sync local pouchdb to remote IBM Cloudant
   user_db
     .sync(user_db_remote)
-    .on("complete", function() {
+    .on("complete", function () {
       console.log(
         `sync of ${user_db_name} and ${user_db_name}_remote successfully completed`
       );
     })
-    .on("error", function(err) {
+    .on("error", function (err) {
       console.log(
         `sync of ${user_db_name} and ${user_db_name}_remote failed with error: ${err}`
       );
@@ -74,12 +74,12 @@ const syncDB = () => {
 
   expander_db
     .sync(expander_db_remote)
-    .on("complete", function() {
+    .on("complete", function () {
       console.log(
         `sync of ${expander_db_name} and ${expander_db_name}_remote successfully completed`
       );
     })
-    .on("error", function(err) {
+    .on("error", function (err) {
       console.log(
         `sync of ${expander_db_name} and ${expander_db_name}_remote failed with error: ${err}`
       );
@@ -87,12 +87,12 @@ const syncDB = () => {
 
   cards_db
     .sync(cards_db_remote)
-    .on("complete", function() {
+    .on("complete", function () {
       console.log(
         `sync of ${cards_db_name} and ${cards_db_name}_remote successfully completed`
       );
     })
-    .on("error", function(err) {
+    .on("error", function (err) {
       console.log(
         `sync of ${cards_db_name} and ${cards_db_name}_remote failed with error: ${err}`
       );

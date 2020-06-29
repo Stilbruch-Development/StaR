@@ -109,6 +109,29 @@ const AuthState = (props) => {
     }
   };
 
+  // UPDATE_USER
+  const update = async (formData) => {
+    try {
+      const response = await user_db.put({
+        ...formData,
+      });
+      if (response.ok === true) {
+        setAlert(
+          { item: "message", value: "Neue Benutzerdaten gespeichert!" },
+          { item: "color", value: "rgba(191, 255, 184, 0.8" }
+        );
+        loadUser();
+      }
+    } catch (err) {
+      dispatch({ type: AUTH_ERROR, payload: err });
+      setAlert({
+        item: "message",
+        value:
+          "Neue Benutzerdaten konnten nicht gespeichert werden. Bitte neu einloggen.",
+      });
+    }
+  };
+
   // Login User
   const login = async (formData) => {
     try {
@@ -190,6 +213,7 @@ const AuthState = (props) => {
         devTools: state.devTools,
         register,
         loadUser,
+        update,
         login,
         logout,
         clearErrors,

@@ -5,6 +5,9 @@ import styled from "styled-components";
 import authContext from "../context/auth/authContext";
 import ExpanderContext from "../context/expander/expanderContext";
 import CardsContext from "../context/cards/cardsContext";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import { Link } from "react-router-dom";
 
 const NavMain = styled.div`
   display: flex;
@@ -54,10 +57,21 @@ const Navbar = () => {
 
   const { clearCards, setCardsState } = useContext(CardsContext);
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClickMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
+
   const onLogout = () => {
     setCardsState("cardsUserData", null);
     clearCards();
     clearExpander();
+    handleCloseMenu();
     logout();
   };
 
@@ -78,18 +92,47 @@ const Navbar = () => {
       <NavRight>
         {isAuthenticated ? (
           <>
-            <NavItem
-              style={{
-                textDecoration: "none",
-                textShadow: "none",
-                cursor: "default"
-              }}
-              head={user && `Hallo ${user.first_name}`}
-              navLink="#!"
-            />
-            <div onClick={onLogout}>
-              <NavItem onClick={e => onLogout()} head="Ausloggen" navLink="/" />
+            <div onClick={handleClickMenu}>
+              <NavItem
+                head={user && `Hallo ${user.first_name}!`}
+                navLink="#!"
+                aria-controls="simple-menu"
+                aria-haspopup="true"
+                onClick={handleClickMenu}
+              />
             </div>
+
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleCloseMenu}
+            >
+              <MenuItem>
+                <Link
+                  to="/user"
+                  onClick={handleCloseMenu}
+                  style={{
+                    textDecoration: "none",
+                    color: "var(--button-color-primary)",
+                    fontSize: "1.5rem",
+                  }}
+                >
+                  Benutzerdaten
+                </Link>
+              </MenuItem>
+              <MenuItem
+                style={{
+                  textDecoration: "none",
+                  color: "var(--button-color-primary)",
+                  fontSize: "1.5rem",
+                }}
+                onClick={(e) => onLogout()}
+              >
+                Logout
+              </MenuItem>
+            </Menu>
           </>
         ) : (
           <NavItem head="Login" navLink="/login" />
