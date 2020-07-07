@@ -1,21 +1,23 @@
 import React, { useState, useContext } from "react";
-import { useForm } from "react-hook-form";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import styled from "styled-components";
+import AlertContext from "../context/alert/alertContext";
 import AuthContext from "../context/auth/authContext";
-import Divider from "@material-ui/core/Divider";
+import UserTable from "./UserTable";
+import { user_db } from "../../pouchdb/db";
+import Button from "@material-ui/core/Button";
 import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import TextField from "@material-ui/core/TextField";
+import { useForm } from "react-hook-form";
 import bcrypt from "bcryptjs";
+import Divider from "@material-ui/core/Divider";
 
 const MainStyleWrapper = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 80vh;
-  padding: 3rem;
 `;
 
 const AlignWrapper = styled.div`
@@ -28,17 +30,7 @@ const HeadingWrapper = styled.div`
   font-family: inherit;
   font-size: 2.5rem;
   padding: 1rem;
-`;
-
-const DisplayWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: flex-start;
-  font-size: 1.5rem;
-  min-height: 50%;
-  margin-top: 3%;
-  font-weight: normal;
+  margin-top: 5%;
 `;
 
 const FormWrapper = styled.div`
@@ -65,92 +57,110 @@ const FormWrapper = styled.div`
   }
 `;
 
-const User = () => {
+const ChangeUser = (props) => {
+  const alertContext = useContext(AlertContext);
   const authContext = useContext(AuthContext);
 
-  const { user, devTools, update } = authContext;
+  const { setAlert } = alertContext;
+
+  const { user, update, deleteUserData } = authContext;
 
   const { register, handleSubmit, watch, errors } = useForm();
 
-  const [localState, setLocalState] = useState({
+  const [state, setState] = useState({
+    userArray: null,
+    selectedUser: null,
     editing: false,
     changingPassword: false,
+    deleteUser: false,
   });
 
-  const onClickChange = (e) => setLocalState({ ...localState, editing: true });
+  const getAllUser = async () => {
+    try {
+      let userArray;
+      if (user.role === 1) {
+        userArray = await user_db.allDocs({
+          include_docs: true,
+        });
+      }
+      setState({ userArray: userArray.rows });
 
-  const onSubmit = async (data) => {
-    delete data.password2;
+      return userArray;
+    } catch (err) {
+      setAlert({
+        item: "message",
+        value: err.message,
+      });
+    }
+  };
+
+  const onSubmit = async (formData) => {
+    delete formData.password2;
     const userData = {
-      ...user,
-      ...data,
+      ...state.selectedUser,
+      ...formData,
     };
+    delete userData.tableData;
     const salt = await bcrypt.genSalt(10);
 
-    if (data.password) {
-      userData.password = await bcrypt.hash(data.password, salt);
+    if (formData.password) {
+      userData.password = await bcrypt.hash(formData.password, salt);
     }
-
     update(userData);
-    setLocalState({ ...localState, editing: false });
+    setState({ ...state, editing: false });
+  };
+
+  const onDeleteClick = async (userData) => {
+    delete userData.tableData;
+    user.role === 1 &&
+      deleteUserData(userData) &&
+      setState({ ...state, deleteUser: false });
   };
 
   const handleCheck = (e) => {
-    setLocalState({ ...localState, [e.target.name]: e.target.checked });
+    setState({ ...state, [e.target.name]: e.target.checked });
   };
 
-  let emailInputRef;
-  let passwordInputRef;
-
-  if (devTools) {
-    emailInputRef = register({
-      required: {
-        value: true,
-        message: "Bitte eine gültige Email-Adresse angeben!",
-      },
-    });
-    passwordInputRef = register({
-      required: {
-        value: true,
-        message: "Bitte Passwort eingeben!",
-      },
-    });
-  } else {
-    emailInputRef = register({
-      required: {
-        value: true,
-        message: "Bitte eine gültige Email-Adresse angeben!",
-      },
-      pattern: {
-        value: /^([a-zA-Z0-9_\-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/i,
-        message: "Bitte eine gültige Email-Adresse angeben!",
-      },
-    });
-    passwordInputRef = register({
-      required: {
-        value: true,
-        message:
-          "Bitte Passwort aus mindestens 4 und höchstens 20 Zeichen wählen. Es muss mindestens einen Klein- und einen Großbuchstaben sowie eine Ziffer enthalten!",
-      },
-      pattern: {
-        value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,20}$/i,
-        message:
-          "Passwort aus mindestens 4 und höchstens 20 Zeichen wählen, das mindestens einen Klein- und einen Großbuchstaben sowie eine Ziffer enthält!",
-      },
-    });
-  }
+  state.userArray === null && getAllUser();
 
   return (
     <MainStyleWrapper>
       <AlignWrapper>
-        {localState.editing ? (
-          <HeadingWrapper>Benutzerdaten ändern</HeadingWrapper>
+        {state.editing ? (
+          <HeadingWrapper>BENUTZERDATEN ÄNDERN</HeadingWrapper>
         ) : (
           <HeadingWrapper>Benutzerdaten</HeadingWrapper>
         )}
-        <Divider />
+        <Divider style={{ marginBottom: "5%" }} />
       </AlignWrapper>
-      {localState.editing ? (
+      {state.userArray && !state.editing && (
+        <UserTable changeUserState={state} changeUserSetState={setState} />
+      )}
+      {!state.editing &&
+        (state.selectedUser ? (
+          <Button
+            variant="outlined"
+            color="primary"
+            style={{
+              marginTop: "5%",
+              fontSize: "1.5rem",
+              cursor: "pointer",
+              width: "80%",
+            }}
+            onClick={() => {
+              setState({
+                ...state,
+                editing: true,
+              });
+            }}
+          >
+            Benutzerdaten ändern!
+          </Button>
+        ) : (
+          <p className="formError">Bitte Benutzer auswählen!</p>
+        ))}
+
+      {state.editing && state.selectedUser && (
         <FormWrapper>
           <form onSubmit={handleSubmit(onSubmit)}>
             <TextField
@@ -159,7 +169,7 @@ const User = () => {
               label="Vorname"
               type="text"
               name="first_name"
-              defaultValue={user.first_name}
+              defaultValue={state.selectedUser.first_name}
               fullWidth
               inputRef={register({
                 required: true,
@@ -173,7 +183,7 @@ const User = () => {
             )}
             <TextField
               name="last_name"
-              defaultValue={user.last_name}
+              defaultValue={state.selectedUser.last_name}
               margin="dense"
               label="Nachname"
               type="text"
@@ -190,11 +200,16 @@ const User = () => {
             )}
             <TextField
               name="email"
-              defaultValue={user.email}
+              defaultValue={state.selectedUser.email}
               margin="dense"
               label="Email"
               fullWidth
-              inputRef={emailInputRef}
+              inputRef={register({
+                required: {
+                  value: true,
+                  message: "Bitte eine gültige Email-Adresse angeben!",
+                },
+              })}
             />
             {errors.email && (
               <p className="formError">{errors.email.message}</p>
@@ -202,7 +217,6 @@ const User = () => {
             <FormControlLabel
               control={
                 <Switch
-                  checked={localState.changingPassword}
                   onChange={handleCheck}
                   name="changingPassword"
                   color="primary"
@@ -210,7 +224,7 @@ const User = () => {
               }
               label="Passwort ändern?"
             />
-            {localState.changingPassword && (
+            {state.changingPassword && (
               <>
                 <TextField
                   name="password"
@@ -218,7 +232,12 @@ const User = () => {
                   label="Passwort"
                   type="password"
                   fullWidth
-                  inputRef={passwordInputRef}
+                  inputRef={register({
+                    required: {
+                      value: true,
+                      message: "Bitte Passwort eingeben!",
+                    },
+                  })}
                 />
                 {errors.password && (
                   <p className="formError">{errors.password.message}</p>
@@ -265,7 +284,7 @@ const User = () => {
               variant="outlined"
               fullWidth
               onClick={() => {
-                setLocalState({ ...localState, editing: false });
+                setState({ ...state, editing: false });
               }}
               style={{
                 marginTop: "10%",
@@ -277,58 +296,44 @@ const User = () => {
               Abbrechen
             </Button>
           </form>
+          <FormControlLabel
+            style={{ marginTop: "10%", color: "red" }}
+            control={
+              <Switch
+                onChange={handleCheck}
+                name="deleteUser"
+                color="primary"
+              />
+            }
+            label="BENUTZER UND ALLE BENUTZERDATEN LÖSCHEN?!"
+          />
+          {state.deleteUser && (
+            <>
+              <p className="formError" style={{ fontSize: "1.5rem" }}>
+                DER BENUTZER UND ALLE BENUTZERDATEN WERDEN UNWIEDERRUFLICH
+                GELÖSCHT!!
+              </p>
+              <Button
+                variant="outlined"
+                fullWidth
+                onClick={() => {
+                  onDeleteClick(state.selectedUser);
+                }}
+                style={{
+                  marginTop: "10%",
+                  fontSize: "1.5rem",
+                  cursor: "pointer",
+                }}
+                id="user_edit_cancel"
+              >
+                BENUTZERDATEN LÖSCHEN
+              </Button>
+            </>
+          )}
         </FormWrapper>
-      ) : (
-        <DisplayWrapper>
-          <div style={{ padding: "1rem" }}>
-            Vorname:
-            <p
-              style={{
-                fontSize: "2rem",
-                fontWeight: "bold",
-                display: "inline",
-              }}
-            >
-              {` ${user.first_name}`}
-            </p>
-          </div>
-          <div style={{ padding: "1rem" }}>
-            Nachname:
-            <p
-              style={{
-                fontSize: "2rem",
-                fontWeight: "bold",
-                display: "inline",
-              }}
-            >
-              {` ${user.last_name}`}
-            </p>
-          </div>
-          <div style={{ padding: "1rem" }}>
-            Email:
-            <p
-              style={{
-                fontSize: "2rem",
-                fontWeight: "bold",
-                display: "inline",
-              }}
-            >
-              {` ${user.email}`}
-            </p>
-          </div>
-          <Button
-            style={{ marginTop: "20%", fontSize: "1.5rem", cursor: "pointer" }}
-            variant="outlined"
-            fullWidth
-            onClick={onClickChange}
-            color="primary"
-          >
-            Benutzerdaten ändern!
-          </Button>
-        </DisplayWrapper>
       )}
     </MainStyleWrapper>
   );
 };
 
-export default User;
+export default ChangeUser;

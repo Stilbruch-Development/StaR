@@ -2,14 +2,13 @@ import React, { useReducer, useContext } from "react";
 import AuthContext from "./authContext";
 import authReducer from "./authReducer";
 import AlertContext from "../alert/alertContext";
-import { user_db, syncDB } from "../../../pouchdb/db";
+import { user_db, cards_db, expander_db, syncDB } from "../../../pouchdb/db";
 import bcrypt from "bcryptjs";
 import uuid4 from "uuid/v4";
 import jwt from "jsonwebtoken";
 import useJsonWebToken from "../../../hooks/useJsonWebToken";
 
 import {
-  REGISTER_SUCCESS,
   REGISTER_FAIL,
   USER_LOADED,
   AUTH_ERROR,
@@ -80,20 +79,20 @@ const AuthState = (props) => {
       if (matchEmail.docs.length === 0) {
         await user_db.put(formData);
 
-        const payload = {
-          user: {
-            _id: formData._id,
-          },
-        };
+        // const payload = {
+        //   user: {
+        //     _id: formData._id,
+        //   },
+        // };
 
-        const token = jwt.sign(payload, jwtSecret, {
-          expiresIn: 7200,
-        });
+        // const token = jwt.sign(payload, jwtSecret, {
+        //   expiresIn: 7200,
+        // });
 
-        dispatch({
-          type: REGISTER_SUCCESS,
-          payload: token,
-        });
+        // dispatch({
+        //   type: REGISTER_SUCCESS,
+        //   payload: token,
+        // });
       } else {
         throw new Error("Ein Benutzer mit dieser Email existiert schon!");
       }
@@ -128,6 +127,72 @@ const AuthState = (props) => {
         item: "message",
         value:
           "Neue Benutzerdaten konnten nicht gespeichert werden. Bitte neu einloggen.",
+      });
+    }
+  };
+
+  // DELETE USER AND ALL DOCUMENTS!!
+  const deleteUserData = async (user) => {
+    try {
+      const responseUser = await user_db.put({
+        ...user,
+        _deleted: true,
+      });
+
+      const expanderArray = await expander_db.find({
+        selector: { user: user._id },
+      });
+
+      expanderArray.docs.forEach((element) => {
+        element._deleted = true;
+      });
+
+      const responseExpander = await expander_db.bulkDocs(expanderArray.docs);
+      let responseExpanderNumber = 0;
+
+      responseExpander.forEach((x) => {
+        x.ok === true && (responseExpanderNumber = responseExpanderNumber + 1);
+      });
+
+      const cardsArray = await cards_db.find({
+        selector: { user: user._id },
+      });
+
+      cardsArray.docs.forEach((element) => {
+        element._deleted = true;
+      });
+
+      const responseCards = await cards_db.bulkDocs(cardsArray.docs);
+      let responseCardsNumber = 0;
+
+      responseCards.forEach((x) => {
+        x.ok === true && (responseCardsNumber = responseCardsNumber + 1);
+      });
+
+      if (
+        responseUser.ok === true &&
+        responseExpanderNumber !== 0 &&
+        responseCardsNumber !== 0
+      ) {
+        setAlert(
+          {
+            item: "message",
+            value: `Benutzer und alle Benutzerdaten wurden gelöscht!! (Expander: ${responseExpanderNumber}; Cards: ${responseCardsNumber})`,
+          },
+          { item: "color", value: "rgba(191, 255, 184, 0.8" }
+        );
+        syncDB();
+      } else {
+        setAlert({
+          item: "message",
+          value: `Löschen nur teilweise erfolgreich! User: ${responseUser.ok}; Expander: ${responseExpanderNumber}; Cards: ${responseCardsNumber};`,
+        });
+      }
+    } catch (err) {
+      dispatch({ type: AUTH_ERROR, payload: err });
+      setAlert({
+        item: "message",
+        value: "Benutzer und Benutzerdaten konnten nicht gelöscht werden!!",
       });
     }
   };
@@ -214,6 +279,7 @@ const AuthState = (props) => {
         register,
         loadUser,
         update,
+        deleteUserData,
         login,
         logout,
         clearErrors,

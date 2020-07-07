@@ -38,7 +38,7 @@ const GlobalStyle = createGlobalStyle`
     font-size: 1vw;
     z-index: -1;
 
-    .MuiInputLabel-root, .MuiButton-root {
+    .MuiInputLabel-root, .MuiButton-root, .MuiTableCell-root {
       font-family: inherit;
     }
   }

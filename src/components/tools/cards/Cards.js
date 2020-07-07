@@ -100,7 +100,7 @@ const Cards = () => {
   return (
     <>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Karten
+        Infokarten
       </Button>
 
       <Dialog

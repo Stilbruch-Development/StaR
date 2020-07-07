@@ -82,7 +82,6 @@ const Navbar = () => {
         {isAuthenticated && (
           <>
             <NavItem head="Arbeitsplatz" navLink="/workplace" />
-            {/* <NavItem head="Einstellungen" navLink="/settings" /> */}
           </>
         )}
         {isAuthenticated && user && user.role && (

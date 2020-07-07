@@ -14,12 +14,11 @@ const SidebarDiv = styled.div`
 
   .MuiButton-root {
     width: 85%;
-    height: 2.5rem;
     margin: 2rem 1rem 0 1rem;
   }
 `;
 
-const Sidebar = props => {
+const Sidebar = (props) => {
   return (
     <SidebarDiv>
       <Button variant="outlined" color="primary" onClick={props.setToggleState}>
@@ -30,7 +29,14 @@ const Sidebar = props => {
         color="primary"
         onClick={props.onRegisterClick}
       >
-        Benutzer
+        Benutzer Anlegen
+      </Button>
+      <Button
+        variant="outlined"
+        color="primary"
+        onClick={props.onChangeUserClick}
+      >
+        Benutzerdaten Ändern
       </Button>
       <Button variant="outlined" color="primary" onClick={props.onToolsClick}>
         Tools

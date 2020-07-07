@@ -91,22 +91,22 @@ const EditorToolBar = (props) => {
         color="primary"
         className={classes.button}
         onClick={() => {
-          setEditorEmpty(props.editorState, props.setEditorState);
+          copyEditorToClipboard(props.editorState);
         }}
         style={{ fontSize: "inherit" }}
       >
-        <DeleteForeverIcon />
+        <FileCopyIcon />
       </Button>
       <Button
         variant="outlined"
         color="primary"
         className={classes.button}
         onClick={() => {
-          copyEditorToClipboard(props.editorState);
+          setEditorEmpty(props.editorState, props.setEditorState);
         }}
         style={{ fontSize: "inherit" }}
       >
-        <FileCopyIcon />
+        <DeleteForeverIcon />
       </Button>
       <Button
         variant="outlined"

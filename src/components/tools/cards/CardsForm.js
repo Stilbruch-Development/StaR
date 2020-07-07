@@ -43,7 +43,6 @@ export default function CardsForm(props) {
     const event_name = event.target.name;
     const event_value = event.target.value;
     if (event_value.replace(/ /g, "").length !== 0) {
-      console.log(event_value);
       setValue({ ...value, [event_name]: event_value });
     }
     if (event_value.length === 0) {

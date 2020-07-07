@@ -30,8 +30,14 @@ const SidebarDiv = styled.div`
   }
 
   .MuiFormLabel-root {
-    font-family: unset;
     color: var(--button-color-primary);
+    width: 50%;
+  }
+
+  .MuiInputLabel-outlined {
+    z-index: 1;
+    transform: translate(14px, 14px) scale(1);
+    pointer-events: none;
   }
 
   .MuiMenu-list {
@@ -39,13 +45,14 @@ const SidebarDiv = styled.div`
     background: var(--main-bg-color);
   }
 
-  .MuiInputLabel-root.Mui-focused {
+  .MuiInputLabel-root.Mui-focused,
+  .MuiFormLabel-filled {
     font-size: 1.2rem;
     z-index: 1;
     background: var(--main-bg-color);
     padding-left: 0.2rem;
-    padding-right: 0.2rem;
-    border-radius: 25px;
+    padding-right: 1.2rem;
+    border-radius: 5px;
   }
 `;
 
@@ -65,9 +72,9 @@ const LeftSidebar = (props) => {
       <Button variant="outlined" color="primary" onClick={props.setToggleState}>
         <ArrowBackIosIcon viewBox="-5 0 24 24" />
       </Button>
-      <Expander setExpanderItem={props.setExpanderItem} />
+
       <FormControl variant="outlined">
-        <InputLabel id="lists">Listen</InputLabel>
+        <InputLabel id="lists">STANDARD BEFUNDE</InputLabel>
         <Select
           labelId="lists"
           id="lists"
@@ -83,6 +90,7 @@ const LeftSidebar = (props) => {
           <MenuItem value={"MRT-Prostata"}>MRT-Prostata</MenuItem>
         </Select>
       </FormControl>
+      <Expander setExpanderItem={props.setExpanderItem} />
       <Cards />
       <Button variant="outlined" color="primary">
         Werkzeuge

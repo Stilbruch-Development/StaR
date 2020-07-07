@@ -4,6 +4,7 @@ import useToggle from "../../hooks/useToggle";
 import Sidebar from "./Sidebar";
 import SidebarButton from "./SidebarButton";
 import Register from "../auth/Register";
+import ChangeUser from "./ChangeUser";
 import Tools from "./Tools";
 
 const MainFlex = styled.div`
@@ -11,28 +12,40 @@ const MainFlex = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
-  height: 100vh;
+  height: 120vh;
   width: 100vw;
 `;
 
 const AdminPanel = () => {
-  const [toggleState, setToggleState] = useToggle(false);
+  const [toggleState, setToggleState] = useToggle(true);
   const [AdminState, setAdminState] = useState({
     register: false,
-    tools: false
+    tools: false,
+    changeUser: false,
+    selectedUser: null,
   });
 
   const onRegisterClick = () => {
     setAdminState({
       register: !AdminState.register,
-      tools: false
+      tools: false,
+      changeUser: false,
     });
   };
 
   const onToolsClick = () => {
     setAdminState({
       register: false,
-      tools: !AdminState.tools
+      tools: !AdminState.tools,
+      changeUser: false,
+    });
+  };
+
+  const onChangeUserClick = () => {
+    setAdminState({
+      register: false,
+      tools: false,
+      changeUser: !AdminState.changeUser,
     });
   };
   return (
@@ -40,14 +53,17 @@ const AdminPanel = () => {
       {toggleState ? (
         <Sidebar
           setToggleState={setToggleState}
-          AdminState={AdminState}
           onRegisterClick={onRegisterClick}
           onToolsClick={onToolsClick}
+          onChangeUserClick={onChangeUserClick}
         />
       ) : (
         <SidebarButton setToggleState={setToggleState} />
       )}
       {AdminState.register && <Register setAdminState={setAdminState} />}
+      {AdminState.changeUser && (
+        <ChangeUser setAdminState={setAdminState} AdminState={AdminState} />
+      )}
       {AdminState.tools && <Tools />}
     </MainFlex>
   );

@@ -150,7 +150,6 @@ export default function ListElementCovid19() {
   };
 
   const handleChangeAusdehnung = (event) => {
-    console.log(event.target.value);
     setCovid19State({
       ...Covid19State,
       Ausdehnung: event.target.value,
