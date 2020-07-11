@@ -202,7 +202,7 @@ const menu = [
   ...(isMac
     ? [
         {
-          label: app.name,
+          label: "StaR",
           submenu: [
             {
               label: "Über StaR",
@@ -242,7 +242,7 @@ const menu = [
   ...(!isMac
     ? [
         {
-          label: "StaT - Standards der Radiologie",
+          label: "StaR",
           submenu: [
             {
               label: "Über StaR",
