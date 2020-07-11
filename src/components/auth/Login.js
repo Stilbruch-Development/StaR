@@ -6,6 +6,7 @@ import AlertContext from "../context/alert/alertContext";
 import AuthContext from "../context/auth/authContext";
 import Divider from "@material-ui/core/Divider";
 import Logo from "../../images/styled_images/MainLogo";
+import { Link } from "react-router-dom";
 
 const MainStyleWrapper = styled.div`
   margin: 0% 35% 0% 35%;
@@ -91,7 +92,9 @@ const Login = (props) => {
   return (
     <MainStyleWrapper>
       <div style={{ width: "80%", padding: "2rem" }}>
-        <Logo />
+        <Link to="/">
+          <Logo />
+        </Link>
       </div>
       <Divider />
       <TextField

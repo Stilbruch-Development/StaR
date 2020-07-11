@@ -22,8 +22,8 @@ const Main = () => {
         <PrivatRoute exact path="/workplace" component={Workplace} />
         <PrivatRoute exact path="/user" component={User} />
         <PrivatRoute exact path="/admin" component={AdminPanel} />
-        <Route exact path="/landing" component={Landing} />
-        <Route path="/*" component={Login} />
+        <Route path="/login" component={Login} />
+        <Route path="/*" component={Landing} />
       </Switch>
       <Alert />
     </>

@@ -18,7 +18,7 @@ export default function useAutoUpdater() {
     });
 
     window.ipcRenderer.on("update_not_available", () => {
-      window.ipcRenderer.removeAllListeners("update-not-available");
+      window.ipcRenderer.removeAllListeners("update_not_available");
       console.log("Kein neues Update verfügbar.");
     });
 
@@ -39,6 +39,14 @@ export default function useAutoUpdater() {
         { item: "button", value: "Neustart" },
         { item: "onClickButton", value: restartApp }
       );
+    });
+
+    window.ipcRenderer.on("error", () => {
+      window.ipcRenderer.removeAllListeners("error");
+      setAlert({
+        item: "message",
+        value: "Es gab ein Problem mit dem automatischen Update!",
+      });
     });
   };
 

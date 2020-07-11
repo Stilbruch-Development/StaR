@@ -12,6 +12,7 @@ const path = require("path");
 const isDev = require("electron-is-dev");
 const log = require("electron-log");
 const os = require("os");
+const isMac = process.platform === "darwin" ? true : false;
 
 //-------------------------------------------------------------------
 // Main Window
@@ -19,7 +20,7 @@ const os = require("os");
 //
 //-------------------------------------------------------------------
 let mainWindow;
-let splashScreen;
+let aboutWindow;
 
 let tools = false;
 
@@ -35,6 +36,7 @@ const createWindow = () => {
   const height = Math.floor(dimensions.height * 0.8);
 
   mainWindow = new BrowserWindow({
+    title: "StaR",
     width: width,
     height: height,
     minWidth: width,
@@ -54,32 +56,33 @@ const createWindow = () => {
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
 
-  if (isDev === false) {
-    splashScreen = new BrowserWindow({
-      minWidth: Math.floor(width * 0.8),
-      minHeight: Math.floor(height * 0.8),
-      width: Math.floor(width * 0.8),
-      height: Math.floor(height * 0.8),
-      center: true,
-      show: false,
-      webPreferences: {
-        devTools: false,
-        nodeIntegration: true,
-        preload: __dirname + "/preload.js",
-      },
-      frame: false,
-      skipTaskbar: false,
-      resizable: false,
-      alwaysOnTop: true,
-    });
-
-    splashScreen.loadURL(
-      `file://${path.join(__dirname, "../build/splashscreen.html")}`
-      // `file://${path.join(__dirname, "../public/splashscreen.html")}`
-    );
-  }
-
   mainWindow.on("closed", () => (mainWindow = null));
+};
+
+const createAboutWindow = () => {
+  const mainScreen = screen.getPrimaryDisplay();
+  const dimensions = mainScreen.size;
+
+  const width = Math.floor(dimensions.width * 0.3);
+  const height = Math.floor(dimensions.height * 0.3);
+
+  aboutWindow = new BrowserWindow({
+    title: "About StaR",
+    width: width,
+    height: height,
+    resizable: false,
+    backgroundColor: "rgb(220, 220, 220)",
+    webPreferences: {
+      devTools: false,
+      nodeIntegration: true,
+      preload: __dirname + "/preload.js",
+    },
+  });
+  aboutWindow.loadURL(
+    isDev
+      ? `file://${path.join(__dirname, "/about.html")}`
+      : `file://${path.join(__dirname, "../build/about.html")}`
+  );
 };
 
 app.allowRendererProcessReuse = true;
@@ -87,28 +90,24 @@ app.allowRendererProcessReuse = true;
 app.on("ready", () => {
   createWindow();
   app.focus();
-  autoUpdater.checkForUpdatesAndNotify();
+  autoUpdater.checkForUpdatesAndNotify().catch((err) => {
+    console.log(err);
+    mainWindow.webContents.send("error");
+  });
 
-  !isDev &&
-    splashScreen.once("ready-to-show", () => {
-      splashScreen.show();
-    });
+  const mainMenu = Menu.buildFromTemplate(menu);
+  Menu.setApplicationMenu(mainMenu);
 
   mainWindow.once("ready-to-show", () => {
-    console.log("loaded");
-    isDev
-      ? mainWindow.show()
-      : setTimeout(() => {
-          splashScreen.destroy();
-          mainWindow.show();
-        }, 5000);
+    mainWindow.show();
   });
 
   isDev &&
+    isMac &&
     BrowserWindow.addDevToolsExtension(
       path.join(
         os.homedir(),
-        "/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.7.0_0"
+        "/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.8.1_0"
       )
     );
 });
@@ -121,18 +120,13 @@ app.on("window-all-closed", () => {
   app.quit();
 });
 
-//-------------------------------------------------------------------
-// AutoUpdater
-//
-//
-//-------------------------------------------------------------------
+// -------------------------------------------------------------------
+// ipcMain Processes
+
+// -------------------------------------------------------------------
 
 ipcMain.on("app_version", (event) => {
   event.sender.send("app_version", { version: app.getVersion() });
-});
-
-ipcMain.on("restart_app", () => {
-  autoUpdater.quitAndInstall();
 });
 
 ipcMain.on("copy_to_clipboard", (event, content) => {
@@ -146,6 +140,15 @@ ipcMain.on("open_external_link", (event, link) => {
       'Fehlerhafter oder inkompletter Link. Bitte immer "http://" oder "https://" anführen!'
     );
   });
+});
+
+// -------------------------------------------------------------------
+// AutoUpdater
+
+// -------------------------------------------------------------------
+
+ipcMain.on("restart_app", () => {
+  autoUpdater.quitAndInstall();
 });
 
 autoUpdater.on("checking-for-update", () => {
@@ -165,12 +168,10 @@ autoUpdater.on("update-downloaded", () => {
   mainWindow.webContents.send("update_downloaded");
 });
 
-autoUpdater.on("update-downloaded", (info) => {
-  mainWindow.webContents.send("Update downloaded");
-});
-
-autoUpdater.on("error", (err) => {
-  mainWindow.webContents.send("Error in auto-updater. " + err);
+autoUpdater.on("error", (message) => {
+  mainWindow.webContents.send("error");
+  console.error("Es gab ein Problem mit dem automatischen Update!");
+  console.error(message);
 });
 
 autoUpdater.logger = log;
@@ -187,6 +188,9 @@ ipcMain.on("toggle-dev-tools", (event, arg) => {
   if (tools === true) {
     mainWindow = null;
     createWindow();
+    mainWindow.once("ready-to-show", () => {
+      mainWindow.show();
+    });
   }
 });
 //-------------------------------------------------------------------
@@ -194,29 +198,86 @@ ipcMain.on("toggle-dev-tools", (event, arg) => {
 //
 //
 //-------------------------------------------------------------------
-// let template = [];
-// if (process.platform === "darwin") {
-//   // OS X
-//   const name = app.getName();
-//   template.unshift({
-//     label: name,
-//     submenu: [
-//       {
-//         label: "About " + name,
-//         role: "about"
-//       },
-//       {
-//         label: "Quit",
-//         accelerator: "Command+Q",
-//         click() {
-//           app.quit();
-//         }
-//       }
-//     ]
-//   });
-// }
-
-// app.on("ready", () => {
-//   const menu = Menu.buildFromTemplate(template);
-//   Menu.setApplicationMenu(menu);
-// });
+const menu = [
+  ...(isMac
+    ? [
+        {
+          label: app.name,
+          submenu: [
+            {
+              label: "Über StaR",
+              click: createAboutWindow,
+            },
+            {
+              label: "Neu laden",
+              role: "reload",
+            },
+            {
+              label: "DevTools",
+              role: "toggledevtools",
+            },
+            {
+              label: "Beenden",
+              // accelerator: isMac ? "Command+Q" : "Ctl+Q",
+              accelerator: "CmdOrCtrl+Q",
+              click: () => app.quit(),
+            },
+          ],
+        },
+        {
+          label: "Bearbeiten",
+          submenu: [
+            { role: "undo" },
+            { role: "redo" },
+            { type: "separator" },
+            { role: "cut" },
+            { role: "copy" },
+            { role: "paste" },
+            { role: "delete" },
+            { role: "selectAll" },
+          ],
+        },
+      ]
+    : []),
+  ...(!isMac
+    ? [
+        {
+          label: "StaT - Standards der Radiologie",
+          submenu: [
+            {
+              label: "Über StaR",
+              click: createAboutWindow,
+            },
+            {
+              label: "Neu laden",
+              role: "reload",
+            },
+            {
+              label: "DevTools",
+              role: "toggledevtools",
+            },
+            {
+              label: "Beenden",
+              // accelerator: isMac ? "Command+Q" : "Ctl+Q",
+              accelerator: "CmdOrCtrl+Q",
+              click: () => app.quit(),
+            },
+          ],
+        },
+        {
+          label: "Bearbeiten",
+          submenu: [
+            { role: "undo" },
+            { role: "redo" },
+            { type: "separator" },
+            { role: "cut" },
+            { role: "copy" },
+            { role: "paste" },
+            { role: "delete" },
+            { type: "separator" },
+            { role: "selectAll" },
+          ],
+        },
+      ]
+    : []),
+];

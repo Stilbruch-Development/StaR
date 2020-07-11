@@ -78,21 +78,6 @@ const AuthState = (props) => {
 
       if (matchEmail.docs.length === 0) {
         await user_db.put(formData);
-
-        // const payload = {
-        //   user: {
-        //     _id: formData._id,
-        //   },
-        // };
-
-        // const token = jwt.sign(payload, jwtSecret, {
-        //   expiresIn: 7200,
-        // });
-
-        // dispatch({
-        //   type: REGISTER_SUCCESS,
-        //   payload: token,
-        // });
       } else {
         throw new Error("Ein Benutzer mit dieser Email existiert schon!");
       }

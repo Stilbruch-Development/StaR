@@ -78,7 +78,7 @@ const Navbar = () => {
   return (
     <NavMain id="NavMain">
       <NavLeft data-testid="NavbarComponent">
-        <NavLogo navLink="/#Start" width="75%" />
+        <NavLogo navLink="/" width="75%" />
         {isAuthenticated && (
           <>
             <NavItem head="Arbeitsplatz" navLink="/workplace" />

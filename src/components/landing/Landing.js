@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import MainLogo from "../../images/styled_images/MainLogo";
 import useAutoUpdater from "../../hooks/useAutoUpdater";
+import { Link } from "react-router-dom";
 
 const LandingMain = styled.div`
   height: 100vh;
@@ -43,7 +44,9 @@ const Landing = () => {
   return (
     <LandingMain id="Start" data-testid="LandingComponent">
       <div className="navChange" style={{ width: "40%", padding: "4rem" }}>
-        <MainLogo />
+        <Link to="/login">
+          <MainLogo />
+        </Link>
       </div>
       <LandingSub className="navChange">Standards der Radiologie</LandingSub>
     </LandingMain>
