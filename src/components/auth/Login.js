@@ -15,6 +15,7 @@ const MainStyleWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   height: 100vh;
+  font-family: inherit;
 
   button {
     font-size: 1.5rem;
