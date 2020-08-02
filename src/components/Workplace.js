@@ -44,7 +44,7 @@ const Editor = () => {
 
   const { rightSidebareOpen } = useContext(NavContext);
 
-  const [toggleState, setToggleState] = useToggle(false);
+  const [toggleState, setToggleState] = useToggle(true);
 
   useEffect(() => {
     setCardsState("cardsUserData", null);

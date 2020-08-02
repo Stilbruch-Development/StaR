@@ -19,7 +19,7 @@ function App() {
           <ExpanderState>
             <CardsState>
               <Router>
-                <div className="App">
+                <div className="App" data-testid="AppComponent">
                   <GlobalStyle />
                   <Navbar />
                   <Main />

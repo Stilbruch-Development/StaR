@@ -76,8 +76,8 @@ const Navbar = () => {
   };
 
   return (
-    <NavMain id="NavMain">
-      <NavLeft data-testid="NavbarComponent">
+    <NavMain id="NavMain" data-testid="NavbarComponent">
+      <NavLeft>
         <NavLogo navLink="/" width="75%" />
         {isAuthenticated && (
           <>
@@ -108,13 +108,17 @@ const Navbar = () => {
               open={Boolean(anchorEl)}
               onClose={handleCloseMenu}
             >
-              <MenuItem>
+              <MenuItem
+                style={{
+                  fontFamily: "inherit",
+                }}
+              >
                 <Link
                   to="/user"
                   onClick={handleCloseMenu}
                   style={{
                     textDecoration: "none",
-                    color: "var(--button-color-primary)",
+                    color: "black",
                     fontSize: "1.5rem",
                   }}
                 >
@@ -124,7 +128,7 @@ const Navbar = () => {
               <MenuItem
                 style={{
                   textDecoration: "none",
-                  color: "var(--button-color-primary)",
+                  fontFamily: "inherit",
                   fontSize: "1.5rem",
                 }}
                 onClick={(e) => onLogout()}

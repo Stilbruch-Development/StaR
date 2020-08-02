@@ -37,15 +37,15 @@ const DraftDisplay = (props) => {
   const onClickLogo = (url) => {
     goToExternalLink(url);
   };
-
-  window.ipcRenderer.on("open_external_link_error", (event, msg) => {
-    window.ipcRenderer.removeAllListeners("open_external_link_error");
-    setAlert({
-      item: "message",
-      value: msg,
+  window.ipcRenderer &&
+    window.ipcRenderer.on("open_external_link_error", (event, msg) => {
+      window.ipcRenderer.removeAllListeners("open_external_link_error");
+      setAlert({
+        item: "message",
+        value: msg,
+      });
+      props.handleClose();
     });
-    props.handleClose();
-  });
 
   return selectedCardsItem ? (
     <MainStyleWrapper>

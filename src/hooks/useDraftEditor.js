@@ -3,7 +3,7 @@ import {
   EditorState,
   ContentState,
   convertToRaw,
-  convertFromRaw
+  convertFromRaw,
 } from "draft-js";
 import AlertContext from "../components/context/alert/alertContext";
 import AuthContext from "../components/context/auth/authContext";
@@ -18,16 +18,16 @@ export default function useDraftEditor() {
     );
   };
 
-  const copyEditorToClipboard = editorState => {
+  const copyEditorToClipboard = (editorState) => {
     const content = editorState.getCurrentContent().getPlainText("\u0001");
-    window.ipcRenderer.send("copy_to_clipboard", content);
+    window.ipcRenderer && window.ipcRenderer.send("copy_to_clipboard", content);
     setAlert(
       { item: "message", value: "Inhalt zur Zwischenablage kopiert!" },
       { item: "color", value: "rgba(191, 255, 184, 0.8" }
     );
   };
 
-  const saveEditorUserIndependent = editorState => {
+  const saveEditorUserIndependent = (editorState) => {
     if (user) {
       const contentState = editorState.getCurrentContent();
       var rawContentState = convertToRaw(contentState);
@@ -63,7 +63,7 @@ export default function useDraftEditor() {
     } else {
       setAlert({
         item: "message",
-        value: "Leerer lokaler Speicher. Laden nicht möglich."
+        value: "Leerer lokaler Speicher. Laden nicht möglich.",
       });
     }
   };
@@ -73,6 +73,6 @@ export default function useDraftEditor() {
     copyEditorToClipboard,
     saveEditorUserIndependent,
     deleteLokalstore,
-    loadFromLokalStore
+    loadFromLokalStore,
   };
 }

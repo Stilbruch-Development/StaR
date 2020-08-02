@@ -21,11 +21,13 @@ const Footer = () => {
   });
 
   useEffect(() => {
-    window.ipcRenderer.send("app_version");
-    window.ipcRenderer.on("app_version", (event, arg) => {
-      window.ipcRenderer.removeAllListeners("app_version");
-      setState({ ...state, version: `Version ${arg.version}` });
-    });
+    window.ipcRenderer &&
+      window.ipcRenderer.send("app_version") &&
+      window.ipcRenderer.on("app_version", (event, arg) => {
+        window.ipcRenderer.removeAllListeners("app_version");
+        setState({ ...state, version: `Version ${arg.version}` });
+      });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.version]);
 
@@ -38,7 +40,7 @@ const Footer = () => {
   }
 
   return (
-    <FooterMain data-testid="FooterMain">
+    <FooterMain data-testid="FooterComponent">
       <div style={{ fontSize: "1rem" }}>
         {version_name} {state.version}
       </div>

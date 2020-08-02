@@ -27,7 +27,7 @@ const Tools = () => {
   };
 
   useEffect(() => {
-    window.ipcRenderer.send("toggle-dev-tools", devTools);
+    window.ipcRenderer && window.ipcRenderer.send("toggle-dev-tools", devTools);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [devTools]);
 

@@ -12,12 +12,13 @@ import authContext from "../components/context/auth/authContext";
 const Main = () => {
   const { logout } = useContext(authContext);
 
-  window.ipcRenderer.on("loggout", () => {
-    logout();
-  });
+  window.ipcRenderer &&
+    window.ipcRenderer.on("loggout", () => {
+      logout();
+    });
 
   return (
-    <>
+    <div data-testid="MainComponent">
       <Switch>
         <PrivatRoute exact path="/workplace" component={Workplace} />
         <PrivatRoute exact path="/user" component={User} />
@@ -26,7 +27,7 @@ const Main = () => {
         <Route path="/*" component={Landing} />
       </Switch>
       <Alert />
-    </>
+    </div>
   );
 };
 

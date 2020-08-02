@@ -14,7 +14,7 @@ import Grid from "@material-ui/core/Grid";
 import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
-  KeyboardDatePicker
+  KeyboardDatePicker,
 } from "@material-ui/pickers";
 
 const MainWrapper = styled.div`
@@ -32,7 +32,7 @@ export default function ListElementVoruntersuchung() {
 
   const [open, setOpen] = useState(false);
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     if (event.target.value === "ja") {
       setOpen(true);
       const result =
@@ -43,25 +43,25 @@ export default function ListElementVoruntersuchung() {
         selectedDate.getFullYear();
       setLungenembolieState({
         ...LungenembolieState,
-        Voruntersuchung: `Voruntersuchung vom ${result} zum Vergleich vorliegend.`
+        Voruntersuchung: `Voruntersuchung vom ${result} zum Vergleich vorliegend.`,
       });
     }
     if (event.target.value === "nein") {
       setOpen(false);
       setLungenembolieState({
         ...LungenembolieState,
-        Voruntersuchung: "Keine Voruntersuchung zum Vergleich vorliegend."
+        Voruntersuchung: "Keine Voruntersuchung zum Vergleich vorliegend.",
       });
     }
   };
 
-  const handleDateChange = date => {
+  const handleDateChange = (date) => {
     const result =
       date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear();
     setSelectedDate(date);
     setLungenembolieState({
       ...LungenembolieState,
-      Voruntersuchung: `Voruntersuchung vom ${result} zum Vergleich vorliegend.`
+      Voruntersuchung: `Voruntersuchung vom ${result} zum Vergleich vorliegend.`,
     });
   };
 
@@ -105,7 +105,7 @@ export default function ListElementVoruntersuchung() {
               value={selectedDate}
               onChange={handleDateChange}
               KeyboardButtonProps={{
-                "aria-label": "change date"
+                "aria-label": "change date",
               }}
             />
           </Grid>
