@@ -21,8 +21,8 @@ const Footer = () => {
   });
 
   useEffect(() => {
+    window.ipcRenderer && window.ipcRenderer.send("app_version");
     window.ipcRenderer &&
-      window.ipcRenderer.send("app_version") &&
       window.ipcRenderer.on("app_version", (event, arg) => {
         window.ipcRenderer.removeAllListeners("app_version");
         setState({ ...state, version: `Version ${arg.version}` });
