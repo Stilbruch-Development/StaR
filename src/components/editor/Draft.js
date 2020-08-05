@@ -53,11 +53,11 @@ const Draft = () => {
     const { setCardsState } = useContext(CardsContext);
 
     var matchElement = props.cardsUserData.filter((element) => {
-      let keywordsArray;
       if (typeof element.keywords === "string") {
-        keywordsArray = element.keywords.split(" ");
+        const keywordsArray = element.keywords.split(" ");
+        return keywordsArray.includes(props.decoratedText) && element;
       }
-      return keywordsArray.includes(props.decoratedText) && element;
+      return null;
     });
 
     const handleOnClick = () => {
