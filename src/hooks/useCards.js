@@ -5,14 +5,17 @@ export default function useCards() {
       cardsUserData.forEach((element) => {
         if (element.keywords.length !== 0) {
           const elementId = element._id;
-          const keywordsArray = element.keywords.split(" ");
-          keywordsArray.forEach((element) => {
-            const keyObject = {
-              keyword: element,
-              keyId: elementId,
-            };
-            finalArray.push(keyObject);
-          });
+          let keywordsArray;
+          if (typeof element.keywords === "string") {
+            keywordsArray = element.keywords.split(" ");
+            keywordsArray.forEach((element) => {
+              const keyObject = {
+                keyword: element,
+                keyId: elementId,
+              };
+              finalArray.push(keyObject);
+            });
+          }
         }
       });
       return finalArray;
