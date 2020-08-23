@@ -44,7 +44,7 @@ const Landing = () => {
   return (
     <LandingMain id="Start" data-testid="LandingComponent">
       <div className="navChange" style={{ width: "40%", padding: "4rem" }}>
-        <Link to="/login">
+        <Link data-testid="LandingComponentLinkToLogin" to="/login">
           <MainLogo />
         </Link>
       </div>

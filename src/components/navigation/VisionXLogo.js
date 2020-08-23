@@ -12,7 +12,7 @@ const VisionXLogo = (props) => {
 
   return (
     <StyledLink
-      data-testid="NavLogo"
+      data-testid="VisionXLogo"
       style={{ width: props.width }}
       // to={props.navLink}
       to={"/"}

@@ -10,7 +10,7 @@ import Alert from "../components/context/alert/Alert";
 import authContext from "../components/context/auth/authContext";
 
 const Main = () => {
-  const { logout } = useContext(authContext);
+  const { logout } = { ...useContext(authContext) };
 
   window.ipcRenderer &&
     window.ipcRenderer.on("loggout", () => {

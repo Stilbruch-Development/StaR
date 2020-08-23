@@ -47,18 +47,14 @@ const ButtonWrapper = styled.div`
 const Alert = () => {
   const classes = useStyles();
 
-  const {
-    message,
-    button,
-    onClickButton,
-    removeAlert,
-    alertState,
-  } = useContext(AlertContext);
+  const { message, button, onClickButton, removeAlert, alertState } = {
+    ...useContext(AlertContext),
+  };
 
   return (
     <AlertWrapper>
       {message !== "" && (
-        <Notefication style={{ backgroundColor: alertState.color }}>
+        <Notefication style={{ backgroundColor: alertState?.color || "red" }}>
           <p>{message}</p>
           <CancelOutlinedIcon
             style={{ fontSize: "3rem", cursor: "pointer", margin: "1rem" }}

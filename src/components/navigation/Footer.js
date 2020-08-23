@@ -45,16 +45,16 @@ const Footer = () => {
         {version_name} {state.version}
       </div>
       <NavLogo dataTestId="FooterLogo" navLink="/#Start" width={"9%"} />
-      <NavItem dataTestId="FooterItemKontakt" head="Hilfe" navLink="/help" />
+      <NavItem dataTestId="FooterItemHelp" head="Hilfe" navLink="/help" />
       <NavItem
-        dataTestId="FooterItemDatenschutz"
+        dataTestId="FooterItemGDPR"
         head="Datenschutz "
-        navLink="/datenschutz/#top"
+        navLink="/gdpr/#top"
       />
       <NavItem
-        dataTestId="FooterItemImpressum"
+        dataTestId="FooterItemImprint"
         head="Impressum"
-        navLink="/impressum/#top"
+        navLink="/imprint/#top"
       />
       <VisionXLogo width={"10%"} />
     </FooterMain>

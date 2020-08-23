@@ -2,7 +2,7 @@ import { useContext } from "react";
 import AlertContext from "../components/context/alert/alertContext";
 
 export default function useAutoUpdater() {
-  const { removeAlert, setAlert } = useContext(AlertContext);
+  const { removeAlert, setAlert } = { ...useContext(AlertContext) };
 
   const autoUpdater = () => {
     if (window.ipcRenderer) {

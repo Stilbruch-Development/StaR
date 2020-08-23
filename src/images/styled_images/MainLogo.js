@@ -40,7 +40,7 @@ const Logo = styled.div`
   /* >1800px = wide screen */
 `;
 
-export default function MainLogo(props) {
+export default function MainLogo() {
   return (
     <Logo>
       <canvas width="100" height="80%"></canvas>
