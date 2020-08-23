@@ -8,7 +8,7 @@ import Collapse from "@material-ui/core/Collapse";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Covid19Context from "../../../context/lists/covid19/covid19Context";
+import StandardContext from "../../../context/standard/standardContext";
 import "date-fns";
 import Grid from "@material-ui/core/Grid";
 import DateFnsUtils from "@date-io/date-fns";
@@ -24,7 +24,8 @@ const MainWrapper = styled.div`
 `;
 
 export default function ListElementVoruntersuchung() {
-  const { Covid19State, setCovid19State } = useContext(Covid19Context);
+  const { Covid19State, setCovid19State } = useContext(StandardContext);
+  const { covid19State } = Covid19State;
 
   const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -41,14 +42,20 @@ export default function ListElementVoruntersuchung() {
         selectedDate.getFullYear();
       setCovid19State({
         ...Covid19State,
-        Voruntersuchung: `Voruntersuchung vom ${result} zum Vergleich vorliegend.`,
+        covid19State: {
+          ...covid19State,
+          Voruntersuchung: `Voruntersuchung vom ${result} zum Vergleich vorliegend.`,
+        },
       });
     }
     if (event.target.value === "nein") {
       setOpen(false);
       setCovid19State({
         ...Covid19State,
-        Voruntersuchung: "Keine Voruntersuchung zum Vergleich vorliegend.",
+        covid19State: {
+          ...covid19State,
+          Voruntersuchung: "Keine Voruntersuchung zum Vergleich vorliegend.",
+        },
       });
     }
   };
@@ -59,7 +66,10 @@ export default function ListElementVoruntersuchung() {
     setSelectedDate(date);
     setCovid19State({
       ...Covid19State,
-      Voruntersuchung: `Voruntersuchung vom ${result} zum Vergleich vorliegend.`,
+      covid19State: {
+        ...covid19State,
+        Voruntersuchung: `Voruntersuchung vom ${result} zum Vergleich vorliegend.`,
+      },
     });
   };
 

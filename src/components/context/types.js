@@ -40,7 +40,7 @@ export const SET_NAVSTATE = "SET_NAVSTATE";
 export const REMOVE_ALERT = "REMOVE_ALERT";
 export const SET_ALERT_STATE = "SET_ALERT_STATE";
 
-// lungenembolie types
+// pulmonaryEmbolism types
 export const SET_LUNGENEMBOLIE = "SET_LUNGENEMBOLIE";
 
 // covid19 types

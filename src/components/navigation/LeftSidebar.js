@@ -48,7 +48,7 @@ const SidebarDiv = styled.div`
   .MuiInputLabel-root.Mui-focused,
   .MuiFormLabel-filled {
     font-size: 1.2rem;
-    z-index: 1;
+    z-index: 0;
     background: var(--main-bg-color);
     padding-left: 0.2rem;
     padding-right: 1.2rem;
@@ -57,7 +57,7 @@ const SidebarDiv = styled.div`
 `;
 
 const LeftSidebar = (props) => {
-  const [lists, setLists] = React.useState("");
+  const [standard, setLists] = React.useState("");
 
   const { setNavState } = useContext(NavContext);
 
@@ -74,11 +74,11 @@ const LeftSidebar = (props) => {
       </Button>
 
       <FormControl variant="outlined">
-        <InputLabel id="lists">STANDARD BEFUNDE</InputLabel>
+        <InputLabel id="standard">STANDARD BEFUNDE</InputLabel>
         <Select
-          labelId="lists"
-          id="lists"
-          value={lists}
+          labelId="standard"
+          id="standard"
+          value={standard}
           onChange={handleChange}
           label="Liste"
         >

@@ -4,11 +4,11 @@ import lungenembolieReducer from "./lungenembolieReducer";
 
 import { SET_LUNGENEMBOLIE } from "../../types";
 
-const LungenembolieState = (props) => {
+const PulmonaryEmbolismState = (props) => {
   const initialState = {
-    LungenembolieState: {
+    PulmonaryEmbolismState: {
       Voruntersuchung: "",
-      Lungenembolie: "",
+      PulmonaryEmbolism: "",
       Lokalisation: [],
       Abschnitte: [],
       Rechtsherzbelastung: "",
@@ -27,7 +27,7 @@ const LungenembolieState = (props) => {
   const [state, dispatch] = useReducer(lungenembolieReducer, initialState);
 
   // SET_LUNGENEMBOLIE
-  const setLungenembolieState = (state) => {
+  const setPulmonaryEmbolismState = (state) => {
     dispatch({
       type: SET_LUNGENEMBOLIE,
       payload: state,
@@ -37,8 +37,8 @@ const LungenembolieState = (props) => {
   return (
     <LungenembolieContext.Provider
       value={{
-        LungenembolieState: state.LungenembolieState,
-        setLungenembolieState,
+        PulmonaryEmbolismState: state.PulmonaryEmbolismState,
+        setPulmonaryEmbolismState,
       }}
     >
       {props.children}
@@ -46,4 +46,4 @@ const LungenembolieState = (props) => {
   );
 };
 
-export default LungenembolieState;
+export default PulmonaryEmbolismState;

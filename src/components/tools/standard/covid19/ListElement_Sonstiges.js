@@ -6,7 +6,7 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
 import TextField from "@material-ui/core/TextField";
-import Covid19Context from "../../../context/lists/covid19/covid19Context";
+import StandardContext from "../../../context/standard/standardContext";
 
 const MainWrapper = styled.div`
   .MuiListItem-root {
@@ -28,7 +28,8 @@ const FormWrapper = styled.div`
 `;
 
 export default function ListElementSonstiges() {
-  const { Covid19State, setCovid19State } = useContext(Covid19Context);
+  const { Covid19State, setCovid19State } = useContext(StandardContext);
+  const { covid19State } = Covid19State;
 
   const {
     Pleura,
@@ -37,7 +38,7 @@ export default function ListElementSonstiges() {
     Herz_Mediastinum,
     Oberbauch,
     Skelett,
-  } = Covid19State;
+  } = covid19State;
 
   const handleClick = () => {
     setOpen(!open);
@@ -51,7 +52,10 @@ export default function ListElementSonstiges() {
     window.setTimeout(() => {
       setCovid19State({
         ...Covid19State,
-        [listItem]: listValue,
+        covid19State: {
+          ...covid19State,
+          [listItem]: listValue,
+        },
       });
     }, 100);
   };

@@ -7,7 +7,7 @@ import ListElementEmbolie from "./ListElement_Embolie";
 import ListElementRechtsherzbelastung from "./ListElement_Rechtsherzbelastung";
 import ListElementSonstiges from "./ListElement_Sonstiges";
 import useLungenembolie from "./useLungenembolie";
-import LungenembolieContext from "../../../context/lists/lungenembolie/lungenembolieContext";
+import StandardContext from "../../../context/standard/standardContext";
 import Button from "@material-ui/core/Button";
 
 const MainWrapper = styled.div`
@@ -85,21 +85,21 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-export default function Lungenembolie() {
-  const { LungenembolieState, setLungenembolieState } = useContext(
-    LungenembolieContext
+export default function PulmonaryEmbolism() {
+  const { PulmonaryEmbolismState, setPulmonaryEmbolismState } = useContext(
+    StandardContext
   );
 
   const handleSubmit = () => () => {
-    setLungenembolieState({
-      ...LungenembolieState,
+    setPulmonaryEmbolismState({
+      ...PulmonaryEmbolismState,
       send: true,
     });
   };
 
   const {
     Voruntersuchung,
-    Lungenembolie,
+    PulmonaryEmbolism,
     Lokalisation,
     Abschnitte,
     Rechtsherzbelastung,
@@ -110,7 +110,7 @@ export default function Lungenembolie() {
     Lymphknoten,
     Oberbauch,
     Skelett,
-  } = LungenembolieState;
+  } = PulmonaryEmbolismState;
 
   const [
     getVoruntersuchung,
@@ -127,7 +127,7 @@ export default function Lungenembolie() {
   useEffect(() => {
     getLungenembolie();
     // eslint-disable-next-line
-  }, [Lungenembolie, Lokalisation, Abschnitte]);
+  }, [PulmonaryEmbolism, Lokalisation, Abschnitte]);
 
   useEffect(() => {
     getRechtsherzbelastung();

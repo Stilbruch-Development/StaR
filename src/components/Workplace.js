@@ -9,8 +9,7 @@ import LeftSidebarButton from "./navigation/LeftSidebarButton";
 import RightSidebarButton from "./navigation/RightSidebarButton";
 import useToggle from "../hooks/useToggle";
 import AuthContext from "./context/auth/authContext";
-import LungenembolieState from "./context/lists/lungenembolie/LungenembolieState";
-import Covid19State from "./context/lists/covid19/Covid19State";
+import StandardState from "./context/standard/StandardState";
 import NavContext from "../components/context/navigation/navContext";
 
 const MainFlex = styled.div`
@@ -63,26 +62,24 @@ const Editor = () => {
   });
 
   return (
-    <Covid19State>
-      <LungenembolieState>
-        <MainFlex>
-          {toggleState ? (
-            <LeftSidebar
-              setExpanderItem={setExpanderItem}
-              setToggleState={setToggleState}
-            />
-          ) : (
-            <LeftSidebarButton setToggleState={setToggleState} />
+    <StandardState>
+      <MainFlex>
+        {toggleState ? (
+          <LeftSidebar
+            setExpanderItem={setExpanderItem}
+            setToggleState={setToggleState}
+          />
+        ) : (
+          <LeftSidebarButton setToggleState={setToggleState} />
+        )}
+        <EditorWrapper>
+          {!loadingCards && !loadingExpander && (
+            <Draft expanderUserData={expanderUserData} />
           )}
-          <EditorWrapper>
-            {!loadingCards && !loadingExpander && (
-              <Draft expanderUserData={expanderUserData} />
-            )}
-          </EditorWrapper>
-          {rightSidebareOpen ? <RightSidebar /> : <RightSidebarButton />}
-        </MainFlex>
-      </LungenembolieState>
-    </Covid19State>
+        </EditorWrapper>
+        {rightSidebareOpen ? <RightSidebar /> : <RightSidebarButton />}
+      </MainFlex>
+    </StandardState>
   );
 };
 

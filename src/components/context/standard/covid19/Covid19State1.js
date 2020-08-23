@@ -1,6 +1,6 @@
 import React, { useReducer } from "react";
-import Covid19Context from "./covid19Context";
-import covid19ieReducer from "./covid19Reducer";
+import Covid19Context from "./covid19Context1";
+import covid19ieReducer from "./covid19Reducer1";
 
 import { SET_COVID19_STATE, SET_COVID19_REPORT } from "../../types";
 

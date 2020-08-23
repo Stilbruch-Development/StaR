@@ -8,7 +8,7 @@ import Collapse from "@material-ui/core/Collapse";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import LungenembolieContext from "../../../context/lists/lungenembolie/lungenembolieContext";
+import StandardContext from "../../../context/standard/standardContext";
 import "date-fns";
 import Grid from "@material-ui/core/Grid";
 import DateFnsUtils from "@date-io/date-fns";
@@ -24,8 +24,8 @@ const MainWrapper = styled.div`
 `;
 
 export default function ListElementVoruntersuchung() {
-  const { LungenembolieState, setLungenembolieState } = useContext(
-    LungenembolieContext
+  const { PulmonaryEmbolismState, setPulmonaryEmbolismState } = useContext(
+    StandardContext
   );
 
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -41,15 +41,15 @@ export default function ListElementVoruntersuchung() {
         (selectedDate.getMonth() + 1) +
         "." +
         selectedDate.getFullYear();
-      setLungenembolieState({
-        ...LungenembolieState,
+      setPulmonaryEmbolismState({
+        ...PulmonaryEmbolismState,
         Voruntersuchung: `Voruntersuchung vom ${result} zum Vergleich vorliegend.`,
       });
     }
     if (event.target.value === "nein") {
       setOpen(false);
-      setLungenembolieState({
-        ...LungenembolieState,
+      setPulmonaryEmbolismState({
+        ...PulmonaryEmbolismState,
         Voruntersuchung: "Keine Voruntersuchung zum Vergleich vorliegend.",
       });
     }
@@ -59,8 +59,8 @@ export default function ListElementVoruntersuchung() {
     const result =
       date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear();
     setSelectedDate(date);
-    setLungenembolieState({
-      ...LungenembolieState,
+    setPulmonaryEmbolismState({
+      ...PulmonaryEmbolismState,
       Voruntersuchung: `Voruntersuchung vom ${result} zum Vergleich vorliegend.`,
     });
   };

@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import LungenembolieContext from "../../../context/lists/lungenembolie/lungenembolieContext";
+import StandardContext from "../../../context/standard/standardContext";
 
 export default function useLungenembolie() {
   const [useLungenembolieState, setUseLungenembolieState] = useState({
@@ -9,8 +9,8 @@ export default function useLungenembolie() {
     Satz_4: "",
   });
 
-  const { LungenembolieState, setLungenembolieState } = useContext(
-    LungenembolieContext
+  const { PulmonaryEmbolismState, setPulmonaryEmbolismState } = useContext(
+    StandardContext
   );
 
   const getSentence = (array, upperCase) => {
@@ -48,7 +48,7 @@ export default function useLungenembolie() {
 
   const {
     Voruntersuchung,
-    Lungenembolie,
+    PulmonaryEmbolism,
     Lokalisation,
     Abschnitte,
     Rechtsherzbelastung,
@@ -59,10 +59,10 @@ export default function useLungenembolie() {
     Lymphknoten,
     Oberbauch,
     Skelett,
-  } = LungenembolieState;
+  } = PulmonaryEmbolismState;
 
   const getLungenembolie = () => {
-    Lungenembolie === "ja"
+    PulmonaryEmbolism === "ja"
       ? setUseLungenembolieState({
           ...useLungenembolieState,
           Satz_2: `Nachweis einer Lungenarterienembolie, ${getSentence(
@@ -70,7 +70,7 @@ export default function useLungenembolie() {
             false
           )} im ${getSentence(Abschnitte, true)}.`,
         })
-      : Lungenembolie === "nein" &&
+      : PulmonaryEmbolism === "nein" &&
         setUseLungenembolieState({
           ...useLungenembolieState,
           Satz_2: "Kein Nachweis einer Lungenarterienembolie.",
@@ -133,8 +133,8 @@ export default function useLungenembolie() {
   const { Satz_1, Satz_2, Satz_3, Satz_4 } = useLungenembolieState;
 
   useEffect(() => {
-    setLungenembolieState({
-      ...LungenembolieState,
+    setPulmonaryEmbolismState({
+      ...PulmonaryEmbolismState,
       Gesamt:
         "Befund und Beurteilung:" +
         "\n" +

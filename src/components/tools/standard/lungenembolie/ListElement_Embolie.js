@@ -11,7 +11,7 @@ import Collapse from "@material-ui/core/Collapse";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import LungenembolieContext from "../../../context/lists/lungenembolie/lungenembolieContext";
+import StandardContext from "../../../context/standard/standardContext";
 
 const MainWrapper = styled.div`
   .MuiListItem-root {
@@ -20,10 +20,10 @@ const MainWrapper = styled.div`
 `;
 
 export default function ListElementEmbolie() {
-  const { LungenembolieState, setLungenembolieState } = useContext(
-    LungenembolieContext
+  const { PulmonaryEmbolismState, setPulmonaryEmbolismState } = useContext(
+    StandardContext
   );
-  const { Lokalisation, Abschnitte } = LungenembolieState;
+  const { Lokalisation, Abschnitte } = PulmonaryEmbolismState;
 
   const handleToggleLokalisation = (value) => () => {
     const currentIndex = Lokalisation.indexOf(value);
@@ -34,8 +34,8 @@ export default function ListElementEmbolie() {
     } else {
       newLokalisation.splice(currentIndex, 1);
     }
-    setLungenembolieState({
-      ...LungenembolieState,
+    setPulmonaryEmbolismState({
+      ...PulmonaryEmbolismState,
       Lokalisation: newLokalisation,
     });
   };
@@ -49,8 +49,8 @@ export default function ListElementEmbolie() {
     } else {
       newAbschnitte.splice(currentIndex, 1);
     }
-    setLungenembolieState({
-      ...LungenembolieState,
+    setPulmonaryEmbolismState({
+      ...PulmonaryEmbolismState,
       Abschnitte: newAbschnitte,
     });
   };
@@ -64,20 +64,20 @@ export default function ListElementEmbolie() {
     if (event.target.value === "nein") {
       setOpen(false);
     }
-    setLungenembolieState({
-      ...LungenembolieState,
-      Lungenembolie: event.target.value,
+    setPulmonaryEmbolismState({
+      ...PulmonaryEmbolismState,
+      PulmonaryEmbolism: event.target.value,
     });
   };
 
   return (
     <MainWrapper>
       <ListItem button>
-        <ListItemText primary="Lungenembolie?" />
+        <ListItemText primary="PulmonaryEmbolism?" />
 
         <RadioGroup
-          aria-label="Lungenembolie"
-          name="Lungenembolie?"
+          aria-label="PulmonaryEmbolism"
+          name="PulmonaryEmbolism?"
           onChange={handleChange}
           row
         >

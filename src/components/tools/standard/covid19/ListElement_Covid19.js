@@ -11,7 +11,7 @@ import Collapse from "@material-ui/core/Collapse";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Covid19Context from "../../../context/lists/covid19/covid19Context";
+import StandardContext from "../../../context/standard/standardContext";
 
 const MainWrapper = styled.div`
   .MuiListItem-root {
@@ -32,8 +32,9 @@ const AusdehnungWrapper = styled.div`
 `;
 
 export default function ListElementCovid19() {
-  const { Covid19State, setCovid19State } = useContext(Covid19Context);
-  const { Kategorie, CTVeränderungen, Lokalisation } = Covid19State;
+  const { Covid19State, setCovid19State } = useContext(StandardContext);
+  const { covid19State } = Covid19State;
+  const { Kategorie, CTVeränderungen, Lokalisation } = covid19State;
 
   const handleToggleFindings = (value) => () => {
     if (Kategorie === "1") {
@@ -47,11 +48,14 @@ export default function ListElementCovid19() {
       }
       setCovid19State({
         ...Covid19State,
-        CTVeränderungen: {
-          Kategorie1: newLokalisation,
-          Kategorie2: [],
-          Kategorie3: [],
-          Kategorie4: [],
+        covid19State: {
+          ...covid19State,
+          CTVeränderungen: {
+            Kategorie1: newLokalisation,
+            Kategorie2: [],
+            Kategorie3: [],
+            Kategorie4: [],
+          },
         },
       });
     }
@@ -67,11 +71,14 @@ export default function ListElementCovid19() {
       }
       setCovid19State({
         ...Covid19State,
-        CTVeränderungen: {
-          Kategorie1: [],
-          Kategorie2: newLokalisation,
-          Kategorie3: [],
-          Kategorie4: [],
+        covid19State: {
+          ...covid19State,
+          CTVeränderungen: {
+            Kategorie1: [],
+            Kategorie2: newLokalisation,
+            Kategorie3: [],
+            Kategorie4: [],
+          },
         },
       });
     }
@@ -86,11 +93,14 @@ export default function ListElementCovid19() {
       }
       setCovid19State({
         ...Covid19State,
-        CTVeränderungen: {
-          Kategorie1: [],
-          Kategorie2: [],
-          Kategorie3: newLokalisation,
-          Kategorie4: [],
+        covid19State: {
+          ...covid19State,
+          CTVeränderungen: {
+            Kategorie1: [],
+            Kategorie2: [],
+            Kategorie3: newLokalisation,
+            Kategorie4: [],
+          },
         },
       });
     }
@@ -105,11 +115,14 @@ export default function ListElementCovid19() {
       }
       setCovid19State({
         ...Covid19State,
-        CTVeränderungen: {
-          Kategorie1: [],
-          Kategorie2: [],
-          Kategorie3: [],
-          Kategorie4: newLokalisation,
+        covid19State: {
+          ...covid19State,
+          CTVeränderungen: {
+            Kategorie1: [],
+            Kategorie2: [],
+            Kategorie3: [],
+            Kategorie4: newLokalisation,
+          },
         },
       });
     }
@@ -126,7 +139,10 @@ export default function ListElementCovid19() {
     }
     setCovid19State({
       ...Covid19State,
-      Lokalisation: newLokalisation,
+      covid19State: {
+        ...covid19State,
+        Lokalisation: newLokalisation,
+      },
     });
   };
 
@@ -145,14 +161,20 @@ export default function ListElementCovid19() {
     }
     setCovid19State({
       ...Covid19State,
-      Kategorie: event.target.value,
+      covid19State: {
+        ...covid19State,
+        Kategorie: event.target.value,
+      },
     });
   };
 
   const handleChangeAusdehnung = (event) => {
     setCovid19State({
       ...Covid19State,
-      Ausdehnung: event.target.value,
+      covid19State: {
+        ...covid19State,
+        Ausdehnung: event.target.value,
+      },
     });
   };
 

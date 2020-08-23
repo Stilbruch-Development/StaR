@@ -6,7 +6,7 @@ import ListElementVoruntersuchung from "./ListElement_Voruntersuchung";
 import ListElementCovid19 from "./ListElement_Covid19";
 import ListElementSonstiges from "./ListElement_Sonstiges";
 import useCovid19 from "./useCOVID19";
-import Covid19Context from "../../../context/lists/covid19/covid19Context";
+import StandardContext from "../../../context/standard/standardContext";
 import Button from "@material-ui/core/Button";
 
 const MainWrapper = styled.div`
@@ -86,7 +86,7 @@ const ButtonWrapper = styled.div`
 `;
 
 export default function Covid19() {
-  const { Covid19State } = useContext(Covid19Context);
+  const { Covid19State } = useContext(StandardContext);
 
   const {
     Voruntersuchung,
