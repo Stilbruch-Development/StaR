@@ -143,30 +143,26 @@ const Draft = () => {
   }, [editorState, expanderUserData]);
 
   useEffect(() => {
-    const { send } = PulmonaryEmbolismState;
+    const { send, Gesamt } = PulmonaryEmbolismState;
     if (send === true) {
-      setList(editorState, setEditorState, PulmonaryEmbolismState.Gesamt);
+      setList(editorState, setEditorState, Gesamt);
       setPulmonaryEmbolismState({ ...PulmonaryEmbolismState, send: false });
     }
     // eslint-disable-next-line
   }, [PulmonaryEmbolismState.send]);
 
   useEffect(() => {
-    const { covid19Report } = Covid19State;
-    const { send } = covid19Report;
+    const { send, Gesamt } = Covid19State;
     if (send === true) {
-      setList(editorState, setEditorState, covid19Report.Gesamt);
+      setList(editorState, setEditorState, Gesamt);
       setCovid19State({
         ...Covid19State,
-        covid19Report: {
-          ...covid19Report,
-          Gesamt: "",
-          send: false,
-        },
+        Gesamt: "",
+        send: false,
       });
     }
     // eslint-disable-next-line
-  }, [Covid19State.covid19Report.send]);
+  }, [Covid19State.send]);
 
   return (
     <MainStyleWrapper>

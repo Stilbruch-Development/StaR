@@ -25,7 +25,6 @@ const MainWrapper = styled.div`
 
 export default function ListElementVoruntersuchung() {
   const { Covid19State, setCovid19State } = useContext(StandardContext);
-  const { covid19State } = Covid19State;
 
   const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -42,20 +41,14 @@ export default function ListElementVoruntersuchung() {
         selectedDate.getFullYear();
       setCovid19State({
         ...Covid19State,
-        covid19State: {
-          ...covid19State,
-          Voruntersuchung: `Voruntersuchung vom ${result} zum Vergleich vorliegend.`,
-        },
+        Voruntersuchung: `Voruntersuchung vom ${result} zum Vergleich vorliegend.`,
       });
     }
     if (event.target.value === "nein") {
       setOpen(false);
       setCovid19State({
         ...Covid19State,
-        covid19State: {
-          ...covid19State,
-          Voruntersuchung: "Keine Voruntersuchung zum Vergleich vorliegend.",
-        },
+        Voruntersuchung: "Keine Voruntersuchung zum Vergleich vorliegend.",
       });
     }
   };
@@ -66,10 +59,7 @@ export default function ListElementVoruntersuchung() {
     setSelectedDate(date);
     setCovid19State({
       ...Covid19State,
-      covid19State: {
-        ...covid19State,
-        Voruntersuchung: `Voruntersuchung vom ${result} zum Vergleich vorliegend.`,
-      },
+      Voruntersuchung: `Voruntersuchung vom ${result} zum Vergleich vorliegend.`,
     });
   };
 

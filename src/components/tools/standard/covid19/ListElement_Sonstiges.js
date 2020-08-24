@@ -29,7 +29,6 @@ const FormWrapper = styled.div`
 
 export default function ListElementSonstiges() {
   const { Covid19State, setCovid19State } = useContext(StandardContext);
-  const { covid19State } = Covid19State;
 
   const {
     Pleura,
@@ -38,7 +37,7 @@ export default function ListElementSonstiges() {
     Herz_Mediastinum,
     Oberbauch,
     Skelett,
-  } = covid19State;
+  } = Covid19State;
 
   const handleClick = () => {
     setOpen(!open);
@@ -52,10 +51,7 @@ export default function ListElementSonstiges() {
     window.setTimeout(() => {
       setCovid19State({
         ...Covid19State,
-        covid19State: {
-          ...covid19State,
-          [listItem]: listValue,
-        },
+        [listItem]: listValue,
       });
     }, 100);
   };
