@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import StandardContext from "../../../context/standard/standardContext";
+import getSentence from "../shared_modules/getSentence";
 
 export default function useLungenembolie() {
   const [useLungenembolieState, setUseLungenembolieState] = useState({
@@ -12,39 +13,6 @@ export default function useLungenembolie() {
   const { PulmonaryEmbolismState, setPulmonaryEmbolismState } = useContext(
     StandardContext
   );
-
-  const getSentence = (array, upperCase) => {
-    const array_start = [];
-    for (let i = 0; i < array.length - 1; i++) {
-      array_start.push(array[i]);
-    }
-    let array_end;
-
-    array.length > 1
-      ? (array_end = [` und ${array[array.length - 1]}`])
-      : (array_end = array);
-
-    const arrays_join = array_start + array_end;
-
-    let matchUpperCase;
-
-    upperCase === true
-      ? (matchUpperCase = [
-          /^./,
-          function (match) {
-            return match.toUpperCase();
-          },
-        ])
-      : (matchUpperCase = []);
-
-    var replacements = new Map([[/,(?=[^\s])/g, ", "], matchUpperCase]),
-      result = arrays_join;
-    replacements.forEach(function (value, key) {
-      result = result.replace(key, value);
-    });
-
-    return result;
-  };
 
   const {
     Voruntersuchung,
@@ -78,7 +46,7 @@ export default function useLungenembolie() {
   };
 
   const getRechtsherzbelastung = () => {
-    const rhbz = Rechtsherzbelastungszeichen.length;
+    const rhbz = Rechtsherzbelastungszeichen?.length;
     let rhb_grad;
 
     if (rhbz <= 2) {

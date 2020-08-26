@@ -19,7 +19,7 @@ const MainWrapper = styled.div`
   }
 `;
 
-export default function ListElementRechtsherzbelastung(props) {
+export default function ListElementRechtsherzbelastung() {
   const { PulmonaryEmbolismState, setPulmonaryEmbolismState } = useContext(
     StandardContext
   );
@@ -107,7 +107,7 @@ export default function ListElementRechtsherzbelastung(props) {
                       <Checkbox
                         edge="start"
                         checked={
-                          Rechtsherzbelastungszeichen.indexOf(value) !== -1
+                          Rechtsherzbelastungszeichen?.indexOf(value) !== -1
                         }
                         tabIndex={-1}
                         disableRipple

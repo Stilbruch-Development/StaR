@@ -117,7 +117,7 @@ export default function ListElementEmbolie() {
                       <ListItemIcon>
                         <Checkbox
                           edge="start"
-                          checked={Lokalisation.indexOf(value) !== -1}
+                          checked={Lokalisation?.indexOf(value) !== -1}
                           tabIndex={-1}
                           disableRipple
                           inputProps={{ "aria-labelledby": labelId }}
@@ -155,7 +155,7 @@ export default function ListElementEmbolie() {
                     <ListItemIcon>
                       <Checkbox
                         edge="start"
-                        checked={Abschnitte.indexOf(value) !== -1}
+                        checked={Abschnitte?.indexOf(value) !== -1}
                         tabIndex={-1}
                         disableRipple
                         inputProps={{ "aria-labelledby": labelId }}

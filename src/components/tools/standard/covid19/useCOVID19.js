@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import StandardContext from "../../../context/standard/standardContext";
+import getSentence from "../shared_modules/getSentence";
 
 export default function useCOVID19() {
   const { Covid19State, setCovid19State } = useContext(StandardContext);
@@ -22,80 +23,47 @@ export default function useCOVID19() {
     Satz_4,
   } = Covid19State;
 
-  const getSentence = (array, upperCase) => {
-    const array_start = [];
-    for (let i = 0; i < array.length - 1; i++) {
-      array_start.push(array[i]);
-    }
-    let array_end;
-
-    array.length > 1
-      ? (array_end = [` und ${array[array.length - 1]}`])
-      : (array_end = array);
-
-    const arrays_join = array_start + array_end;
-
-    let matchUpperCase;
-
-    upperCase === true
-      ? (matchUpperCase = [
-          /^./,
-          function (match) {
-            return match.toUpperCase();
-          },
-        ])
-      : (matchUpperCase = []);
-
-    var replacements = new Map([[/,(?=[^\s])/g, ", "], matchUpperCase]),
-      result = arrays_join;
-    replacements.forEach(function (value, key) {
-      result = result.replace(key, value);
-    });
-
-    return result;
-  };
-
   const getKategorie = () => {
     Kategorie === "1"
       ? setCovid19State({
           ...Covid19State,
-          Satz_2: `CT-Veränderungen passend zu einer viralen Pneumonie mit ${Ausdehnung}er Ausdehnung. Bei hoher individueller Prätestwahscheinlichkeit suggestiv für eine COVID-19-Pneumonie [Cov19Typ].`,
+          Satz_2: `CT-Veränderungen passend zu einer viralen Pneumonie mit ${Ausdehnung}er Ausdehnung, COVID-19-Pneumonie möglich [Cov19Typ].`,
           Satz_3: `${getSentence(
             CTVeränderungen.Kategorie1,
             true
-          )}, betont im ${getSentence(
+          )}, mit Betonung im ${getSentence(
             Lokalisation,
             true
-          )}. Dies ist suggestiv für eine COVID19 Infektion. Die Ausdehnung der Veränderung(en) wird als ${Ausdehnung} gewertet.`,
+          )}. Die Ausdehnung der Veränderung(en) wird als ${Ausdehnung} gewertet.`,
         })
       : Kategorie === "2"
       ? setCovid19State({
           ...Covid19State,
-          Satz_2: `CT-Veränderungen passend zu einer viral-entzündlichen Pneumonie mit ${Ausdehnung}er Ausdehnung. Bei hoher individueller Prätestwahrscheinlichkeit suggestiv COVID-19-Pneumonie möglich, CT-Veränderungen aber nicht charakteristisch [Cov19Ind].`,
+          Satz_2: `Infiltrate, wie oben beschrieben, mit ${Ausdehnung}er Ausdehnung, passend zu einer Pneumonie unklarer Genese. Keine sicheren Charakteristika einer viralen/ COVID19- Pneumonie, diese lässt sich allerdings auch nicht sicher ausschließen [Cov19Ind].`,
           Satz_3: `${getSentence(
             CTVeränderungen.Kategorie2,
             false
           )}, betont im ${getSentence(
             Lokalisation,
             true
-          )}. Kein typisches COVID19-Bild aber eine COVID-19 Infektion ist nicht sicher auszuschließen. Die Ausdehnung der Veränderung(en) wird als ${Ausdehnung} gewertet.`,
+          )}. Die Ausdehnung der Veränderung(en) wird als ${Ausdehnung} gewertet.`,
         })
       : Kategorie === "3"
       ? setCovid19State({
           ...Covid19State,
-          Satz_2: `CT-Veränderungen des Lungenparenchyms vereinbar mit einer alternativen Diagnose, a.e. XXX. CT-Veränderungen ohne Hinweis auf COVID-19-Pneumonie [Cov19Aty].`,
+          Satz_2: `CT-Veränderungen des Lungenparenchyms, wie oben beschrieben, eher vereinbar mit einer zur COVID19- Pneumonie alternativen Diagnose, dd. XXX. Bild untypisch für eine COVID-19-Pneumonie [Cov19Aty].`,
           Satz_3: `${getSentence(
             CTVeränderungen.Kategorie3,
             true
           )}, betont im ${getSentence(
             Lokalisation,
             true
-          )}. Bild untypisch für eine COVID-19 Infektion, eine andere Diagnose erscheint wahrscheinlicher. Die Ausdehnung der Veränderung(en) wird als ${Ausdehnung} gewertet.`,
+          )}. Die Ausdehnung der Veränderung(en) wird als ${Ausdehnung} gewertet.`,
         })
       : setCovid19State({
           ...Covid19State,
-          Satz_2: `Kein nachweis pneumonischer Infiltrate. Kein Hinweis auf eine COVID19-Infektion [Cov19Neg].`,
-          Satz_3: `Kein Nachweis pneumonischer Veränderungen, insbesondere kein COVID19-Bild.`,
+          Satz_2: `Kein Nachweis pneumonischer Infiltrate. Kein Hinweis auf eine COVID19-Infektion [Cov19Neg].`,
+          Satz_3: `Kein Nachweis pneumonischer Infiltrate.`,
         });
   };
 

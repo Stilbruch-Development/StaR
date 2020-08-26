@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import styled from "styled-components";
 import List from "@material-ui/core/List";
 import ListSubheader from "@material-ui/core/ListSubheader";
-import ListElementVoruntersuchung from "./ListElement_Voruntersuchung";
+import ListElementVoruntersuchung from "../shared_modules/ListElement_Voruntersuchung";
 import ListElementEmbolie from "./ListElement_Embolie";
 import ListElementRechtsherzbelastung from "./ListElement_Rechtsherzbelastung";
 import ListElementSonstiges from "./ListElement_Sonstiges";
@@ -156,7 +156,10 @@ export default function PulmonaryEmbolism() {
           </ListSubheader>
         }
       >
-        <ListElementVoruntersuchung />
+        <ListElementVoruntersuchung
+          state={PulmonaryEmbolismState}
+          setState={setPulmonaryEmbolismState}
+        />
         <ListElementEmbolie />
         <ListElementRechtsherzbelastung />
         <ListElementSonstiges />

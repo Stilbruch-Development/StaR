@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import styled from "styled-components";
 import List from "@material-ui/core/List";
 import ListSubheader from "@material-ui/core/ListSubheader";
-import ListElementVoruntersuchung from "./ListElement_Voruntersuchung";
+import ListElementVoruntersuchung from "../shared_modules/ListElement_Voruntersuchung";
 import ListElementCovid19 from "./ListElement_Covid19";
 import ListElementSonstiges from "./ListElement_Sonstiges";
 import useCovid19 from "./useCOVID19";
@@ -86,7 +86,7 @@ const ButtonWrapper = styled.div`
 `;
 
 export default function Covid19() {
-  const { Covid19State } = useContext(StandardContext);
+  const { Covid19State, setCovid19State } = useContext(StandardContext);
 
   const {
     Voruntersuchung,
@@ -145,7 +145,10 @@ export default function Covid19() {
           </ListSubheader>
         }
       >
-        <ListElementVoruntersuchung />
+        <ListElementVoruntersuchung
+          state={Covid19State}
+          setState={setCovid19State}
+        />
         <ListElementCovid19 />
         <ListElementSonstiges />
         <ButtonWrapper>

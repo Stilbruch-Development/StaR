@@ -170,25 +170,25 @@ export default function ListElementCovid19() {
           <FormControlLabel
             value="1"
             control={<Radio color="primary" />}
-            label="Covid19 suspekt (Kategorie 1)"
+            label="Covid19 suspekt [Cov19Typ]"
             labelPlacement="end"
           />
           <FormControlLabel
             value="2"
             control={<Radio color="primary" />}
-            label="Unklarer Befund (Kategorie 2)"
+            label="Unklarer Befund [Cov19Ind]"
             labelPlacement="end"
           />
           <FormControlLabel
             value="3"
             control={<Radio color="primary" />}
-            label="Alternative Diagnose (Kategorie 3)"
+            label="Alternative Diagnose [Cov19Aty]"
             labelPlacement="end"
           />
           <FormControlLabel
             value="4"
             control={<Radio color="primary" />}
-            label="Keine Infiltrate (Kategorie 4)"
+            label="Keine Infiltrate [Cov19Neg]"
             labelPlacement="end"
           />
         </RadioGroup>
@@ -202,14 +202,13 @@ export default function ListElementCovid19() {
             <ListItem>
               <List>
                 {[
-                  `früh dominante Milchglasverdichtungen ("Ground Glas")`,
-                  `später dominante Konsolidierung/ "Crazy Paving"`,
-                  `Zeichen der organisierten Pneumonie (arkadenförmige Konsolidierungen/ Milchglastrübung, umgekehrtes Halo-Zeichen)`,
-                  `periphere sowie posteriore betonte Verdichtungen ohne subpleurale Aussparung`,
-                  `Veränderungen rund oder geographisch konfiguriert`,
-                  `Veränderungen zeigen sich bilateral sowie multifokal`,
-                  `intraläsional zeigen sich erweiternde Gefäße`,
-                  `fehlende mediastinale Lymphadenopathie`,
+                  `fleckige Milchglasverdichtungen`,
+                  `geographische Konsolidierungen wie bei organisierter Pneumonie`,
+                  `"Crazy Paving" -Muster`,
+                  `betont periphere sowie posteriore Verdichtungen ohne subpleurale Aussparung`,
+                  `rund oder geographisch konfiguriert Verdichtungen`,
+                  `bilaterales sowie multifokales Verteilungsmuster`,
+                  `erweiternde Gefäße intraläsional`,
                 ].map((value) => {
                   const labelId = `${value}`;
 
@@ -242,7 +241,7 @@ export default function ListElementCovid19() {
             <ListItem>
               <List>
                 {[
-                  `Milchglas, "Crazy Paving" oder Konsolidierung anders verteilt als bei [Cov19Typ]-Kategorie`,
+                  `Milchglasverdichtungen oder Konsolidierungen anders verteilt als bei [Cov19Typ]-Kategorie`,
                   `zentrale Betonung der Veränderungen`,
                   `nicht rund oder geographisch konfigurierte Veränderungen`,
                 ].map((value) => {
@@ -277,14 +276,13 @@ export default function ListElementCovid19() {
             <ListItem>
               <List>
                 {[
-                  `Noduli`,
-                  `"Tree in bud"`,
-                  `peribronchiales Infiltrat`,
-                  `lobäre/segmentale Konsolidierung`,
-                  `Kaverne`,
+                  `noduläre Verdichtungen`,
+                  `"Tree in bud"- Muster`,
+                  `peribronchial betonte Infiltrate`,
+                  `lobäre oder segmentale Konsolidierungen`,
+                  `Kavernenbildung`,
                   `Bronchialwandverdickungen`,
                   `Mucus-Plugging`,
-                  `Pleuraerguss`,
                 ].map((value) => {
                   const labelId = `${value}`;
 
@@ -323,6 +321,9 @@ export default function ListElementCovid19() {
                 "Unterlappen rechts",
                 "Unterlappen links",
                 "Mittellappen",
+                "bipulmonal",
+                "Ober- und Unterlappen links",
+                "Ober- und Unterlappen rechts",
               ].map((value) => {
                 const labelId = `${value}`;
 
@@ -361,13 +362,13 @@ export default function ListElementCovid19() {
                 <FormControlLabel
                   value="leicht"
                   control={<Radio color="primary" />}
-                  label="Leicht"
+                  label="leicht"
                   labelPlacement="end"
                 />
                 <FormControlLabel
                   value="mittelgradig"
                   control={<Radio color="primary" />}
-                  label="Mittelgradig"
+                  label="mittelgradig"
                   labelPlacement="end"
                 />
                 <FormControlLabel
