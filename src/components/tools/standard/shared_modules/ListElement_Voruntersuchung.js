@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -8,7 +8,6 @@ import Collapse from "@material-ui/core/Collapse";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Covid19Context from "../../../context/lists/covid19/covid19Context";
 import "date-fns";
 import Grid from "@material-ui/core/Grid";
 import DateFnsUtils from "@date-io/date-fns";
@@ -21,12 +20,19 @@ const MainWrapper = styled.div`
   .MuiListItem-root {
     justify-content: space-between;
   }
+  .modality {
+    justify-content: center;
+  }
 `;
 
-export default function ListElementVoruntersuchung() {
-  const { Covid19State, setCovid19State } = useContext(Covid19Context);
+export default function ListElementVoruntersuchung(props) {
+  const [selectedState, setSelectedState] = useState({
+    Date: new Date(),
+    modality: "",
+  });
 
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  let selectedDate = selectedState.newDate;
+  let selectedModlity = selectedState.modality;
 
   const [open, setOpen] = useState(false);
 
@@ -34,20 +40,22 @@ export default function ListElementVoruntersuchung() {
     if (event.target.value === "ja") {
       setOpen(true);
       const result =
-        selectedDate.getDate() +
+        selectedDate?.getDate() +
         "." +
-        (selectedDate.getMonth() + 1) +
+        (selectedDate?.getMonth() + 1) +
         "." +
-        selectedDate.getFullYear();
-      setCovid19State({
-        ...Covid19State,
-        Voruntersuchung: `Voruntersuchung vom ${result} zum Vergleich vorliegend.`,
+        selectedDate?.getFullYear();
+      props.setState({
+        ...props.state,
+        Voruntersuchung: `${selectedModlity} Voruntersuchung vom ${
+          result ? result : ""
+        } zum Vergleich vorliegend.`,
       });
     }
     if (event.target.value === "nein") {
       setOpen(false);
-      setCovid19State({
-        ...Covid19State,
+      props.setState({
+        ...props.state,
         Voruntersuchung: "Keine Voruntersuchung zum Vergleich vorliegend.",
       });
     }
@@ -56,10 +64,22 @@ export default function ListElementVoruntersuchung() {
   const handleDateChange = (date) => {
     const result =
       date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear();
-    setSelectedDate(date);
-    setCovid19State({
-      ...Covid19State,
-      Voruntersuchung: `Voruntersuchung vom ${result} zum Vergleich vorliegend.`,
+    setSelectedState({
+      ...selectedState,
+      Date: date,
+    });
+    props.setState({
+      ...props.state,
+      Voruntersuchung: `${selectedModlity} Voruntersuchung vom ${
+        result ? result : ""
+      } zum Vergleich vorliegend.`,
+    });
+  };
+
+  const handleModalityChange = (event) => {
+    props.setState({
+      setSelectedState,
+      modality: event.target.value,
     });
   };
 
@@ -67,7 +87,6 @@ export default function ListElementVoruntersuchung() {
     <MainWrapper>
       <ListItem button>
         <ListItemText primary="Voruntersuchung?" />
-
         <RadioGroup
           aria-label="Voruntersuchung"
           name="Voruntersuchung?"
@@ -87,10 +106,36 @@ export default function ListElementVoruntersuchung() {
             labelPlacement="end"
           />
         </RadioGroup>
-
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
+        <RadioGroup
+          aria-label="Konventionelle"
+          name="Art?"
+          onChange={handleModalityChange}
+          row
+          className="modality"
+        >
+          <FormControlLabel
+            value="Konventionelle"
+            control={<Radio color="primary" />}
+            label="Konventionell"
+            labelPlacement="start"
+          />
+          <FormControlLabel
+            value="CT- "
+            control={<Radio color="primary" />}
+            label="CT"
+            labelPlacement="start"
+          />
+          <FormControlLabel
+            value="MRT- "
+            control={<Radio color="primary" />}
+            label="MRT"
+            labelPlacement="start"
+          />
+        </RadioGroup>
+
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Grid container justify="space-around">
             <KeyboardDatePicker

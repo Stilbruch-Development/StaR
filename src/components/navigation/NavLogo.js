@@ -5,7 +5,7 @@ import StyledLink from "./../styled_components/StyledLink";
 const NavLogo = (props) => {
   return (
     <StyledLink
-      data-testid="NavLogo"
+      data-testid={props.dataTestId}
       style={{ width: props.width }}
       to={props.navLink}
       scroll={(el) => el.scrollIntoView({ behavior: "smooth", block: "end" })}

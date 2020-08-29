@@ -24,4 +24,11 @@
         "source.fixAll.eslint": true
     },
     "window.zoomLevel": 0,
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "terminal.integrated.rendererType": "dom",
+    "[typescript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    }
 }

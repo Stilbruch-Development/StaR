@@ -14,8 +14,7 @@ import EditorToolBar from "./EditorToolBar";
 import blockRenderMap from "./blocktypes/TextAlign";
 import ExpanderContext from "../context/expander/expanderContext";
 import useExpander from "../../hooks/useExpander";
-import LungenembolieContext from "../context/lists/lungenembolie/lungenembolieContext";
-import Covid19Context from "../context/lists/covid19/covid19Context";
+import StandardContext from "../context/standard/standardContext";
 import useLists from "../../hooks/useLists";
 import useCards from "../../hooks/useCards";
 import CardsContext from "../context/cards/cardsContext";
@@ -112,10 +111,13 @@ const Draft = () => {
   const { expanderUserData } = useContext(ExpanderContext);
   const [checkExpander] = useExpander();
   const [setList] = useLists();
-  const { LungenembolieState, setLungenembolieState } = useContext(
-    LungenembolieContext
-  );
-  const { Covid19Report, setCovid19Report } = useContext(Covid19Context);
+
+  const {
+    Covid19State,
+    setCovid19State,
+    PulmonaryEmbolismState,
+    setPulmonaryEmbolismState,
+  } = useContext(StandardContext);
 
   //------ BlockType Style -----------------------------------------------------
   const _toggleBlockType = (blockType) => {
@@ -141,26 +143,26 @@ const Draft = () => {
   }, [editorState, expanderUserData]);
 
   useEffect(() => {
-    const { send } = LungenembolieState;
+    const { send, Gesamt } = PulmonaryEmbolismState;
     if (send === true) {
-      setList(editorState, setEditorState, LungenembolieState.Gesamt);
-      setLungenembolieState({ ...LungenembolieState, send: false });
+      setList(editorState, setEditorState, Gesamt);
+      setPulmonaryEmbolismState({ ...PulmonaryEmbolismState, send: false });
     }
     // eslint-disable-next-line
-  }, [LungenembolieState.send]);
+  }, [PulmonaryEmbolismState.send]);
 
   useEffect(() => {
-    const { send } = Covid19Report;
+    const { send, Gesamt } = Covid19State;
     if (send === true) {
-      setList(editorState, setEditorState, Covid19Report.Gesamt);
-      setCovid19Report({
-        ...Covid19Report,
+      setList(editorState, setEditorState, Gesamt);
+      setCovid19State({
+        ...Covid19State,
         Gesamt: "",
         send: false,
       });
     }
     // eslint-disable-next-line
-  }, [Covid19Report.send]);
+  }, [Covid19State.send]);
 
   return (
     <MainStyleWrapper>

@@ -6,7 +6,7 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
 import TextField from "@material-ui/core/TextField";
-import Covid19Context from "../../../context/lists/covid19/covid19Context";
+import StandardContext from "../../../context/standard/standardContext";
 
 const MainWrapper = styled.div`
   .MuiListItem-root {
@@ -28,7 +28,7 @@ const FormWrapper = styled.div`
 `;
 
 export default function ListElementSonstiges() {
-  const { Covid19State, setCovid19State } = useContext(Covid19Context);
+  const { Covid19State, setCovid19State } = useContext(StandardContext);
 
   const {
     Pleura,

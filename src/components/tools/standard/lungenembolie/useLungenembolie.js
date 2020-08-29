@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from "react";
-import LungenembolieContext from "../../../context/lists/lungenembolie/lungenembolieContext";
+import StandardContext from "../../../context/standard/standardContext";
+import getSentence from "../shared_modules/getSentence";
 
 export default function useLungenembolie() {
   const [useLungenembolieState, setUseLungenembolieState] = useState({
@@ -9,46 +10,13 @@ export default function useLungenembolie() {
     Satz_4: "",
   });
 
-  const { LungenembolieState, setLungenembolieState } = useContext(
-    LungenembolieContext
+  const { PulmonaryEmbolismState, setPulmonaryEmbolismState } = useContext(
+    StandardContext
   );
-
-  const getSentence = (array, upperCase) => {
-    const array_start = [];
-    for (let i = 0; i < array.length - 1; i++) {
-      array_start.push(array[i]);
-    }
-    let array_end;
-
-    array.length > 1
-      ? (array_end = [` und ${array[array.length - 1]}`])
-      : (array_end = array);
-
-    const arrays_join = array_start + array_end;
-
-    let matchUpperCase;
-
-    upperCase === true
-      ? (matchUpperCase = [
-          /^./,
-          function (match) {
-            return match.toUpperCase();
-          },
-        ])
-      : (matchUpperCase = []);
-
-    var replacements = new Map([[/,(?=[^\s])/g, ", "], matchUpperCase]),
-      result = arrays_join;
-    replacements.forEach(function (value, key) {
-      result = result.replace(key, value);
-    });
-
-    return result;
-  };
 
   const {
     Voruntersuchung,
-    Lungenembolie,
+    PulmonaryEmbolism,
     Lokalisation,
     Abschnitte,
     Rechtsherzbelastung,
@@ -59,10 +27,10 @@ export default function useLungenembolie() {
     Lymphknoten,
     Oberbauch,
     Skelett,
-  } = LungenembolieState;
+  } = PulmonaryEmbolismState;
 
   const getLungenembolie = () => {
-    Lungenembolie === "ja"
+    PulmonaryEmbolism === "ja"
       ? setUseLungenembolieState({
           ...useLungenembolieState,
           Satz_2: `Nachweis einer Lungenarterienembolie, ${getSentence(
@@ -70,7 +38,7 @@ export default function useLungenembolie() {
             false
           )} im ${getSentence(Abschnitte, true)}.`,
         })
-      : Lungenembolie === "nein" &&
+      : PulmonaryEmbolism === "nein" &&
         setUseLungenembolieState({
           ...useLungenembolieState,
           Satz_2: "Kein Nachweis einer Lungenarterienembolie.",
@@ -78,7 +46,7 @@ export default function useLungenembolie() {
   };
 
   const getRechtsherzbelastung = () => {
-    const rhbz = Rechtsherzbelastungszeichen.length;
+    const rhbz = Rechtsherzbelastungszeichen?.length;
     let rhb_grad;
 
     if (rhbz <= 2) {
@@ -133,8 +101,8 @@ export default function useLungenembolie() {
   const { Satz_1, Satz_2, Satz_3, Satz_4 } = useLungenembolieState;
 
   useEffect(() => {
-    setLungenembolieState({
-      ...LungenembolieState,
+    setPulmonaryEmbolismState({
+      ...PulmonaryEmbolismState,
       Gesamt:
         "Befund und Beurteilung:" +
         "\n" +

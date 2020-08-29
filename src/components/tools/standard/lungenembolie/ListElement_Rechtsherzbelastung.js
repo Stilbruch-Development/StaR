@@ -11,7 +11,7 @@ import Collapse from "@material-ui/core/Collapse";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import LungenembolieContext from "../../../context/lists/lungenembolie/lungenembolieContext";
+import StandardContext from "../../../context/standard/standardContext";
 
 const MainWrapper = styled.div`
   .MuiListItem-root {
@@ -19,14 +19,14 @@ const MainWrapper = styled.div`
   }
 `;
 
-export default function ListElementRechtsherzbelastung(props) {
-  const { LungenembolieState, setLungenembolieState } = useContext(
-    LungenembolieContext
+export default function ListElementRechtsherzbelastung() {
+  const { PulmonaryEmbolismState, setPulmonaryEmbolismState } = useContext(
+    StandardContext
   );
 
-  const { Rechtsherzbelastungszeichen } = LungenembolieState;
+  const { Rechtsherzbelastungszeichen } = PulmonaryEmbolismState;
 
-  const handleToggleRechtsherzbelastung = value => () => {
+  const handleToggleRechtsherzbelastung = (value) => () => {
     const currentIndex = Rechtsherzbelastungszeichen.indexOf(value);
     const newRechtsherzbelastungszeichen = [...Rechtsherzbelastungszeichen];
 
@@ -35,24 +35,24 @@ export default function ListElementRechtsherzbelastung(props) {
     } else {
       newRechtsherzbelastungszeichen.splice(currentIndex, 1);
     }
-    setLungenembolieState({
-      ...LungenembolieState,
-      Rechtsherzbelastungszeichen: newRechtsherzbelastungszeichen
+    setPulmonaryEmbolismState({
+      ...PulmonaryEmbolismState,
+      Rechtsherzbelastungszeichen: newRechtsherzbelastungszeichen,
     });
   };
 
   const [open, setOpen] = React.useState(false);
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     if (event.target.value === "ja") {
       setOpen(true);
     }
     if (event.target.value === "nein") {
       setOpen(false);
     }
-    setLungenembolieState({
-      ...LungenembolieState,
-      Rechtsherzbelastung: event.target.value
+    setPulmonaryEmbolismState({
+      ...PulmonaryEmbolismState,
+      Rechtsherzbelastung: event.target.value,
     });
   };
 
@@ -91,8 +91,8 @@ export default function ListElementRechtsherzbelastung(props) {
                 "erweiterter rechter Vorhof",
                 "erweiterter rechter Ventrikel",
                 "Kontrastmittel Rückstrom in die Lebervenen",
-                "erweiterter Tr. pulmonalis/ Pulmonalarterien"
-              ].map(value => {
+                "erweiterter Tr. pulmonalis/ Pulmonalarterien",
+              ].map((value) => {
                 const labelId = `${value}`;
 
                 return (
@@ -107,7 +107,7 @@ export default function ListElementRechtsherzbelastung(props) {
                       <Checkbox
                         edge="start"
                         checked={
-                          Rechtsherzbelastungszeichen.indexOf(value) !== -1
+                          Rechtsherzbelastungszeichen?.indexOf(value) !== -1
                         }
                         tabIndex={-1}
                         disableRipple

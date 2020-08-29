@@ -6,7 +6,7 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
 import TextField from "@material-ui/core/TextField";
-import LungenembolieContext from "../../../context/lists/lungenembolie/lungenembolieContext";
+import StandardContext from "../../../context/standard/standardContext";
 
 const MainWrapper = styled.div`
   .MuiListItem-root {
@@ -28,8 +28,8 @@ const FormWrapper = styled.div`
 `;
 
 export default function ListElementSonstiges() {
-  const { LungenembolieState, setLungenembolieState } = useContext(
-    LungenembolieContext
+  const { PulmonaryEmbolismState, setPulmonaryEmbolismState } = useContext(
+    StandardContext
   );
 
   const {
@@ -39,7 +39,7 @@ export default function ListElementSonstiges() {
     Herz_Mediastinum,
     Oberbauch,
     Skelett,
-  } = LungenembolieState;
+  } = PulmonaryEmbolismState;
 
   const handleClick = () => {
     setOpen(!open);
@@ -51,8 +51,8 @@ export default function ListElementSonstiges() {
     const listItem = event.target.name;
     const listValue = event.target.value;
     window.setTimeout(() => {
-      setLungenembolieState({
-        ...LungenembolieState,
+      setPulmonaryEmbolismState({
+        ...PulmonaryEmbolismState,
         [listItem]: listValue,
       });
     }, 100);
