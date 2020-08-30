@@ -8,7 +8,7 @@ import Navbar from "./components/navigation/Navbar";
 import AuthState from "./components/context/auth/AuthState";
 import AlertState from "./components/context/alert/AlertState";
 import ExpanderState from "./components/context/expander/ExpanderState";
-import NavigationState from "./components/context/navigation/NavState";
+import NavigationState from "./components/context/navigation/navState";
 import CardsState from "./components/context/cards/CardsState";
 
 function App() {

@@ -3,7 +3,7 @@ import ExpanderContext from "./expanderContext";
 import expanderReducer from "./expanderReducer";
 import AlertContext from "../../context/alert/alertContext";
 import { expander_db } from "../../../pouchdb/db";
-import uuid4 from "uuid/v4";
+import { v4 as uuid4 } from 'uuid';
 import AuthContext from "../../context/auth/authContext";
 
 import {

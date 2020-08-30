@@ -3,7 +3,7 @@ import CardsContext from "./cardsContext";
 import cardsReducer from "./cardsReducer";
 import AlertContext from "../alert/alertContext";
 import { cards_db } from "../../../pouchdb/db";
-import uuid4 from "uuid/v4";
+import { v4 as uuid4 } from 'uuid';
 import AuthContext from "../auth/authContext";
 
 import {

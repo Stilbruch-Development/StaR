@@ -4,7 +4,7 @@ import authReducer from "./authReducer";
 import AlertContext from "../alert/alertContext";
 import { user_db, cards_db, expander_db, syncDB } from "../../../pouchdb/db";
 import bcrypt from "bcryptjs";
-import uuid4 from "uuid/v4";
+import { v4 as uuid4 } from 'uuid';
 import jwt from "jsonwebtoken";
 import useJsonWebToken from "../../../hooks/useJsonWebToken";
 
