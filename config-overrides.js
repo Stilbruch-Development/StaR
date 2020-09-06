@@ -1,8 +1,8 @@
-const rewireStyledComponents = require("react-app-rewire-styled-components");
+const rewireStyledComponents = require('react-app-rewire-styled-components');
 
 module.exports = function override(config, env) {
-  config = rewireStyledComponents(config, env, {
-    displayName: true,
+  const rewired = rewireStyledComponents(config, env, {
+    displayName: true
   });
-  return config;
+  return rewired;
 };

@@ -1,34 +1,31 @@
 {
-    "terminal.external.windowsExec": "C:\\windows\\System32\\bash.exe",
-    "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
-    "workbench.settings.editor": "json",
-    "workbench.settings.openDefaultSettings": true,
-    "workbench.settings.useSplitJSON": true,
-    "editor.minimap.enabled": false,
-    "workbench.colorTheme": "Visual Studio Dark",
-    "workbench.startupEditor": "none",
-    "javascript.updateImportsOnFileMove.enabled": "always",
-    "eslint.alwaysShowStatus": true,
-    "[javascript]": {
-        "editor.formatOnSave": false
-    },
-    "prettier.disableLanguages": [
-        "js"
-    ],
-    "files.autoSave": "onFocusChange",
-    "files.trimTrailingWhitespace": true,
+  "terminal.external.windowsExec": "C:\\windows\\System32\\bash.exe",
+  "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
+  "workbench.settings.editor": "json",
+  "workbench.settings.openDefaultSettings": true,
+  "workbench.settings.useSplitJSON": true,
+  "editor.minimap.enabled": false,
+  "workbench.colorTheme": "Visual Studio Dark",
+  "workbench.startupEditor": "none",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "eslint.alwaysShowStatus": true,
+  "[javascript]": {
     "editor.formatOnSave": true,
-    "diffEditor.ignoreTrimWhitespace": false,
-    "explorer.confirmDelete": false,
-    "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
-    },
-    "window.zoomLevel": 0,
-    "[json]": {
-        "editor.defaultFormatter": "vscode.json-language-features"
-    },
-    "terminal.integrated.rendererType": "dom",
-    "[typescript]": {
-        "editor.defaultFormatter": "vscode.typescript-language-features"
-    }
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "prettier.disableLanguages": ["js"],
+  "files.autoSave": "onFocusChange",
+  "files.trimTrailingWhitespace": true,
+  "editor.formatOnSave": true,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "explorer.confirmDelete": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "window.zoomLevel": 0,
+  "terminal.integrated.rendererType": "dom",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

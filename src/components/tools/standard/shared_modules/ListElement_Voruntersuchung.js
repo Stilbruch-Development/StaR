@@ -1,20 +1,20 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
-import Collapse from "@material-ui/core/Collapse";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import "date-fns";
-import Grid from "@material-ui/core/Grid";
-import DateFnsUtils from "@date-io/date-fns";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import Collapse from '@material-ui/core/Collapse';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import 'date-fns';
+import Grid from '@material-ui/core/Grid';
+import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
+  KeyboardDatePicker
+} from '@material-ui/pickers';
 
 const MainWrapper = styled.div`
   .MuiListItem-root {
@@ -27,59 +27,63 @@ const MainWrapper = styled.div`
 
 export default function ListElementVoruntersuchung(props) {
   const [selectedState, setSelectedState] = useState({
-    Date: new Date(),
-    modality: "",
+    date: new Date(),
+    modality: ''
   });
 
-  let selectedDate = selectedState.newDate;
-  let selectedModlity = selectedState.modality;
+  const selectedDate = selectedState.date;
+  const selectedModality = selectedState.modality;
 
   const [open, setOpen] = useState(false);
 
   const handleChange = (event) => {
-    if (event.target.value === "ja") {
+    if (event.target.value === 'ja') {
       setOpen(true);
-      const result =
-        selectedDate?.getDate() +
-        "." +
-        (selectedDate?.getMonth() + 1) +
-        "." +
-        selectedDate?.getFullYear();
+      const result = `${selectedDate?.getDate()}.${
+        selectedDate?.getMonth() + 1
+      }.${selectedDate?.getFullYear()}`;
       props.setState({
         ...props.state,
-        Voruntersuchung: `${selectedModlity} Voruntersuchung vom ${
-          result ? result : ""
-        } zum Vergleich vorliegend.`,
+        Voruntersuchung: `${selectedModality} Voruntersuchung vom ${
+          result || ''
+        } zum Vergleich vorliegend.`
       });
     }
-    if (event.target.value === "nein") {
+    if (event.target.value === 'nein') {
       setOpen(false);
       props.setState({
         ...props.state,
-        Voruntersuchung: "Keine Voruntersuchung zum Vergleich vorliegend.",
+        Voruntersuchung: 'Keine Voruntersuchung zum Vergleich vorliegend.'
       });
     }
   };
 
   const handleDateChange = (date) => {
-    const result =
-      date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear();
+    const result = `${date.getDate()}.${
+      date.getMonth() + 1
+    }.${date.getFullYear()}`;
     setSelectedState({
       ...selectedState,
-      Date: date,
+      Date: result
     });
     props.setState({
       ...props.state,
-      Voruntersuchung: `${selectedModlity} Voruntersuchung vom ${
-        result ? result : ""
-      } zum Vergleich vorliegend.`,
+      Voruntersuchung: `${selectedModality || ''} Voruntersuchung vom ${
+        result || ''
+      } zum Vergleich vorliegend.`
     });
   };
 
   const handleModalityChange = (event) => {
+    setSelectedState({
+      selectedState,
+      modality: event.target.value
+    });
     props.setState({
-      setSelectedState,
-      modality: event.target.value,
+      ...props.state,
+      Voruntersuchung: `${selectedModality || ''} Voruntersuchung vom ${
+        selectedDate || ''
+      } zum Vergleich vorliegend.`
     });
   };
 
@@ -110,7 +114,7 @@ export default function ListElementVoruntersuchung(props) {
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <RadioGroup
-          aria-label="Konventionelle"
+          aria-label="Voruntersuchungsart"
           name="Art?"
           onChange={handleModalityChange}
           row
@@ -148,7 +152,7 @@ export default function ListElementVoruntersuchung(props) {
               value={selectedDate}
               onChange={handleDateChange}
               KeyboardButtonProps={{
-                "aria-label": "change date",
+                'aria-label': 'change date'
               }}
             />
           </Grid>
