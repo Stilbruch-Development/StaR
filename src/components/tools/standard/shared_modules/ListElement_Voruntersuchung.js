@@ -31,20 +31,18 @@ export default function ListElementVoruntersuchung(props) {
     modality: ''
   });
 
-  const selectedDate = selectedState.date;
-  const selectedModality = selectedState.modality;
-
   const [open, setOpen] = useState(false);
 
   const handleChange = (event) => {
+    console.log(event);
     if (event.target.value === 'ja') {
       setOpen(true);
-      const result = `${selectedDate?.getDate()}.${
-        selectedDate?.getMonth() + 1
-      }.${selectedDate?.getFullYear()}`;
+      const result = `${selectedState.date?.getDate()}.${
+        selectedState.date?.getMonth() + 1
+      }.${selectedState.date?.getFullYear()}`;
       props.setState({
         ...props.state,
-        Voruntersuchung: `${selectedModality} Voruntersuchung vom ${
+        Voruntersuchung: `${selectedState.modality || ''}Voruntersuchung vom ${
           result || ''
         } zum Vergleich vorliegend.`
       });
@@ -64,25 +62,27 @@ export default function ListElementVoruntersuchung(props) {
     }.${date.getFullYear()}`;
     setSelectedState({
       ...selectedState,
-      Date: result
+      date: result
     });
     props.setState({
       ...props.state,
-      Voruntersuchung: `${selectedModality || ''} Voruntersuchung vom ${
+      Voruntersuchung: `${selectedState.modality || ''}Voruntersuchung vom ${
         result || ''
       } zum Vergleich vorliegend.`
     });
   };
 
-  const handleModalityChange = (event) => {
-    setSelectedState({
-      selectedState,
+  const handleModalityChange = async (event) => {
+    console.log(event.target.value);
+    await setSelectedState({
+      ...selectedState,
       modality: event.target.value
     });
+    console.log(selectedState);
     props.setState({
       ...props.state,
-      Voruntersuchung: `${selectedModality || ''} Voruntersuchung vom ${
-        selectedDate || ''
+      Voruntersuchung: `${selectedState.modality || ''}Voruntersuchung vom ${
+        selectedState.date || ''
       } zum Vergleich vorliegend.`
     });
   };
@@ -149,7 +149,7 @@ export default function ListElementVoruntersuchung(props) {
               margin="normal"
               id="date-picker-inline"
               label="Voruntersuchung vom:"
-              value={selectedDate}
+              value={selectedState.date}
               onChange={handleDateChange}
               KeyboardButtonProps={{
                 'aria-label': 'change date'
