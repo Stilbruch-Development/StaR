@@ -1,13 +1,13 @@
-import React, { useContext } from "react";
-import NavItem from "./NavItem";
-import NavLogo from "./NavLogo";
-import styled from "styled-components";
-import authContext from "../context/auth/authContext";
-import ExpanderContext from "../context/expander/expanderContext";
-import CardsContext from "../context/cards/cardsContext";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import { Link } from "react-router-dom";
+import React, { useContext } from 'react';
+import NavItem from './NavItem';
+import NavLogo from './NavLogo';
+import styled from 'styled-components';
+import authContext from '../context/auth/authContext';
+import ExpanderContext from '../context/expander/expanderContext';
+import CardsContext from '../context/cards/cardsContext';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import { Link } from 'react-router-dom';
 
 const NavMain = styled.div`
   display: flex;
@@ -16,7 +16,7 @@ const NavMain = styled.div`
   align-items: center;
   background: var(--theme-color);
   padding: 0.3rem 0.7rem 0.3rem 0.7rem;
-  z-index: 1;
+  z-index: 11;
   position: sticky;
   top: 0;
   height: 5rem;
@@ -68,7 +68,7 @@ const Navbar = () => {
   };
 
   const onLogout = () => {
-    setCardsState("cardsUserData", null);
+    setCardsState('cardsUserData', null);
     clearCards();
     clearExpander();
     handleCloseMenu();
@@ -110,16 +110,16 @@ const Navbar = () => {
             >
               <MenuItem
                 style={{
-                  fontFamily: "inherit",
+                  fontFamily: 'inherit'
                 }}
               >
                 <Link
                   to="/user"
                   onClick={handleCloseMenu}
                   style={{
-                    textDecoration: "none",
-                    color: "black",
-                    fontSize: "1.5rem",
+                    textDecoration: 'none',
+                    color: 'black',
+                    fontSize: '1.5rem'
                   }}
                 >
                   Benutzerdaten
@@ -127,9 +127,9 @@ const Navbar = () => {
               </MenuItem>
               <MenuItem
                 style={{
-                  textDecoration: "none",
-                  fontFamily: "inherit",
-                  fontSize: "1.5rem",
+                  textDecoration: 'none',
+                  fontFamily: 'inherit',
+                  fontSize: '1.5rem'
                 }}
                 onClick={(e) => onLogout()}
               >

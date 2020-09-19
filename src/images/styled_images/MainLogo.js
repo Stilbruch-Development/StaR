@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import { ReactComponent as StaRLogo } from "../StaR_Main_500.svg";
+import React from 'react';
+import styled from 'styled-components';
+import { ReactComponent as StaRLogo } from '../StaR_Main_500.svg';
 
 const Logo = styled.div`
   display: flex;
@@ -43,7 +43,7 @@ const Logo = styled.div`
 export default function MainLogo() {
   return (
     <Logo>
-      <canvas width="100" height="80%"></canvas>
+      <canvas width="100" height="70%"></canvas>
       <StaRLogo />
     </Logo>
   );

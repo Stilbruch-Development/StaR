@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from 'react';
 import {
   Editor,
   EditorState,
@@ -6,19 +6,19 @@ import {
   DefaultDraftBlockRenderMap,
   convertFromRaw,
   convertToRaw,
-  CompositeDecorator,
-} from "draft-js";
-import "draft-js/dist/Draft.css";
-import styled from "styled-components";
-import EditorToolBar from "./EditorToolBar";
-import blockRenderMap from "./blocktypes/TextAlign";
-import ExpanderContext from "../context/expander/expanderContext";
-import useExpander from "../../hooks/useExpander";
-import StandardContext from "../context/standard/standardContext";
-import useLists from "../../hooks/useLists";
-import useCards from "../../hooks/useCards";
-import CardsContext from "../context/cards/cardsContext";
-import NavContext from "../context/navigation/navContext";
+  CompositeDecorator
+} from 'draft-js';
+import 'draft-js/dist/Draft.css';
+import styled from 'styled-components';
+import EditorToolBar from './EditorToolBar';
+import blockRenderMap from './blocktypes/TextAlign';
+import ExpanderContext from '../context/expander/expanderContext';
+import useExpander from '../../hooks/useExpander';
+import StandardContext from '../context/standard/standardContext';
+import useStandards from '../../hooks/useStandards';
+import useCards from '../../hooks/useCards';
+import CardsContext from '../context/cards/cardsContext';
+import NavContext from '../context/navigation/navContext';
 
 const MainStyleWrapper = styled.div`
   width: 100%;
@@ -41,7 +41,7 @@ const ToolBarSyleWrapper = styled.div`
 const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap);
 
 const Draft = () => {
-  const getLocalStorage = JSON.parse(localStorage.getItem("editorState"));
+  const getLocalStorage = JSON.parse(localStorage.getItem('editorState'));
 
   //------ Editor Cards Implementation -----------------------------------------------------
   const { cardsUserData } = useContext(CardsContext);
@@ -52,8 +52,8 @@ const Draft = () => {
     const { setCardsState } = useContext(CardsContext);
 
     var matchElement = props.cardsUserData.filter((element) => {
-      if (typeof element.keywords === "string") {
-        const keywordsArray = element.keywords.split(" ");
+      if (typeof element.keywords === 'string') {
+        const keywordsArray = element.keywords.split(' ');
         return keywordsArray.includes(props.decoratedText) && element;
       }
       return null;
@@ -61,18 +61,18 @@ const Draft = () => {
 
     const handleOnClick = () => {
       if (matchElement) {
-        setCardsState("selectedCardsItem", matchElement[0]);
-        setNavState("display", "Cards");
-        setNavState("rightSidebareOpen", true);
+        setCardsState('selectedCardsItem', matchElement[0]);
+        setNavState('display', 'Cards');
+        setNavState('rightSidebareOpen', true);
       }
     };
     return (
       <span
         {...props}
         style={{
-          fontStyle: "italic",
-          color: "rgba(0, 80, 120, 1)",
-          cursor: "pointer",
+          fontStyle: 'italic',
+          color: 'rgba(0, 80, 120, 1)',
+          cursor: 'pointer'
         }}
         onClick={handleOnClick}
       >
@@ -89,8 +89,8 @@ const Draft = () => {
     {
       strategy: cardsStrategy,
       component: CardsSpan,
-      props: { cardsUserData },
-    },
+      props: { cardsUserData }
+    }
   ]);
 
   //------ Set Up Editor -----------------------------------------------------
@@ -110,13 +110,13 @@ const Draft = () => {
   const [editorState, setEditorState] = useState(editorStateLocalStore);
   const { expanderUserData } = useContext(ExpanderContext);
   const [checkExpander] = useExpander();
-  const [setList] = useLists();
+  const [setList] = useStandards();
 
   const {
     Covid19State,
     setCovid19State,
     PulmonaryEmbolismState,
-    setPulmonaryEmbolismState,
+    setPulmonaryEmbolismState
   } = useContext(StandardContext);
 
   //------ BlockType Style -----------------------------------------------------
@@ -138,7 +138,7 @@ const Draft = () => {
     checkExpander(editorState, setEditorState, expanderUserData);
     const contentState = editorState.getCurrentContent();
     var rawEditorState = convertToRaw(contentState);
-    localStorage.setItem("editorState", JSON.stringify(rawEditorState));
+    localStorage.setItem('editorState', JSON.stringify(rawEditorState));
     // eslint-disable-next-line
   }, [editorState, expanderUserData]);
 
@@ -157,8 +157,8 @@ const Draft = () => {
       setList(editorState, setEditorState, Gesamt);
       setCovid19State({
         ...Covid19State,
-        Gesamt: "",
-        send: false,
+        Gesamt: '',
+        send: false
       });
     }
     // eslint-disable-next-line

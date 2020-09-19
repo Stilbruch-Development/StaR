@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
 
@@ -8,7 +8,7 @@ const GlobalStyle = createGlobalStyle`
     font-style: normal;
     font-weight: 400;
     src: local('Play'), local('Play-Regular'),
-        url(${require("../../fonts/Play/Play-Regular.ttf")}) format('truetype')
+        url(${require('../../fonts/Play/Play-Regular.ttf')}) format('truetype')
   }
 
   @font-face {
@@ -16,7 +16,7 @@ const GlobalStyle = createGlobalStyle`
     font-style: bold;
     font-weight: 700;
     src: local('Play'), local('Play-Bold'),
-        url(${require("../../fonts/Play/Play-Bold.ttf")}) format('truetype')
+        url(${require('../../fonts/Play/Play-Bold.ttf')}) format('truetype')
   }
 
   html, body {

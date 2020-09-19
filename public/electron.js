@@ -12,6 +12,11 @@ const path = require('path');
 const isDev = require('electron-is-dev');
 const log = require('electron-log');
 const os = require('os');
+const {
+  default: installExtension,
+  REACT_DEVELOPER_TOOLS
+} = require('electron-devtools-installer');
+
 const isMac = process.platform === 'darwin' ? true : false;
 
 //-------------------------------------------------------------------
@@ -46,7 +51,9 @@ const createWindow = () => {
     webPreferences: {
       devTools: tools,
       nodeIntegration: true,
-      preload: __dirname + '/preload.js'
+      preload: __dirname + '/preload.js',
+      worldSafeExecuteJavaScript: true,
+      contextIsolation: true
     }
   });
 
@@ -75,7 +82,9 @@ const createAboutWindow = () => {
     webPreferences: {
       devTools: false,
       nodeIntegration: true,
-      preload: __dirname + '/preload.js'
+      preload: __dirname + '/preload.js',
+      worldSafeExecuteJavaScript: true,
+      contextIsolation: true
     }
   });
   aboutWindow.loadURL(
@@ -84,8 +93,6 @@ const createAboutWindow = () => {
       : `file://${path.join(__dirname, '../build/about.html')}`
   );
 };
-
-app.allowRendererProcessReuse = false;
 
 app.on('ready', () => {
   createWindow();
@@ -104,13 +111,12 @@ app.on('ready', () => {
 
   isDev &&
     isMac &&
-    BrowserWindow.addDevToolsExtension(
-      path.join(
-        os.homedir(),
-        '/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.8.2_0'
-      )
-    );
+    installExtension(REACT_DEVELOPER_TOOLS)
+      .then((name) => console.log(`Added Extension:  ${name}`))
+      .catch((err) => console.log('An error occurred: ', err));
 });
+
+app.allowRendererProcessReuse = true;
 
 app.on('before-quit', () => {
   mainWindow.webContents.send('loggout');

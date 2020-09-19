@@ -1,12 +1,11 @@
-import React, { useContext } from "react";
-import styled from "styled-components";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
-import Collapse from "@material-ui/core/Collapse";
-import TextField from "@material-ui/core/TextField";
-import StandardContext from "../../../context/standard/standardContext";
+import React from 'react';
+import styled from 'styled-components';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import Collapse from '@material-ui/core/Collapse';
+import TextField from '@material-ui/core/TextField';
 
 const MainWrapper = styled.div`
   .MuiListItem-root {
@@ -27,17 +26,15 @@ const FormWrapper = styled.div`
   margin: 1rem;
 `;
 
-export default function ListElementSonstiges() {
-  const { Covid19State, setCovid19State } = useContext(StandardContext);
-
+export default function ListElementSonstiges(props) {
   const {
     Pleura,
     Lungenparenchym,
     Lymphknoten,
     Herz_Mediastinum,
     Oberbauch,
-    Skelett,
-  } = Covid19State;
+    Skelett
+  } = props.state;
 
   const handleClick = () => {
     setOpen(!open);
@@ -49,17 +46,17 @@ export default function ListElementSonstiges() {
     const listItem = event.target.name;
     const listValue = event.target.value;
     window.setTimeout(() => {
-      setCovid19State({
-        ...Covid19State,
-        [listItem]: listValue,
+      props.setState({
+        ...props.state,
+        [listItem]: listValue
       });
-    }, 100);
+    }, 50);
   };
 
   return (
     <MainWrapper>
       <ListItem button onClick={handleClick}>
-        <ListItemText primary="Sonstiges/Komorbiditäten:" />
+        <ListItemText primary="Sonstiges" />
 
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>

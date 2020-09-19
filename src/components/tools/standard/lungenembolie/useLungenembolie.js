@@ -1,13 +1,13 @@
-import { useState, useContext, useEffect } from "react";
-import StandardContext from "../../../context/standard/standardContext";
-import getSentence from "../shared_modules/getSentence";
+import { useState, useContext, useEffect } from 'react';
+import StandardContext from '../../../context/standard/standardContext';
+import getSentence from '../shared_modules/getSentence';
 
 export default function useLungenembolie() {
   const [useLungenembolieState, setUseLungenembolieState] = useState({
-    Satz_1: "",
-    Satz_2: "",
-    Satz_3: "",
-    Satz_4: "",
+    Satz_1: '',
+    Satz_2: '',
+    Satz_3: '',
+    Satz_4: ''
   });
 
   const { PulmonaryEmbolismState, setPulmonaryEmbolismState } = useContext(
@@ -26,22 +26,25 @@ export default function useLungenembolie() {
     Herz_Mediastinum,
     Lymphknoten,
     Oberbauch,
-    Skelett,
+    Skelett
   } = PulmonaryEmbolismState;
 
   const getLungenembolie = () => {
-    PulmonaryEmbolism === "ja"
+    PulmonaryEmbolism === 'ja'
       ? setUseLungenembolieState({
           ...useLungenembolieState,
-          Satz_2: `Nachweis einer Lungenarterienembolie, ${getSentence(
-            Lokalisation,
-            false
-          )} im ${getSentence(Abschnitte, true)}.`,
+          Satz_2: `Nachweis ${
+            getSentence(Lokalisation) ? getSentence(Lokalisation) : 'einer'
+          } Lungenarterienembolie${getSentence(Lokalisation) && 'n'}${
+            getSentence(Abschnitte)
+              ? ', lokalisiert ' + getSentence(Abschnitte) + '.'
+              : '.'
+          }`
         })
-      : PulmonaryEmbolism === "nein" &&
+      : PulmonaryEmbolism === 'nein' &&
         setUseLungenembolieState({
           ...useLungenembolieState,
-          Satz_2: "Kein Nachweis einer Lungenarterienembolie.",
+          Satz_2: 'Kein Nachweis einer Lungenarterienembolie.'
         });
   };
 
@@ -50,51 +53,54 @@ export default function useLungenembolie() {
     let rhb_grad;
 
     if (rhbz <= 2) {
-      rhb_grad = "geringen";
+      rhb_grad = 'geringen';
     } else if (rhbz > 2 && rhbz <= 3) {
-      rhb_grad = "mäßigen";
+      rhb_grad = 'mäßigen';
     } else {
-      rhb_grad = "hochgradigen";
+      rhb_grad = 'hochgradigen';
     }
 
-    Rechtsherzbelastung === "ja"
+    Rechtsherzbelastung === 'ja'
       ? setUseLungenembolieState({
           ...useLungenembolieState,
-          Satz_3: `${getSentence(
-            Rechtsherzbelastungszeichen,
-            true
-          )} als Zeichen der ${rhb_grad} Rechtsherzbelastung.`,
+          Satz_3: `${
+            getSentence(Rechtsherzbelastungszeichen, true)
+              ? getSentence(Rechtsherzbelastungszeichen, true) + ' als '
+              : ''
+          }Zeichen der ${
+            getSentence(Rechtsherzbelastungszeichen, true) ? rhb_grad : ''
+          } Rechtsherzbelastung.`
         })
-      : Rechtsherzbelastung === "nein" &&
+      : Rechtsherzbelastung === 'nein' &&
         setUseLungenembolieState({
           ...useLungenembolieState,
-          Satz_3: `Keine Rechtsherzbelastungszeichen.`,
+          Satz_3: `Keine Rechtsherzbelastungszeichen.`
         });
   };
 
   const getSonstige = () => {
     const sonstigeGesamt =
       Lungenparenchym +
-      " " +
+      ' ' +
       Pleura +
-      " " +
+      ' ' +
       Herz_Mediastinum +
-      " " +
+      ' ' +
       Lymphknoten +
-      " " +
+      ' ' +
       Oberbauch +
-      " " +
+      ' ' +
       Skelett;
     setUseLungenembolieState({
       ...useLungenembolieState,
-      Satz_4: sonstigeGesamt,
+      Satz_4: sonstigeGesamt
     });
   };
 
   const getVoruntersuchung = () => {
     setUseLungenembolieState({
       ...useLungenembolieState,
-      Satz_1: Voruntersuchung,
+      Satz_1: Voruntersuchung
     });
   };
 
@@ -104,15 +110,15 @@ export default function useLungenembolie() {
     setPulmonaryEmbolismState({
       ...PulmonaryEmbolismState,
       Gesamt:
-        "Befund und Beurteilung:" +
-        "\n" +
+        'Befund und Beurteilung:' +
+        '\n' +
         Satz_1 +
-        "\n\n" +
+        '\n\n' +
         Satz_2 +
-        "\n" +
+        '\n' +
         Satz_3 +
-        "\n\n" +
-        Satz_4,
+        '\n\n' +
+        Satz_4
     });
     // eslint-disable-next-line
   }, [Satz_1, Satz_2, Satz_3, Satz_4]);
@@ -122,6 +128,6 @@ export default function useLungenembolie() {
     getLungenembolie,
     getRechtsherzbelastung,
     getSonstige,
-    useLungenembolieState,
+    useLungenembolieState
   ];
 }

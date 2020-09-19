@@ -1,14 +1,14 @@
-import React, { useEffect, useContext } from "react";
-import styled from "styled-components";
-import List from "@material-ui/core/List";
-import ListSubheader from "@material-ui/core/ListSubheader";
-import ListElementVoruntersuchung from "../shared_modules/ListElement_Voruntersuchung";
-import ListElementEmbolie from "./ListElement_Embolie";
-import ListElementRechtsherzbelastung from "./ListElement_Rechtsherzbelastung";
-import ListElementSonstiges from "./ListElement_Sonstiges";
-import useLungenembolie from "./useLungenembolie";
-import StandardContext from "../../../context/standard/standardContext";
-import Button from "@material-ui/core/Button";
+import React, { useEffect, useContext } from 'react';
+import styled from 'styled-components';
+import List from '@material-ui/core/List';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import ListElementVoruntersuchung from '../shared_modules/ListElement_Voruntersuchung';
+import ListElementEmbolie from './ListElement_Embolie';
+import ListElementRechtsherzbelastung from './ListElement_Rechtsherzbelastung';
+import ListElementSonstiges from '../shared_modules/ListElement_Sonstiges_Thorax_CT';
+import useLungenembolie from './useLungenembolie';
+import StandardContext from '../../../context/standard/standardContext';
+import Button from '@material-ui/core/Button';
 
 const MainWrapper = styled.div`
   display: flex;
@@ -90,10 +90,10 @@ export default function PulmonaryEmbolism() {
     StandardContext
   );
 
-  const handleSubmit = () => () => {
+  const handleSubmit = () => {
     setPulmonaryEmbolismState({
       ...PulmonaryEmbolismState,
-      send: true,
+      send: true
     });
   };
 
@@ -109,14 +109,14 @@ export default function PulmonaryEmbolism() {
     Herz_Mediastinum,
     Lymphknoten,
     Oberbauch,
-    Skelett,
+    Skelett
   } = PulmonaryEmbolismState;
 
   const [
     getVoruntersuchung,
     getLungenembolie,
     getRechtsherzbelastung,
-    getSonstige,
+    getSonstige
   ] = useLungenembolie();
 
   useEffect(() => {
@@ -137,12 +137,13 @@ export default function PulmonaryEmbolism() {
   useEffect(() => {
     getSonstige();
     // eslint-disable-next-line
-  }, [Lungenparenchym,
+  }, [
+    Lungenparenchym,
     Pleura,
     Herz_Mediastinum,
     Lymphknoten,
     Oberbauch,
-    Skelett,
+    Skelett
   ]);
 
   return (
@@ -162,9 +163,12 @@ export default function PulmonaryEmbolism() {
         />
         <ListElementEmbolie />
         <ListElementRechtsherzbelastung />
-        <ListElementSonstiges />
+        <ListElementSonstiges
+          state={PulmonaryEmbolismState}
+          setState={setPulmonaryEmbolismState}
+        />
         <ButtonWrapper>
-          <Button variant="outlined" color="primary" onClick={handleSubmit()}>
+          <Button variant="outlined" color="primary" onClick={handleSubmit}>
             Abschicken
           </Button>
         </ButtonWrapper>

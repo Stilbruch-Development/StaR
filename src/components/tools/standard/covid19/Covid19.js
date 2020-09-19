@@ -1,13 +1,13 @@
-import React, { useEffect, useContext } from "react";
-import styled from "styled-components";
-import List from "@material-ui/core/List";
-import ListSubheader from "@material-ui/core/ListSubheader";
-import ListElementVoruntersuchung from "../shared_modules/ListElement_Voruntersuchung";
-import ListElementCovid19 from "./ListElement_Covid19";
-import ListElementSonstiges from "./ListElement_Sonstiges";
-import useCovid19 from "./useCOVID19";
-import StandardContext from "../../../context/standard/standardContext";
-import Button from "@material-ui/core/Button";
+import React, { useEffect, useContext } from 'react';
+import styled from 'styled-components';
+import List from '@material-ui/core/List';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import ListElementVoruntersuchung from '../shared_modules/ListElement_Voruntersuchung';
+import ListElementCovid19 from './ListElement_Covid19';
+import ListElementSonstiges from '../shared_modules/ListElement_Sonstiges_Thorax_CT';
+import useCovid19 from './useCOVID19';
+import StandardContext from '../../../context/standard/standardContext';
+import Button from '@material-ui/core/Button';
 
 const MainWrapper = styled.div`
   display: flex;
@@ -99,14 +99,14 @@ export default function Covid19() {
     Herz_Mediastinum,
     Lymphknoten,
     Oberbauch,
-    Skelett,
+    Skelett
   } = Covid19State;
 
   const {
     getVoruntersuchung,
     getKategorie,
     getSonstige,
-    setGesamt,
+    setGesamt
   } = useCovid19();
 
   const handleSubmit = () => () => {
@@ -126,12 +126,13 @@ export default function Covid19() {
   useEffect(() => {
     getSonstige();
     // eslint-disable-next-line
-  }, [Lungenparenchym,
+  }, [
+    Lungenparenchym,
     Pleura,
     Herz_Mediastinum,
     Lymphknoten,
     Oberbauch,
-    Skelett,
+    Skelett
   ]);
 
   return (
@@ -150,7 +151,7 @@ export default function Covid19() {
           setState={setCovid19State}
         />
         <ListElementCovid19 />
-        <ListElementSonstiges />
+        <ListElementSonstiges state={Covid19State} setState={setCovid19State} />
         <ButtonWrapper>
           <Button variant="outlined" color="primary" onClick={handleSubmit()}>
             Abschicken

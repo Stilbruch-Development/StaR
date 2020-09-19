@@ -1,7 +1,7 @@
 const getSentence = (
   array,
-  upperCase,
-  replacementRegEx = [/,(?=[^\s])/g, ", "]
+  upperCase = false,
+  replacementRegEx = [/,(?=[^\s])/g, ', ']
 ) => {
   const array_start = [];
   for (let i = 0; i < array.length - 1; i++) {
@@ -22,7 +22,7 @@ const getSentence = (
         /^./,
         function (match) {
           return match.toUpperCase();
-        },
+        }
       ])
     : (matchUpperCase = []);
 

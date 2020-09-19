@@ -8,13 +8,13 @@ import Collapse from '@material-ui/core/Collapse';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import 'date-fns';
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker
 } from '@material-ui/pickers';
+import useAsyncReference from '../../../../hooks/useAsyncReference';
 
 const MainWrapper = styled.div`
   .MuiListItem-root {
@@ -26,7 +26,14 @@ const MainWrapper = styled.div`
 `;
 
 export default function ListElementVoruntersuchung(props) {
-  const [selectedState, setSelectedState] = useState({
+  const getDateFormat = (unformatedDate) => {
+    const dateString = `${unformatedDate?.getDate()}.${
+      unformatedDate?.getMonth() + 1
+    }.${unformatedDate?.getFullYear()}`;
+    return dateString;
+  };
+
+  const [selectedState, setSelectedState] = useAsyncReference({
     date: new Date(),
     modality: ''
   });
@@ -34,16 +41,14 @@ export default function ListElementVoruntersuchung(props) {
   const [open, setOpen] = useState(false);
 
   const handleChange = (event) => {
-    console.log(event);
     if (event.target.value === 'ja') {
       setOpen(true);
-      const result = `${selectedState.date?.getDate()}.${
-        selectedState.date?.getMonth() + 1
-      }.${selectedState.date?.getFullYear()}`;
+      const date = getDateFormat(selectedState.current.date);
+      const modality = selectedState.current.modality;
       props.setState({
         ...props.state,
-        Voruntersuchung: `${selectedState.modality || ''}Voruntersuchung vom ${
-          result || ''
+        Voruntersuchung: `${modality || ''}Voruntersuchung vom ${
+          date || ''
         } zum Vergleich vorliegend.`
       });
     }
@@ -56,33 +61,32 @@ export default function ListElementVoruntersuchung(props) {
     }
   };
 
-  const handleDateChange = (date) => {
-    const result = `${date.getDate()}.${
-      date.getMonth() + 1
-    }.${date.getFullYear()}`;
+  const handleDateChange = (unformatedDate) => {
+    const date = getDateFormat(unformatedDate);
     setSelectedState({
-      ...selectedState,
-      date: result
+      ...selectedState.current,
+      date: unformatedDate
     });
+    const modality = selectedState.current.modality;
     props.setState({
       ...props.state,
-      Voruntersuchung: `${selectedState.modality || ''}Voruntersuchung vom ${
-        result || ''
+      Voruntersuchung: `${modality || ''}Voruntersuchung vom ${
+        date || ''
       } zum Vergleich vorliegend.`
     });
   };
 
-  const handleModalityChange = async (event) => {
-    console.log(event.target.value);
-    await setSelectedState({
-      ...selectedState,
+  const handleModalityChange = (event) => {
+    setSelectedState({
+      ...selectedState.current,
       modality: event.target.value
     });
-    console.log(selectedState);
+    const modality = event.target.value;
+    const date = getDateFormat(selectedState.current.date);
     props.setState({
       ...props.state,
-      Voruntersuchung: `${selectedState.modality || ''}Voruntersuchung vom ${
-        selectedState.date || ''
+      Voruntersuchung: `${modality || ''}Voruntersuchung vom ${
+        date || ''
       } zum Vergleich vorliegend.`
     });
   };
@@ -121,7 +125,7 @@ export default function ListElementVoruntersuchung(props) {
           className="modality"
         >
           <FormControlLabel
-            value="Konventionelle"
+            value="Konventionelle "
             control={<Radio color="primary" />}
             label="Konventionell"
             labelPlacement="start"
@@ -138,6 +142,12 @@ export default function ListElementVoruntersuchung(props) {
             label="MRT"
             labelPlacement="start"
           />
+          <FormControlLabel
+            value=""
+            control={<Radio color="primary" />}
+            label="Andere"
+            labelPlacement="start"
+          />
         </RadioGroup>
 
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -149,7 +159,8 @@ export default function ListElementVoruntersuchung(props) {
               margin="normal"
               id="date-picker-inline"
               label="Voruntersuchung vom:"
-              value={selectedState.date}
+              autoOk
+              value={selectedState.current.date}
               onChange={handleDateChange}
               KeyboardButtonProps={{
                 'aria-label': 'change date'

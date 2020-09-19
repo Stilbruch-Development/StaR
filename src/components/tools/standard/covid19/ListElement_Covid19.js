@@ -1,17 +1,17 @@
-import React, { useContext } from "react";
-import styled from "styled-components";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import Checkbox from "@material-ui/core/Checkbox";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
-import Collapse from "@material-ui/core/Collapse";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import StandardContext from "../../../context/standard/standardContext";
+import React, { useContext } from 'react';
+import styled from 'styled-components';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Checkbox from '@material-ui/core/Checkbox';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import Collapse from '@material-ui/core/Collapse';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import StandardContext from '../../../context/standard/standardContext';
 
 const MainWrapper = styled.div`
   .MuiListItem-root {
@@ -36,7 +36,7 @@ export default function ListElementCovid19() {
   const { Kategorie, CTVeränderungen, Lokalisation } = Covid19State;
 
   const handleToggleFindings = (value) => () => {
-    if (Kategorie === "1") {
+    if (Kategorie === '1') {
       const currentIndex = CTVeränderungen.Kategorie1.indexOf(value);
       const newLokalisation = [...CTVeränderungen.Kategorie1];
 
@@ -51,12 +51,12 @@ export default function ListElementCovid19() {
           Kategorie1: newLokalisation,
           Kategorie2: [],
           Kategorie3: [],
-          Kategorie4: [],
-        },
+          Kategorie4: []
+        }
       });
     }
 
-    if (Kategorie === "2") {
+    if (Kategorie === '2') {
       const currentIndex = CTVeränderungen.Kategorie2.indexOf(value);
       const newLokalisation = [...CTVeränderungen.Kategorie2];
 
@@ -71,11 +71,11 @@ export default function ListElementCovid19() {
           Kategorie1: [],
           Kategorie2: newLokalisation,
           Kategorie3: [],
-          Kategorie4: [],
-        },
+          Kategorie4: []
+        }
       });
     }
-    if (Kategorie === "3") {
+    if (Kategorie === '3') {
       const currentIndex = CTVeränderungen.Kategorie3.indexOf(value);
       const newLokalisation = [...CTVeränderungen.Kategorie3];
 
@@ -90,11 +90,11 @@ export default function ListElementCovid19() {
           Kategorie1: [],
           Kategorie2: [],
           Kategorie3: newLokalisation,
-          Kategorie4: [],
-        },
+          Kategorie4: []
+        }
       });
     }
-    if (Kategorie === "4") {
+    if (Kategorie === '4') {
       const currentIndex = CTVeränderungen.Kategorie4.indexOf(value);
       const newLokalisation = [...CTVeränderungen.Kategorie4];
 
@@ -109,8 +109,8 @@ export default function ListElementCovid19() {
           Kategorie1: [],
           Kategorie2: [],
           Kategorie3: [],
-          Kategorie4: newLokalisation,
-        },
+          Kategorie4: newLokalisation
+        }
       });
     }
   };
@@ -126,7 +126,7 @@ export default function ListElementCovid19() {
     }
     setCovid19State({
       ...Covid19State,
-      Lokalisation: newLokalisation,
+      Lokalisation: newLokalisation
     });
   };
 
@@ -134,25 +134,25 @@ export default function ListElementCovid19() {
 
   const handleChangeCovid19 = (event) => {
     if (
-      event.target.value === "1" ||
-      event.target.value === "2" ||
-      event.target.value === "3"
+      event.target.value === '1' ||
+      event.target.value === '2' ||
+      event.target.value === '3'
     ) {
       setOpen(true);
     }
-    if (event.target.value === "4") {
+    if (event.target.value === '4') {
       setOpen(false);
     }
     setCovid19State({
       ...Covid19State,
-      Kategorie: event.target.value,
+      Kategorie: event.target.value
     });
   };
 
   const handleChangeAusdehnung = (event) => {
     setCovid19State({
       ...Covid19State,
-      Ausdehnung: event.target.value,
+      Ausdehnung: event.target.value
     });
   };
 
@@ -197,8 +197,11 @@ export default function ListElementCovid19() {
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItemText primary={`CT-Veränderungen: `} />
-          {Kategorie === "1" && (
+          <ListItemText
+            primary={`CT-Veränderungen: `}
+            style={{ paddingLeft: '0.5rem', paddingTop: '0.5rem' }}
+          />
+          {Kategorie === '1' && (
             <ListItem>
               <List>
                 {[
@@ -208,7 +211,7 @@ export default function ListElementCovid19() {
                   `betont periphere sowie posteriore Verdichtungen ohne subpleurale Aussparung`,
                   `rund oder geographisch konfiguriert Verdichtungen`,
                   `bilaterales sowie multifokales Verteilungsmuster`,
-                  `erweiternde Gefäße intraläsional`,
+                  `erweiternde Gefäße intraläsional`
                 ].map((value) => {
                   const labelId = `${value}`;
 
@@ -221,13 +224,13 @@ export default function ListElementCovid19() {
                     >
                       <ListItemIcon>
                         <Checkbox
-                          edge="start"
+                          edge="end"
                           checked={
                             CTVeränderungen.Kategorie1.indexOf(value) !== -1
                           }
                           tabIndex={-1}
                           disableRipple
-                          inputProps={{ "aria-labelledby": labelId }}
+                          inputProps={{ 'aria-labelledby': labelId }}
                         />
                       </ListItemIcon>
                       <ListItemText id={labelId} primary={`${value}`} />
@@ -237,13 +240,13 @@ export default function ListElementCovid19() {
               </List>
             </ListItem>
           )}
-          {Kategorie === "2" && (
+          {Kategorie === '2' && (
             <ListItem>
               <List>
                 {[
                   `Milchglasverdichtungen oder Konsolidierungen anders verteilt als bei [Cov19Typ]-Kategorie`,
                   `zentrale Betonung der Veränderungen`,
-                  `nicht rund oder geographisch konfigurierte Veränderungen`,
+                  `nicht rund oder geographisch konfigurierte Veränderungen`
                 ].map((value) => {
                   const labelId = `${value}`;
 
@@ -256,13 +259,13 @@ export default function ListElementCovid19() {
                     >
                       <ListItemIcon>
                         <Checkbox
-                          edge="start"
+                          edge="end"
                           checked={
                             CTVeränderungen.Kategorie2.indexOf(value) !== -1
                           }
                           tabIndex={-1}
                           disableRipple
-                          inputProps={{ "aria-labelledby": labelId }}
+                          inputProps={{ 'aria-labelledby': labelId }}
                         />
                       </ListItemIcon>
                       <ListItemText id={labelId} primary={`${value}`} />
@@ -272,7 +275,7 @@ export default function ListElementCovid19() {
               </List>
             </ListItem>
           )}
-          {Kategorie === "3" && (
+          {Kategorie === '3' && (
             <ListItem>
               <List>
                 {[
@@ -282,7 +285,7 @@ export default function ListElementCovid19() {
                   `lobäre oder segmentale Konsolidierungen`,
                   `Kavernenbildung`,
                   `Bronchialwandverdickungen`,
-                  `Mucus-Plugging`,
+                  `Mucus-Plugging`
                 ].map((value) => {
                   const labelId = `${value}`;
 
@@ -295,13 +298,13 @@ export default function ListElementCovid19() {
                     >
                       <ListItemIcon>
                         <Checkbox
-                          edge="start"
+                          edge="end"
                           checked={
                             CTVeränderungen.Kategorie3.indexOf(value) !== -1
                           }
                           tabIndex={-1}
                           disableRipple
-                          inputProps={{ "aria-labelledby": labelId }}
+                          inputProps={{ 'aria-labelledby': labelId }}
                         />
                       </ListItemIcon>
                       <ListItemText id={labelId} primary={`${value}`} />
@@ -316,14 +319,14 @@ export default function ListElementCovid19() {
             <ListItemText primary={`Lokalisation: `} />
             <List>
               {[
-                "Oberlappen rechts",
-                "Oberlappen links",
-                "Unterlappen rechts",
-                "Unterlappen links",
-                "Mittellappen",
-                "bipulmonal",
-                "Ober- und Unterlappen links",
-                "Ober- und Unterlappen rechts",
+                'Oberlappen rechts',
+                'Oberlappen links',
+                'Unterlappen rechts',
+                'Unterlappen links',
+                'Mittellappen',
+                'bipulmonal',
+                'Ober- und Unterlappen links',
+                'Ober- und Unterlappen rechts'
               ].map((value) => {
                 const labelId = `${value}`;
 
@@ -341,7 +344,7 @@ export default function ListElementCovid19() {
                         checked={Lokalisation.indexOf(value) !== -1}
                         tabIndex={-1}
                         disableRipple
-                        inputProps={{ "aria-labelledby": labelId }}
+                        inputProps={{ 'aria-labelledby': labelId }}
                       />
                     </ListItemIcon>
                   </ListItem>

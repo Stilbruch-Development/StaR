@@ -4,15 +4,15 @@
     <style>
       /*  Play font */
       @font-face {
-        font-family: "Play";
+        font-family: 'Play';
         font-style: normal;
         font-weight: 400;
-        src: local("Play"), local("Play-Regular"),
-          url("../../src/fonts/Play/Play-Regular.ttf") format("truetype");
+        src: local('Play'), local('Play-Regular'),
+          url('../../src/fonts/Play/Play-Regular.ttf') format('truetype');
       }
 
       body {
-        font-family: "Play", Arial;
+        font-family: 'Play', Arial;
         color: black;
         margin: 0;
         padding: 0;
@@ -46,16 +46,19 @@
         font-family: inherit;
       }
     </style>
+
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="../src/images/StaR_Main.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#dcdcdc" />
     <meta name="StaR" content="Standards der Radiologie" />
     <link rel="apple-touch-icon" href="../src/images/StaR_Main.svg" />
-
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-
     <title>StaR -Standards der Radiologie</title>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="script-src 'self''unsafe-inline'"
+    />
   </head>
   <body>
     <div id="landingMain">
@@ -63,9 +66,7 @@
         <img src="../../src/images/StaR_Main_500.svg" alt="StaR_Logo" />
         <!-- src="../src/images/StaR_Main_500.svg" src="../../src/images/StaR_Main_500.svg"-->
       </div>
-      <div id="landingSub">
-        Standards der Radiologie
-      </div>
+      <div id="landingSub">Standards der Radiologie</div>
       <div id="version"></div>
     </div>
   </body>
