@@ -7,7 +7,7 @@ import ListElementCovid19 from './ListElement_Covid19';
 import ListElementSonstiges from '../shared_modules/ListElement_Sonstiges_Thorax_CT';
 import useCovid19 from './useCOVID19';
 import StandardContext from '../../../context/standard/standardContext';
-import Button from '@material-ui/core/Button';
+import SubmitButton from '../shared_modules/Submit_Button';
 
 const MainWrapper = styled.div`
   display: flex;
@@ -73,18 +73,6 @@ const MainWrapper = styled.div`
   }
 `;
 
-const ButtonWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-
-  .MuiButton-root {
-    width: 85%;
-    height: 2.5rem;
-    margin: 1rem 1rem 0 1rem;
-  }
-`;
-
 export default function Covid19() {
   const { Covid19State, setCovid19State } = useContext(StandardContext);
 
@@ -109,7 +97,7 @@ export default function Covid19() {
     setGesamt
   } = useCovid19();
 
-  const handleSubmit = () => () => {
+  const handleSubmit = () => {
     setGesamt();
   };
 
@@ -152,11 +140,7 @@ export default function Covid19() {
         />
         <ListElementCovid19 />
         <ListElementSonstiges state={Covid19State} setState={setCovid19State} />
-        <ButtonWrapper>
-          <Button variant="outlined" color="primary" onClick={handleSubmit()}>
-            Abschicken
-          </Button>
-        </ButtonWrapper>
+        <SubmitButton handleSubmit={handleSubmit} />
       </List>
     </MainWrapper>
   );

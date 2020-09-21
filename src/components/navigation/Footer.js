@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import NavItem from "./NavItem";
-import NavLogo from "./NavLogo";
-import VisionXLogo from "./VisionXLogo";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import NavItem from './NavItem';
+import NavLogo from './NavLogo';
+import VisionXLogo from './VisionXLogo';
 
 const FooterMain = styled.div`
   display: flex;
@@ -17,14 +17,14 @@ const FooterMain = styled.div`
 
 const Footer = () => {
   const [state, setState] = useState({
-    version: "",
+    version: ''
   });
 
   useEffect(() => {
-    window.ipcRenderer && window.ipcRenderer.send("app_version");
+    window.ipcRenderer && window.ipcRenderer.send('app_version');
     window.ipcRenderer &&
-      window.ipcRenderer.on("app_version", (event, arg) => {
-        window.ipcRenderer.removeAllListeners("app_version");
+      window.ipcRenderer.on('app_version', (event, arg) => {
+        window.ipcRenderer.removeAllListeners('app_version');
         setState({ ...state, version: `Version ${arg.version}` });
       });
 
@@ -33,18 +33,18 @@ const Footer = () => {
 
   let version_name;
 
-  if (process.env.NODE_ENV === "development") {
-    version_name = "Dev";
+  if (process.env.NODE_ENV === 'development') {
+    version_name = 'Dev';
   } else {
     version_name = process.env.REACT_APP_VERSION;
   }
 
   return (
     <FooterMain data-testid="FooterComponent">
-      <div style={{ fontSize: "1rem" }}>
+      <div style={{ fontSize: '1rem' }}>
         {version_name} {state.version}
       </div>
-      <NavLogo dataTestId="FooterLogo" navLink="/#Start" width={"9%"} />
+      <NavLogo dataTestId="FooterLogo" navLink="/#Start" width={'9%'} />
       <NavItem dataTestId="FooterItemHelp" head="Hilfe" navLink="/help" />
       <NavItem
         dataTestId="FooterItemGDPR"
@@ -56,7 +56,7 @@ const Footer = () => {
         head="Impressum"
         navLink="/imprint/#top"
       />
-      <VisionXLogo width={"10%"} />
+      <VisionXLogo width={'10%'} />
     </FooterMain>
   );
 };

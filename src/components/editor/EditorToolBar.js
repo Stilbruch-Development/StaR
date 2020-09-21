@@ -1,25 +1,25 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
-import FormatAlignLeftIcon from "@material-ui/icons/FormatAlignLeft";
-import FormatAlignCenterIcon from "@material-ui/icons/FormatAlignCenter";
-import FormatAlignRightIcon from "@material-ui/icons/FormatAlignRight";
-import styled from "styled-components";
-import useDraftEditor from "../../hooks/useDraftEditor";
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
-import SaveIcon from "@material-ui/icons/Save";
-import FileCopyIcon from "@material-ui/icons/FileCopy";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
-import CloudOffIcon from "@material-ui/icons/CloudOff";
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
+import FormatAlignCenterIcon from '@material-ui/icons/FormatAlignCenter';
+import FormatAlignRightIcon from '@material-ui/icons/FormatAlignRight';
+import styled from 'styled-components';
+import useDraftEditor from '../../hooks/useDraftEditor';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import SaveIcon from '@material-ui/icons/Save';
+import FileCopyIcon from '@material-ui/icons/FileCopy';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import CloudOffIcon from '@material-ui/icons/CloudOff';
 
 const useStyles = makeStyles((theme) => ({
   button: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(1)
   },
   input: {
-    display: "none",
-  },
+    display: 'none'
+  }
 }));
 
 const StyleWrapper = styled.div`
@@ -39,7 +39,7 @@ const EditorToolBar = (props) => {
     copyEditorToClipboard,
     saveEditorUserIndependent,
     deleteLokalstore,
-    loadFromLokalStore,
+    loadFromLokalStore
   } = useDraftEditor();
 
   return (
@@ -48,8 +48,8 @@ const EditorToolBar = (props) => {
         variant="outlined"
         color="primary"
         className={classes.button}
-        onClick={() => props._toggleInlineStyle("BOLD")}
-        style={{ fontWeight: "bolder", fontSize: "inherit" }}
+        onClick={() => props._toggleInlineStyle('BOLD')}
+        style={{ fontWeight: 'bolder', fontSize: 'inherit' }}
       >
         Fett
       </Button>
@@ -57,8 +57,8 @@ const EditorToolBar = (props) => {
         variant="outlined"
         color="primary"
         className={classes.button}
-        onClick={() => props._toggleInlineStyle("ITALIC")}
-        style={{ fontStyle: "italic", fontSize: "inherit" }}
+        onClick={() => props._toggleInlineStyle('ITALIC')}
+        style={{ fontStyle: 'italic', fontSize: 'inherit' }}
       >
         Kursiv
       </Button>
@@ -66,23 +66,23 @@ const EditorToolBar = (props) => {
         variant="outlined"
         color="primary"
         className={classes.button}
-        onClick={() => props._toggleInlineStyle("UNDERLINE")}
-        style={{ textDecoration: "underline", fontSize: "inherit" }}
+        onClick={() => props._toggleInlineStyle('UNDERLINE')}
+        style={{ textDecoration: 'underline', fontSize: 'inherit' }}
       >
         Unterstrichen
       </Button>
       <ButtonGroup
         color="primary"
         aria-label="outlined primary button group"
-        style={{ margin: "8px", fontSize: "inherit" }}
+        style={{ margin: '8px', fontSize: 'inherit' }}
       >
-        <Button onClick={() => props._toggleBlockType("alignLeft")}>
+        <Button onClick={() => props._toggleBlockType('alignLeft')}>
           <FormatAlignLeftIcon />
         </Button>
-        <Button onClick={() => props._toggleBlockType("alignCenter")}>
+        <Button onClick={() => props._toggleBlockType('alignCenter')}>
           <FormatAlignCenterIcon />
         </Button>
-        <Button onClick={() => props._toggleBlockType("alignRight")}>
+        <Button onClick={() => props._toggleBlockType('alignRight')}>
           <FormatAlignRightIcon />
         </Button>
       </ButtonGroup>
@@ -93,7 +93,7 @@ const EditorToolBar = (props) => {
         onClick={() => {
           copyEditorToClipboard(props.editorState);
         }}
-        style={{ fontSize: "inherit" }}
+        style={{ fontSize: 'inherit' }}
       >
         <FileCopyIcon />
       </Button>
@@ -104,7 +104,7 @@ const EditorToolBar = (props) => {
         onClick={() => {
           setEditorEmpty(props.editorState, props.setEditorState);
         }}
-        style={{ fontSize: "inherit" }}
+        style={{ fontSize: 'inherit' }}
       >
         <DeleteForeverIcon />
       </Button>
@@ -113,7 +113,7 @@ const EditorToolBar = (props) => {
         color="primary"
         className={classes.button}
         onClick={() => saveEditorUserIndependent(props.editorState)}
-        style={{ fontSize: "inherit" }}
+        style={{ fontSize: 'inherit' }}
       >
         <SaveIcon />
       </Button>
@@ -124,7 +124,7 @@ const EditorToolBar = (props) => {
         onClick={() =>
           loadFromLokalStore(props.editorState, props.setEditorState)
         }
-        style={{ fontSize: "inherit" }}
+        style={{ fontSize: 'inherit' }}
       >
         <CloudUploadIcon />
       </Button>
@@ -133,7 +133,7 @@ const EditorToolBar = (props) => {
         color="primary"
         className={classes.button}
         onClick={deleteLokalstore}
-        style={{ fontSize: "inherit" }}
+        style={{ fontSize: 'inherit' }}
       >
         <CloudOffIcon />
       </Button>

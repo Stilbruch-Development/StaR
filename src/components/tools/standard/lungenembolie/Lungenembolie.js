@@ -8,7 +8,7 @@ import ListElementRechtsherzbelastung from './ListElement_Rechtsherzbelastung';
 import ListElementSonstiges from '../shared_modules/ListElement_Sonstiges_Thorax_CT';
 import useLungenembolie from './useLungenembolie';
 import StandardContext from '../../../context/standard/standardContext';
-import Button from '@material-ui/core/Button';
+import SubmitButton from '../shared_modules/Submit_Button';
 
 const MainWrapper = styled.div`
   display: flex;
@@ -73,29 +73,10 @@ const MainWrapper = styled.div`
   }
 `;
 
-const ButtonWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-
-  .MuiButton-root {
-    width: 85%;
-    height: 2.5rem;
-    margin: 1rem 1rem 0 1rem;
-  }
-`;
-
 export default function PulmonaryEmbolism() {
   const { PulmonaryEmbolismState, setPulmonaryEmbolismState } = useContext(
     StandardContext
   );
-
-  const handleSubmit = () => {
-    setPulmonaryEmbolismState({
-      ...PulmonaryEmbolismState,
-      send: true
-    });
-  };
 
   const {
     Voruntersuchung,
@@ -118,6 +99,13 @@ export default function PulmonaryEmbolism() {
     getRechtsherzbelastung,
     getSonstige
   ] = useLungenembolie();
+
+  const handleSubmit = () => {
+    setPulmonaryEmbolismState({
+      ...PulmonaryEmbolismState,
+      send: true
+    });
+  };
 
   useEffect(() => {
     getVoruntersuchung();
@@ -167,11 +155,7 @@ export default function PulmonaryEmbolism() {
           state={PulmonaryEmbolismState}
           setState={setPulmonaryEmbolismState}
         />
-        <ButtonWrapper>
-          <Button variant="outlined" color="primary" onClick={handleSubmit}>
-            Abschicken
-          </Button>
-        </ButtonWrapper>
+        <SubmitButton handleSubmit={handleSubmit} />
       </List>
     </MainWrapper>
   );

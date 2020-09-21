@@ -12,10 +12,6 @@ const path = require('path');
 const isDev = require('electron-is-dev');
 const log = require('electron-log');
 const os = require('os');
-const {
-  default: installExtension,
-  REACT_DEVELOPER_TOOLS
-} = require('electron-devtools-installer');
 
 const isMac = process.platform === 'darwin' ? true : false;
 
@@ -52,8 +48,7 @@ const createWindow = () => {
       devTools: tools,
       nodeIntegration: true,
       preload: __dirname + '/preload.js',
-      worldSafeExecuteJavaScript: true,
-      contextIsolation: true
+      worldSafeExecuteJavaScript: true
     }
   });
 
@@ -83,8 +78,7 @@ const createAboutWindow = () => {
       devTools: false,
       nodeIntegration: true,
       preload: __dirname + '/preload.js',
-      worldSafeExecuteJavaScript: true,
-      contextIsolation: true
+      worldSafeExecuteJavaScript: true
     }
   });
   aboutWindow.loadURL(
@@ -108,12 +102,6 @@ app.on('ready', () => {
   mainWindow.once('ready-to-show', () => {
     mainWindow.show();
   });
-
-  isDev &&
-    isMac &&
-    installExtension(REACT_DEVELOPER_TOOLS)
-      .then((name) => console.log(`Added Extension:  ${name}`))
-      .catch((err) => console.log('An error occurred: ', err));
 });
 
 app.allowRendererProcessReuse = true;
