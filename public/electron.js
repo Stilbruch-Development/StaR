@@ -102,6 +102,20 @@ app.on('ready', () => {
   mainWindow.once('ready-to-show', () => {
     mainWindow.show();
   });
+
+  let devExtensionPath;
+
+  isMac
+    ? (devExtensionPath =
+        '/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.10.0_0')
+    : (devExtensionPath =
+        '%LOCALAPPDATA%GoogleChromeUser DataDefaultExtensions\fmkadmapgofadopljbjfkapdkoienihi\4.10.0_0');
+
+  isDev &&
+    isMac &&
+    BrowserWindow.addDevToolsExtension(
+      path.join(os.homedir(), devExtensionPath)
+    );
 });
 
 app.allowRendererProcessReuse = true;
