@@ -9,16 +9,19 @@ function useDecorator() {
 
   //------ Editor Cards Implementation -----------------------------------------------------
   const { cardsUserData } = useContext(CardsContext);
+
   const { findCardsDecorators } = useCards();
 
   const CardsSpan = (props) => {
     const { setNavState } = useContext(NavContext);
     const { setCardsState } = useContext(CardsContext);
 
-    var matchElement = props.cardsUserData.filter((element) => {
+    const { cardsUserData, decoratedText } = props;
+
+    var matchElement = cardsUserData.filter((element) => {
       if (typeof element.keywords === 'string') {
         const keywordsArray = element.keywords.split(' ');
-        return keywordsArray.includes(props.decoratedText) && element;
+        return keywordsArray.includes(decoratedText) && element;
       }
       return null;
     });
@@ -32,7 +35,6 @@ function useDecorator() {
     };
     return (
       <span
-        {...props}
         style={{
           fontStyle: 'italic',
           color: 'rgba(0, 80, 120, 1)',
@@ -69,7 +71,6 @@ function useDecorator() {
 
     return EditorState.createEmpty(compositeDecorator);
   };
-
   return [editorStateLocalStore];
 }
 export default useDecorator;

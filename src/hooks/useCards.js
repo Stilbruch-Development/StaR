@@ -6,12 +6,12 @@ export default function useCards() {
         if (element.keywords.length !== 0) {
           const elementId = element._id;
           let keywordsArray;
-          if (typeof element.keywords === "string") {
-            keywordsArray = element.keywords.split(" ");
+          if (typeof element.keywords === 'string') {
+            keywordsArray = element.keywords.split(' ');
             keywordsArray.forEach((element) => {
               const keyObject = {
                 keyword: element,
-                keyId: elementId,
+                keyId: elementId
               };
               finalArray.push(keyObject);
             });
@@ -31,18 +31,19 @@ export default function useCards() {
       const match = keywordArray.map((keyword) => {
         let matchArr, start;
         var regex = `\\b${keyword.keyword}\\b`;
-        var keywordRegex = new RegExp(regex, "g");
+        var keywordRegex = new RegExp(regex, 'g');
         while ((matchArr = keywordRegex.exec(text)) !== null) {
           start = matchArr.index;
           callback(start, start + matchArr[0].length);
         }
         return null;
       });
+      console.log(match);
       return match;
     }
   };
 
   return {
-    findCardsDecorators,
+    findCardsDecorators
   };
 }
