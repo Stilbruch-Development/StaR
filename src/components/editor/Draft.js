@@ -1,26 +1,19 @@
 import React, { useState, useContext, useEffect } from 'react';
 import {
   Editor,
-  EditorState,
   RichUtils,
   DefaultDraftBlockRenderMap,
-  convertFromRaw,
-  convertToRaw,
-  CompositeDecorator
+  convertToRaw
 } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import styled from 'styled-components';
 import EditorToolBar from './EditorToolBar';
 import blockRenderMap from './blocktypes/TextAlign';
-import EditorContext from '../context/editor/editorContext';
 import ExpanderContext from '../context/expander/expanderContext';
 import useExpander from '../../hooks/useExpander';
 import StandardContext from '../context/standard/standardContext';
 import useStandards from '../../hooks/useStandards';
 import useCards from '../../hooks/useCards';
-import CardsContext from '../context/cards/cardsContext';
-import NavContext from '../context/navigation/navContext';
-import useDecorator from '../../hooks/useDecorator';
 
 const MainStyleWrapper = styled.div`
   width: 100%;
@@ -43,76 +36,10 @@ const ToolBarSyleWrapper = styled.div`
 const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap);
 
 const Draft = () => {
-  // const getLocalStorage = JSON.parse(localStorage.getItem('editorState'));
-
-  // //------ Editor Cards Implementation -----------------------------------------------------
-  // const { cardsUserData } = useContext(CardsContext);
-  // const { findCardsDecorators } = useCards();
-
-  // const CardsSpan = (props) => {
-  //   const { setNavState } = useContext(NavContext);
-  //   const { setCardsState } = useContext(CardsContext);
-
-  //   var matchElement = props.cardsUserData.filter((element) => {
-  //     if (typeof element.keywords === 'string') {
-  //       const keywordsArray = element.keywords.split(' ');
-  //       return keywordsArray.includes(props.decoratedText) && element;
-  //     }
-  //     return null;
-  //   });
-
-  //   const handleOnClick = () => {
-  //     if (matchElement) {
-  //       setCardsState('selectedCardsItem', matchElement[0]);
-  //       setNavState('display', 'Cards');
-  //       setNavState('rightSidebareOpen', true);
-  //     }
-  //   };
-  //   return (
-  //     <span
-  //       {...props}
-  //       style={{
-  //         fontStyle: 'italic',
-  //         color: 'rgba(0, 80, 120, 1)',
-  //         cursor: 'pointer'
-  //       }}
-  //       onClick={handleOnClick}
-  //     >
-  //       {props.children}
-  //     </span>
-  //   );
-  // };
-
-  // const cardsStrategy = (contentBlock, callback, contentState) => {
-  //   findCardsDecorators(contentBlock, cardsUserData, callback);
-  // };
-
-  // const compositeDecorator = new CompositeDecorator([
-  //   {
-  //     strategy: cardsStrategy,
-  //     component: CardsSpan,
-  //     props: { cardsUserData }
-  //   }
-  // ]);
-
-  // //------ Set Up Editor -----------------------------------------------------
-
-  // const editorStateLocalStore = () => {
-  //   if (getLocalStorage !== null) {
-  //     return EditorState.createWithContent(
-  //       convertFromRaw(getLocalStorage),
-  //       compositeDecorator
-  //     );
-  //   }
-
-  //   return EditorState.createEmpty(compositeDecorator);
-  // };
-
   //------ Context and Hooks-----------------------------------------------------
-  const [editorStateLocalStore] = useDecorator();
-  const [editorState, setEditorState] = useState(editorStateLocalStore);
+  const [editorStateWithDecorator] = useCards();
 
-  // const { editorState, setEditorState } = useContext(EditorContext);
+  const [editorState, setEditorState] = useState(editorStateWithDecorator);
 
   const { expanderUserData } = useContext(ExpanderContext);
   const [checkExpander] = useExpander();
