@@ -1,5 +1,5 @@
-export default function useHandleExeption() {
-    const handleExeption = () => {
+export default function useHandleException() {
+    const handleException = () => {
         window.process &&
         window.process.on('uncaughtException', function (error) {
             const {app, dialog} = window.require("electron").remote;
@@ -9,5 +9,5 @@ export default function useHandleExeption() {
         });
     };
 
-    return [handleExeption];
+    return [handleException];
   }

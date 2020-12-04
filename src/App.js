@@ -11,11 +11,11 @@ import ExpanderState from './components/context/expander/ExpanderState';
 import NavigationState from './components/context/navigation/NavState';
 import CardsState from './components/context/cards/CardsState';
 
-import useHandleExeption from "./hooks/useHandleExeption";
+import useHandleException from "./hooks/useHandleException";
 
 function App() {
-  const [handleExeption] = useHandleExeption();
-  handleExeption();
+  const [handleException] = useHandleException();
+  handleException();
   return (
     <AlertState>
       <AuthState>
