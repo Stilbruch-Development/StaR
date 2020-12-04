@@ -5,7 +5,9 @@ const {
   ipcMain,
   clipboard,
   shell,
-  screen
+  screen,
+  session,
+  dialog
 } = require('electron');
 const { autoUpdater } = require('electron-updater');
 const path = require('path');
@@ -48,7 +50,8 @@ const createWindow = () => {
       devTools: tools,
       nodeIntegration: true,
       preload: __dirname + '/preload.js',
-      worldSafeExecuteJavaScript: true
+      worldSafeExecuteJavaScript: true,
+      enableRemoteModule: true
     }
   });
 
@@ -88,7 +91,7 @@ const createAboutWindow = () => {
   );
 };
 
-app.on('ready', () => {
+app.on('ready', async () => {
   createWindow();
   app.focus();
   autoUpdater.checkForUpdatesAndNotify().catch((err) => {
@@ -113,9 +116,9 @@ app.on('ready', () => {
 
   isDev &&
     isMac &&
-    BrowserWindow.addDevToolsExtension(
+    (await session.defaultSession.loadExtension(
       path.join(os.homedir(), devExtensionPath)
-    );
+    ));
 });
 
 app.allowRendererProcessReuse = true;
@@ -201,6 +204,24 @@ ipcMain.on('toggle-dev-tools', (event, arg) => {
     });
   }
 });
+
+//-------------------------------------------------------------------
+// Handle Errors
+//
+//
+//-------------------------------------------------------------------
+
+process.on("uncaughtException", (error) => {
+  const messageBoxOptions = {
+       type: "error",
+       title: "Unerwarteter Fehler",
+       message: "Unerwarteten Fehler im Hauptprozess. StaR wird abgebrochen. Bitte kontaktieren Sie den Administrator.",
+       detail: `Fehlernachricht: ${error.message}`
+   };
+   dialog.showMessageBox(messageBoxOptions);
+   throw error;
+});
+
 //-------------------------------------------------------------------
 // Menu
 //

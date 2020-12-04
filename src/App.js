@@ -7,28 +7,29 @@ import Navbar from './components/navigation/Navbar';
 
 import AuthState from './components/context/auth/AuthState';
 import AlertState from './components/context/alert/AlertState';
-import EditorState from './components/context/editor/EditorState';
 import ExpanderState from './components/context/expander/ExpanderState';
 import NavigationState from './components/context/navigation/NavState';
 import CardsState from './components/context/cards/CardsState';
 
+import useHandleExeption from "./hooks/useHandleExeption";
+
 function App() {
+  const [handleExeption] = useHandleExeption();
+  handleExeption();
   return (
     <AlertState>
       <AuthState>
         <NavigationState>
           <ExpanderState>
             <CardsState>
-              <EditorState>
-                <Router>
-                  <div className="App" data-testid="AppComponent">
-                    <GlobalStyle />
-                    <Navbar />
-                    <Main />
-                    <Footer />
-                  </div>
-                </Router>
-              </EditorState>
+              <Router>
+                <div className="App" data-testid="AppComponent">
+                  <GlobalStyle />
+                  <Navbar />
+                  <Main />
+                  <Footer />
+                </div>
+              </Router>
             </CardsState>
           </ExpanderState>
         </NavigationState>
