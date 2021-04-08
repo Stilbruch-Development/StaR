@@ -15,7 +15,7 @@ const isDev = require('electron-is-dev');
 const log = require('electron-log');
 const os = require('os');
 
-const isMac = process.platform === 'darwin' ? true : false;
+const isMac = process.platform === 'darwin';
 
 //-------------------------------------------------------------------
 // Main Window
@@ -49,7 +49,7 @@ const createWindow = () => {
     webPreferences: {
       devTools: tools,
       nodeIntegration: true,
-      preload: __dirname + '/preload.js',
+      preload: `${__dirname}/preload.js`,
       worldSafeExecuteJavaScript: true,
       enableRemoteModule: true
     }
@@ -80,7 +80,7 @@ const createAboutWindow = () => {
     webPreferences: {
       devTools: false,
       nodeIntegration: true,
-      preload: __dirname + '/preload.js',
+      preload: `${__dirname}/preload.js`,
       worldSafeExecuteJavaScript: true
     }
   });
@@ -112,7 +112,7 @@ app.on('ready', async () => {
     ? (devExtensionPath =
         '/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.10.0_0')
     : (devExtensionPath =
-        '%LOCALAPPDATA%GoogleChromeUser DataDefaultExtensions\fmkadmapgofadopljbjfkapdkoienihi\4.10.0_0');
+        '%LOCALAPPDATA%GoogleChromeUser DataDefaultExtensions\\fmkadmapgofadopljbjfkapdkoienihi\\4.10.0_0');
 
   isDev &&
     isMac &&
@@ -211,15 +211,16 @@ ipcMain.on('toggle-dev-tools', (event, arg) => {
 //
 //-------------------------------------------------------------------
 
-process.on("uncaughtException", (error) => {
+process.on('uncaughtException', (error) => {
   const messageBoxOptions = {
-       type: "error",
-       title: "Unerwarteter Fehler",
-       message: "Unerwarteten Fehler im Hauptprozess. StaR wird abgebrochen. Bitte kontaktieren Sie den Administrator.",
-       detail: `Fehlernachricht: ${error.message}`
-   };
-   dialog.showMessageBox(messageBoxOptions);
-   throw error;
+    type: 'error',
+    title: 'Unerwarteter Fehler',
+    message:
+      'Unerwarteten Fehler im Hauptprozess. StaR wird abgebrochen. Bitte kontaktieren Sie den Administrator.',
+    detail: `Fehlernachricht: ${error.message}`
+  };
+  dialog.showMessageBox(messageBoxOptions);
+  throw error;
 });
 
 //-------------------------------------------------------------------

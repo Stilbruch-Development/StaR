@@ -8,3 +8,4 @@ electron-builder.yml
 /cards_db
 /expander_db
 /user_db
+.vscode
