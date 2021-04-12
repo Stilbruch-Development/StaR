@@ -1,16 +1,16 @@
-import React, { useState, useContext } from "react";
-import styled from "styled-components";
-import AlertContext from "../context/alert/alertContext";
-import AuthContext from "../context/auth/authContext";
-import UserTable from "./UserTable";
-import { user_db } from "../../pouchdb/db";
-import Button from "@material-ui/core/Button";
-import Switch from "@material-ui/core/Switch";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import TextField from "@material-ui/core/TextField";
-import { useForm } from "react-hook-form";
-import bcrypt from "bcryptjs";
-import Divider from "@material-ui/core/Divider";
+import React, { useState, useContext } from 'react';
+import styled from 'styled-components';
+import Button from '@material-ui/core/Button';
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import TextField from '@material-ui/core/TextField';
+import { useForm } from 'react-hook-form';
+import bcrypt from 'bcryptjs';
+import Divider from '@material-ui/core/Divider';
+import { user_db } from '../../pouchdb/db';
+import UserTable from './UserTable';
+import AuthContext from '../context/auth/authContext';
+import AlertContext from '../context/alert/alertContext';
 
 const MainStyleWrapper = styled.div`
   width: 100%;
@@ -57,7 +57,7 @@ const FormWrapper = styled.div`
   }
 `;
 
-const ChangeUser = (props) => {
+const ChangeUser = () => {
   const alertContext = useContext(AlertContext);
   const authContext = useContext(AuthContext);
 
@@ -72,48 +72,51 @@ const ChangeUser = (props) => {
     selectedUser: null,
     editing: false,
     changingPassword: false,
-    deleteUser: false,
+    deleteUser: false
   });
 
   const getAllUser = async () => {
     try {
-      let userArray;
+      let user_array;
       if (user.role === 1) {
-        userArray = await user_db.allDocs({
-          include_docs: true,
+        user_array = await user_db.allDocs({
+          include_docs: true
         });
       }
-      setState({ userArray: userArray.rows });
+      setState({ userArray: user_array.rows });
 
-      return userArray;
+      return user_array;
     } catch (err) {
       setAlert({
-        item: "message",
-        value: err.message,
+        item: 'message',
+        value: err.message
       });
     }
+    return null;
   };
 
-  const onSubmit = async (formData) => {
-    delete formData.password2;
-    const userData = {
+  const onSubmit = async (form_data_input) => {
+    const form_data = form_data_input;
+    delete form_data.password2;
+    const user_data = {
       ...state.selectedUser,
-      ...formData,
+      ...form_data
     };
-    delete userData.tableData;
+    delete user_data.tableData;
     const salt = await bcrypt.genSalt(10);
 
-    if (formData.password) {
-      userData.password = await bcrypt.hash(formData.password, salt);
+    if (form_data.password) {
+      user_data.password = await bcrypt.hash(form_data.password, salt);
     }
-    update(userData);
+    update(user_data);
     setState({ ...state, editing: false });
   };
 
-  const onDeleteClick = async (userData) => {
-    delete userData.tableData;
+  const onDeleteClick = async (user_data_input) => {
+    const user_data = user_data_input;
+    delete user_data.tableData;
     user.role === 1 &&
-      deleteUserData(userData) &&
+      deleteUserData(user_data) &&
       setState({ ...state, deleteUser: false });
   };
 
@@ -131,7 +134,7 @@ const ChangeUser = (props) => {
         ) : (
           <HeadingWrapper>Benutzerdaten</HeadingWrapper>
         )}
-        <Divider style={{ marginBottom: "5%" }} />
+        <Divider style={{ marginBottom: '5%' }} />
       </AlignWrapper>
       {state.userArray && !state.editing && (
         <UserTable changeUserState={state} changeUserSetState={setState} />
@@ -142,15 +145,15 @@ const ChangeUser = (props) => {
             variant="outlined"
             color="primary"
             style={{
-              marginTop: "5%",
-              fontSize: "1.5rem",
-              cursor: "pointer",
-              width: "80%",
+              marginTop: '5%',
+              fontSize: '1.5rem',
+              cursor: 'pointer',
+              width: '80%'
             }}
             onClick={() => {
               setState({
                 ...state,
-                editing: true,
+                editing: true
               });
             }}
           >
@@ -173,7 +176,7 @@ const ChangeUser = (props) => {
               fullWidth
               inputRef={register({
                 required: true,
-                pattern: /^[a-zA-ZöäüÖÄÜ][a-zA-ZöäüÖÄÜ0-9-_.]{1,20}$/i,
+                pattern: /^[a-zA-ZöäüÖÄÜ][a-zA-ZöäüÖÄÜ0-9-_.]{1,20}$/i
               })}
             />
             {errors.first_name && (
@@ -190,7 +193,7 @@ const ChangeUser = (props) => {
               fullWidth
               inputRef={register({
                 required: true,
-                pattern: /^[a-zA-ZöäüÖÄÜ][a-zA-ZöäüÖÄÜ0-9-_.]{1,20}$/i,
+                pattern: /^[a-zA-ZöäüÖÄÜ][a-zA-ZöäüÖÄÜ0-9-_.]{1,20}$/i
               })}
             />
             {errors.last_name && (
@@ -207,8 +210,8 @@ const ChangeUser = (props) => {
               inputRef={register({
                 required: {
                   value: true,
-                  message: "Bitte eine gültige Email-Adresse angeben!",
-                },
+                  message: 'Bitte eine gültige Email-Adresse angeben!'
+                }
               })}
             />
             {errors.email && (
@@ -235,8 +238,8 @@ const ChangeUser = (props) => {
                   inputRef={register({
                     required: {
                       value: true,
-                      message: "Bitte Passwort eingeben!",
-                    },
+                      message: 'Bitte Passwort eingeben!'
+                    }
                   })}
                 />
                 {errors.password && (
@@ -251,14 +254,11 @@ const ChangeUser = (props) => {
                   inputRef={register({
                     required: {
                       value: true,
-                      message: "Bitte Passwort wiederholen!",
+                      message: 'Bitte Passwort wiederholen!'
                     },
-                    validate: (value) => {
-                      return (
-                        value === watch("password") ||
-                        "Passwörter stimmen nicht überein!"
-                      );
-                    },
+                    validate: (value) =>
+                      value === watch('password') ||
+                      'Passwörter stimmen nicht überein!'
                   })}
                 />
                 {errors.password2 && (
@@ -272,9 +272,9 @@ const ChangeUser = (props) => {
               fullWidth
               type="submit"
               style={{
-                marginTop: "10%",
-                fontSize: "1.5rem",
-                cursor: "pointer",
+                marginTop: '10%',
+                fontSize: '1.5rem',
+                cursor: 'pointer'
               }}
               id="user_edit_save"
             >
@@ -287,9 +287,9 @@ const ChangeUser = (props) => {
                 setState({ ...state, editing: false });
               }}
               style={{
-                marginTop: "10%",
-                fontSize: "1.5rem",
-                cursor: "pointer",
+                marginTop: '10%',
+                fontSize: '1.5rem',
+                cursor: 'pointer'
               }}
               id="user_edit_cancel"
             >
@@ -297,7 +297,7 @@ const ChangeUser = (props) => {
             </Button>
           </form>
           <FormControlLabel
-            style={{ marginTop: "10%", color: "red" }}
+            style={{ marginTop: '10%', color: 'red' }}
             control={
               <Switch
                 onChange={handleCheck}
@@ -309,7 +309,7 @@ const ChangeUser = (props) => {
           />
           {state.deleteUser && (
             <>
-              <p className="formError" style={{ fontSize: "1.5rem" }}>
+              <p className="formError" style={{ fontSize: '1.5rem' }}>
                 DER BENUTZER UND ALLE BENUTZERDATEN WERDEN UNWIEDERRUFLICH
                 GELÖSCHT!!
               </p>
@@ -320,9 +320,9 @@ const ChangeUser = (props) => {
                   onDeleteClick(state.selectedUser);
                 }}
                 style={{
-                  marginTop: "10%",
-                  fontSize: "1.5rem",
-                  cursor: "pointer",
+                  marginTop: '10%',
+                  fontSize: '1.5rem',
+                  cursor: 'pointer'
                 }}
                 id="user_edit_cancel"
               >

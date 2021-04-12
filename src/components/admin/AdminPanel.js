@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import useToggle from "../../hooks/useToggle";
-import Sidebar from "./Sidebar";
-import SidebarButton from "./SidebarButton";
-import Register from "../auth/Register";
-import ChangeUser from "./ChangeUser";
-import Tools from "./Tools";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import useToggle from '../../hooks/useToggle';
+import Sidebar from './Sidebar';
+import SidebarButton from './SidebarButton';
+import Register from '../auth/Register';
+import ChangeUser from './ChangeUser';
+import Tools from './Tools';
 
 const MainFlex = styled.div`
   display: flex;
@@ -22,14 +22,14 @@ const AdminPanel = () => {
     register: false,
     tools: false,
     changeUser: false,
-    selectedUser: null,
+    selectedUser: null
   });
 
   const onRegisterClick = () => {
     setAdminState({
       register: !AdminState.register,
       tools: false,
-      changeUser: false,
+      changeUser: false
     });
   };
 
@@ -37,7 +37,7 @@ const AdminPanel = () => {
     setAdminState({
       register: false,
       tools: !AdminState.tools,
-      changeUser: false,
+      changeUser: false
     });
   };
 
@@ -45,7 +45,7 @@ const AdminPanel = () => {
     setAdminState({
       register: false,
       tools: false,
-      changeUser: !AdminState.changeUser,
+      changeUser: !AdminState.changeUser
     });
   };
   return (

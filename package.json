@@ -1,6 +1,9 @@
 {
   "name": "star",
   "version": "0.0.8",
+  "engines": {
+    "node": ">=14.16.0"
+},
   "description": "Support for your clinical radiological workflow.",
   "author": "visionx.dev",
   "private": false,

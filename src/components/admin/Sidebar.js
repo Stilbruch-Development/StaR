@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import Button from "@material-ui/core/Button";
-import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import React from 'react';
+import styled from 'styled-components';
+import Button from '@material-ui/core/Button';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 const SidebarDiv = styled.div`
   display: flex;
@@ -18,31 +18,25 @@ const SidebarDiv = styled.div`
   }
 `;
 
-const Sidebar = (props) => {
-  return (
-    <SidebarDiv>
-      <Button variant="outlined" color="primary" onClick={props.setToggleState}>
-        <ArrowBackIosIcon viewBox="-5 0 24 24" />
-      </Button>
-      <Button
-        variant="outlined"
-        color="primary"
-        onClick={props.onRegisterClick}
-      >
-        Benutzer Anlegen
-      </Button>
-      <Button
-        variant="outlined"
-        color="primary"
-        onClick={props.onChangeUserClick}
-      >
-        Benutzerdaten Ändern
-      </Button>
-      <Button variant="outlined" color="primary" onClick={props.onToolsClick}>
-        Tools
-      </Button>
-    </SidebarDiv>
-  );
-};
+const Sidebar = (props) => (
+  <SidebarDiv>
+    <Button variant="outlined" color="primary" onClick={props.setToggleState}>
+      <ArrowBackIosIcon viewBox="-5 0 24 24" />
+    </Button>
+    <Button variant="outlined" color="primary" onClick={props.onRegisterClick}>
+      Benutzer Anlegen
+    </Button>
+    <Button
+      variant="outlined"
+      color="primary"
+      onClick={props.onChangeUserClick}
+    >
+      Benutzerdaten Ändern
+    </Button>
+    <Button variant="outlined" color="primary" onClick={props.onToolsClick}>
+      Tools
+    </Button>
+  </SidebarDiv>
+);
 
 export default Sidebar;

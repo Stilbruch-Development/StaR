@@ -145,7 +145,7 @@ ipcMain.on('copy_to_clipboard', (event, content) => {
 });
 
 ipcMain.on('open_external_link', (event, link) => {
-  shell.openExternal(link).catch((e) => {
+  shell.openExternal(link).catch(() => {
     event.reply(
       'open_external_link_error',
       'Fehlerhafter oder inkompletter Link. Bitte immer "http://" oder "https://" anführen!'
@@ -170,7 +170,7 @@ autoUpdater.on('update-available', () => {
   mainWindow.webContents.send('update_available');
 });
 
-autoUpdater.on('update-not-available', (info) => {
+autoUpdater.on('update-not-available', () => {
   mainWindow.webContents.send('update_not_available');
   console.log('update not available');
 });
