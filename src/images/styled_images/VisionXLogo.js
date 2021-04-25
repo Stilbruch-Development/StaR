@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import { ReactComponent as VisionXLogo } from "../VisionX.svg";
+import React from 'react';
+import styled from 'styled-components';
+import { ReactComponent as VisionXLogo } from '../VisionX.svg';
 
 const Logo = styled.div`
   display: flex;
@@ -44,7 +44,7 @@ const Logo = styled.div`
 export default function MainLogo() {
   return (
     <Logo>
-      <canvas></canvas>
+      <canvas />
       <VisionXLogo />
     </Logo>
   );

@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
-import AuthContext from "../components/context/auth/authContext";
-import { Route, Redirect } from "react-router-dom";
+/* eslint-disable react/jsx-props-no-spreading */
+import React, { useContext } from 'react';
+import { Route, Redirect } from 'react-router-dom';
+import AuthContext from '../components/context/auth/authContext';
 
 const PrivatRoute = ({ component: Component, ...rest }) => {
   const authContext = useContext(AuthContext);

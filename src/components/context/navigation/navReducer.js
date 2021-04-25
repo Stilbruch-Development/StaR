@@ -1,4 +1,4 @@
-import { OPEN_DISPLAY, CLOSE_DISPLAY, SET_NAVSTATE } from "../types";
+import { OPEN_DISPLAY, CLOSE_DISPLAY, SET_NAVSTATE } from '../types';
 
 export default function (state, action) {
   switch (action.type) {
@@ -6,20 +6,21 @@ export default function (state, action) {
       return {
         ...state,
         display: action.payload,
-        rightSidebareOpen: true,
+        rightSidebareOpen: true
       };
     case CLOSE_DISPLAY:
       return {
         ...state,
-        display: "",
-        rightSidebareOpen: false,
+        display: '',
+        rightSidebareOpen: false
       };
-    case SET_NAVSTATE:
+    case SET_NAVSTATE: {
       const { item, value } = action.payload;
       return {
         ...state,
-        [item]: value,
+        [item]: value
       };
+    }
     default:
       return state;
   }

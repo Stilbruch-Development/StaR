@@ -37,7 +37,7 @@ export default function useLungenembolie() {
             getSentence(Lokalisation) ? getSentence(Lokalisation) : 'einer'
           } Lungenarterienembolie${getSentence(Lokalisation) && 'n'}${
             getSentence(Abschnitte)
-              ? ', lokalisiert ' + getSentence(Abschnitte) + '.'
+              ? `, lokalisiert ${getSentence(Abschnitte)}.`
               : '.'
           }`
         })
@@ -65,7 +65,7 @@ export default function useLungenembolie() {
           ...useLungenembolieState,
           Satz_3: `${
             getSentence(Rechtsherzbelastungszeichen, true)
-              ? getSentence(Rechtsherzbelastungszeichen, true) + ' als '
+              ? `${getSentence(Rechtsherzbelastungszeichen, true)} als `
               : ''
           }Zeichen der ${
             getSentence(Rechtsherzbelastungszeichen, true) ? rhb_grad : ''
@@ -79,18 +79,7 @@ export default function useLungenembolie() {
   };
 
   const getSonstige = () => {
-    const sonstigeGesamt =
-      Lungenparenchym +
-      ' ' +
-      Pleura +
-      ' ' +
-      Herz_Mediastinum +
-      ' ' +
-      Lymphknoten +
-      ' ' +
-      Oberbauch +
-      ' ' +
-      Skelett;
+    const sonstigeGesamt = `${Lungenparenchym} ${Pleura} ${Herz_Mediastinum} ${Lymphknoten} ${Oberbauch} ${Skelett}`;
     setUseLungenembolieState({
       ...useLungenembolieState,
       Satz_4: sonstigeGesamt
@@ -109,16 +98,7 @@ export default function useLungenembolie() {
   useEffect(() => {
     setPulmonaryEmbolismState({
       ...PulmonaryEmbolismState,
-      Gesamt:
-        'Befund und Beurteilung:' +
-        '\n' +
-        Satz_1 +
-        '\n\n' +
-        Satz_2 +
-        '\n' +
-        Satz_3 +
-        '\n\n' +
-        Satz_4
+      Gesamt: `${'Befund und Beurteilung: \n'}${Satz_1}\n\n${Satz_2}\n${Satz_3}\n\n${Satz_4}`
     });
     // eslint-disable-next-line
   }, [Satz_1, Satz_2, Satz_3, Satz_4]);

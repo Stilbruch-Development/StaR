@@ -1,13 +1,14 @@
-import StandardContext from "./standardContext";
-import React from "react";
-import useCovid19State from "./covid19/useCovid19State";
-import usePulmonaryEmbolismState from "./pulmonaryEmbolism/usePulmonaryEmbolismState";
+import React from 'react';
+import StandardContext from './standardContext';
+import useCovid19State from './covid19/useCovid19State';
+import usePulmonaryEmbolismState from './pulmonaryEmbolism/usePulmonaryEmbolismState';
 
 const StandardState = (props) => {
+  const { children } = props;
   const [Covid19State, setCovid19State] = useCovid19State();
   const [
     PulmonaryEmbolismState,
-    setPulmonaryEmbolismState,
+    setPulmonaryEmbolismState
   ] = usePulmonaryEmbolismState();
   return (
     <StandardContext.Provider
@@ -15,10 +16,10 @@ const StandardState = (props) => {
         Covid19State,
         setCovid19State,
         PulmonaryEmbolismState,
-        setPulmonaryEmbolismState,
+        setPulmonaryEmbolismState
       }}
     >
-      {props.children}
+      {children}
     </StandardContext.Provider>
   );
 };

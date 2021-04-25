@@ -6,22 +6,23 @@ import {
   UPDATE_CARDS,
   CLEAR_CARDS,
   CARDS_ERROR,
-  SET_CARDS_STATE,
-} from "../types";
+  SET_CARDS_STATE
+} from '../types';
 
 export default function (state, action) {
   switch (action.type) {
-    case SET_CARDS_STATE:
+    case SET_CARDS_STATE: {
       const { item, value } = action.payload;
       return {
         ...state,
-        [item]: value,
+        [item]: value
       };
+    }
     case ADD_CARDS_ITEM:
       return {
         ...state,
         cardsUserData: [...state.cardsUserData, action.payload],
-        loadingCards: false,
+        loadingCards: false
       };
     case UPDATE_CARDS:
       return {
@@ -29,7 +30,7 @@ export default function (state, action) {
         cardsUserData: state.cardsUserData.map((cards) =>
           cards._id === action.payload._id ? action.payload : cards
         ),
-        loadingCards: false,
+        loadingCards: false
       };
     case DELETE_CARDS:
       return {
@@ -37,23 +38,23 @@ export default function (state, action) {
         cardsUserData: state.cardsUserData.filter(
           (cards) => cards._id !== action.payload
         ),
-        loadingCards: false,
+        loadingCards: false
       };
     case CARDS_ERROR:
       return {
         ...state,
-        error: action.payload,
+        error: action.payload
       };
     case GET_CARDS:
       return {
         ...state,
-        loadingCards: true,
+        loadingCards: true
       };
     case GET_CARDS_SUCCESS:
       return {
         ...state,
         cardsUserData: action.payload,
-        loadingCards: false,
+        loadingCards: false
       };
     case CLEAR_CARDS:
       return {
@@ -62,7 +63,7 @@ export default function (state, action) {
         selectedCardsItem: null,
         editingCards: false,
         cardsFormState: null,
-        cardsUserData: null,
+        cardsUserData: null
       };
     default:
       return state;

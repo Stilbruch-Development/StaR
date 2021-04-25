@@ -18,7 +18,7 @@ const MainWrapper = styled.div`
     justify-content: flex-start;
   }
 
-  .MuiListItemText-root.MuiListItemText-dense  {
+  .MuiListItemText-root.MuiListItemText-dense {
     border-radius: 10px;
     margin: 0;
     width: 90%;

@@ -15,9 +15,10 @@ const ButtonWrapper = styled.div`
 `;
 
 export default function SubmitButton(props) {
+  const { handleSubmit } = props;
   return (
     <ButtonWrapper>
-      <Button variant="outlined" color="primary" onClick={props.handleSubmit}>
+      <Button variant="outlined" color="primary" onClick={handleSubmit}>
         Abschicken
       </Button>
     </ButtonWrapper>

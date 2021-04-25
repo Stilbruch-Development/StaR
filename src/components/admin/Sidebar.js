@@ -18,25 +18,29 @@ const SidebarDiv = styled.div`
   }
 `;
 
-const Sidebar = (props) => (
-  <SidebarDiv>
-    <Button variant="outlined" color="primary" onClick={props.setToggleState}>
-      <ArrowBackIosIcon viewBox="-5 0 24 24" />
-    </Button>
-    <Button variant="outlined" color="primary" onClick={props.onRegisterClick}>
-      Benutzer Anlegen
-    </Button>
-    <Button
-      variant="outlined"
-      color="primary"
-      onClick={props.onChangeUserClick}
-    >
-      Benutzerdaten Ändern
-    </Button>
-    <Button variant="outlined" color="primary" onClick={props.onToolsClick}>
-      Tools
-    </Button>
-  </SidebarDiv>
-);
+const Sidebar = (props) => {
+  const {
+    setToggleState,
+    onRegisterClick,
+    onChangeUserClick,
+    onToolsClick
+  } = props;
+  return (
+    <SidebarDiv>
+      <Button variant="outlined" color="primary" onClick={setToggleState}>
+        <ArrowBackIosIcon viewBox="-5 0 24 24" />
+      </Button>
+      <Button variant="outlined" color="primary" onClick={onRegisterClick}>
+        Benutzer Anlegen
+      </Button>
+      <Button variant="outlined" color="primary" onClick={onChangeUserClick}>
+        Benutzerdaten Ändern
+      </Button>
+      <Button variant="outlined" color="primary" onClick={onToolsClick}>
+        Tools
+      </Button>
+    </SidebarDiv>
+  );
+};
 
 export default Sidebar;

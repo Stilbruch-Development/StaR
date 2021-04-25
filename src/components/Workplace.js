@@ -1,16 +1,16 @@
-import React, { useContext, useEffect } from "react";
-import styled from "styled-components";
-import LeftSidebar from "./navigation/LeftSidebar";
-import RightSidebar from "./navigation/RightSidebar";
-import ExpanderContext from "./context/expander/expanderContext";
-import CardsContext from "./context/cards/cardsContext";
-import Draft from "./editor/Draft";
-import LeftSidebarButton from "./navigation/LeftSidebarButton";
-import RightSidebarButton from "./navigation/RightSidebarButton";
-import useToggle from "../hooks/useToggle";
-import AuthContext from "./context/auth/authContext";
-import StandardState from "./context/standard/StandardState";
-import NavContext from "../components/context/navigation/navContext";
+import React, { useContext, useEffect } from 'react';
+import styled from 'styled-components';
+import LeftSidebar from './navigation/LeftSidebar';
+import RightSidebar from './navigation/RightSidebar';
+import ExpanderContext from './context/expander/expanderContext';
+import CardsContext from './context/cards/cardsContext';
+import Draft from './editor/Draft';
+import LeftSidebarButton from './navigation/LeftSidebarButton';
+import RightSidebarButton from './navigation/RightSidebarButton';
+import useToggle from '../hooks/useToggle';
+import AuthContext from './context/auth/authContext';
+import StandardState from './context/standard/StandardState';
+import NavContext from './context/navigation/navContext';
 
 const MainFlex = styled.div`
   display: flex;
@@ -32,7 +32,7 @@ const Editor = () => {
     getExpander,
     setExpanderItem,
     clearExpander,
-    loadingExpander,
+    loadingExpander
   } = useContext(ExpanderContext);
 
   const { getCards, clearCards, setCardsState, loadingCards } = useContext(
@@ -46,19 +46,17 @@ const Editor = () => {
   const [toggleState, setToggleState] = useToggle(true);
 
   useEffect(() => {
-    setCardsState("cardsUserData", null);
+    setCardsState('cardsUserData', null);
     clearExpander();
     clearCards();
     getExpander();
     getCards();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   window.scroll({
     top: 0,
     left: 0,
-    behavior: "instant",
+    behavior: 'instant'
   });
 
   return (

@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
-import styled from "styled-components";
-import MainLogo from "../../images/styled_images/MainLogo";
-import useAutoUpdater from "../../hooks/useAutoUpdater";
-import { Link } from "react-router-dom";
+import React, { useEffect } from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import MainLogo from '../../images/styled_images/MainLogo';
+import useAutoUpdater from '../../hooks/useAutoUpdater';
 
 const LandingMain = styled.div`
   height: 100vh;
@@ -38,12 +38,11 @@ const Landing = () => {
 
   useEffect(() => {
     autoUpdater();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [autoUpdater]);
 
   return (
     <LandingMain id="Start" data-testid="LandingComponent">
-      <div className="navChange" style={{ width: "40%", padding: "4rem" }}>
+      <div className="navChange" style={{ width: '40%', padding: '4rem' }}>
         <Link data-testid="LandingComponentLinkToLogin" to="/login">
           <MainLogo />
         </Link>

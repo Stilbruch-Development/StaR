@@ -44,7 +44,7 @@ export default function ListElementVoruntersuchung(props) {
     if (event.target.value === 'ja') {
       setOpen(true);
       const date = getDateFormat(selectedState.current.date);
-      const modality = selectedState.current.modality;
+      const { modality } = selectedState.current;
       props.setState({
         ...props.state,
         Voruntersuchung: `${modality || ''}Voruntersuchung vom ${
@@ -67,7 +67,7 @@ export default function ListElementVoruntersuchung(props) {
       ...selectedState.current,
       date: unformatedDate
     });
-    const modality = selectedState.current.modality;
+    const { modality } = selectedState.current;
     props.setState({
       ...props.state,
       Voruntersuchung: `${modality || ''}Voruntersuchung vom ${

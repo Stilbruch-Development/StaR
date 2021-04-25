@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
-import AlertContext from "./alertContext";
-import styled from "styled-components";
-import Button from "@material-ui/core/Button";
-import CancelOutlinedIcon from "@material-ui/icons/CancelOutlined";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useContext } from 'react';
+import styled from 'styled-components';
+import Button from '@material-ui/core/Button';
+import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
+import { makeStyles } from '@material-ui/core/styles';
+import AlertContext from './alertContext';
 
 const AlertWrapper = styled.div`
   position: fixed;
@@ -29,12 +29,12 @@ const Notefication = styled.div`
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 `;
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   button: {
-    width: "100%",
-    fontSize: "1.5rem",
-    margin: "1rem",
-  },
+    width: '100%',
+    fontSize: '1.5rem',
+    margin: '1rem'
+  }
 }));
 
 const ButtonWrapper = styled.div`
@@ -48,20 +48,20 @@ const Alert = () => {
   const classes = useStyles();
 
   const { message, button, onClickButton, removeAlert, alertState } = {
-    ...useContext(AlertContext),
+    ...useContext(AlertContext)
   };
 
   return (
     <AlertWrapper>
-      {message !== "" && (
-        <Notefication style={{ backgroundColor: alertState?.color || "red" }}>
+      {message !== '' && (
+        <Notefication style={{ backgroundColor: alertState?.color || 'red' }}>
           <p>{message}</p>
           <CancelOutlinedIcon
-            style={{ fontSize: "3rem", cursor: "pointer", margin: "1rem" }}
+            style={{ fontSize: '3rem', cursor: 'pointer', margin: '1rem' }}
             onClick={removeAlert}
           />
           <ButtonWrapper>
-            {button !== "" && (
+            {button !== '' && (
               <Button
                 variant="contained"
                 fullWidth

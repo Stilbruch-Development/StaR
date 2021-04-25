@@ -1,5 +1,5 @@
-import PouchDB from "pouchdb";
-import PouchDBFind from "pouchdb-find";
+import PouchDB from 'pouchdb';
+import PouchDBFind from 'pouchdb-find';
 
 let user_db_remote_url;
 let expander_db_remote_url;
@@ -10,28 +10,28 @@ let cards_db_name;
 
 PouchDB.plugin(PouchDBFind);
 
-if (process.env.NODE_ENV === "development") {
-  user_db_name = "dev_user_db";
-  expander_db_name = "dev_expander_db";
-  cards_db_name = "dev_cards_db";
+if (process.env.NODE_ENV === 'development') {
+  user_db_name = 'dev_user_db';
+  expander_db_name = 'dev_expander_db';
+  cards_db_name = 'dev_cards_db';
   user_db_remote_url = process.env.REACT_APP_USER_DB_DEV;
   expander_db_remote_url = process.env.REACT_APP_EXPANDER_DB_DEV;
   cards_db_remote_url = process.env.REACT_APP_CARDS_DB_DEV;
 } else {
-  user_db_name = "user_db";
-  expander_db_name = "expander_db";
-  cards_db_name = "cards_db";
+  user_db_name = 'user_db';
+  expander_db_name = 'expander_db';
+  cards_db_name = 'cards_db';
   user_db_remote_url = process.env.REACT_APP_USER_DB;
   expander_db_remote_url = process.env.REACT_APP_EXPANDER_DB;
   cards_db_remote_url = process.env.REACT_APP_CARDS_DB;
 }
 
 const admin_user = {
-  _id: "1",
-  email: "admin",
-  first_name: "Admin",
-  password: "$2y$12$VgcgxTY.At3i8mTQyFF7Lu6xuzZdfuiuo6dKuiSLF8rj26VqQXb1a",
-  role: 1,
+  _id: '1',
+  email: 'admin',
+  first_name: 'Admin',
+  password: '$2y$12$VgcgxTY.At3i8mTQyFF7Lu6xuzZdfuiuo6dKuiSLF8rj26VqQXb1a',
+  role: 1
 };
 
 const user_db = new PouchDB(user_db_name);
@@ -43,13 +43,13 @@ const cards_db_remote = new PouchDB(cards_db_remote_url);
 
 const setAdmin = async () => {
   try {
-    await user_db.get("1");
+    await user_db.get('1');
   } catch (err) {
-    if (err.name === "not_found") {
+    if (err.name === 'not_found') {
       try {
         await user_db.put(admin_user);
-      } catch (err) {
-        console.log(err);
+      } catch (e) {
+        console.log(e);
       }
     }
   }
@@ -61,12 +61,12 @@ const syncDB = () => {
   // sync local pouchdb to remote IBM Cloudant
   user_db
     .sync(user_db_remote)
-    .on("complete", function () {
+    .on('complete', () => {
       console.log(
         `sync of ${user_db_name} and ${user_db_name}_remote successfully completed`
       );
     })
-    .on("error", function (err) {
+    .on('error', (err) => {
       console.log(
         `sync of ${user_db_name} and ${user_db_name}_remote failed with error: ${err}`
       );
@@ -74,12 +74,12 @@ const syncDB = () => {
 
   expander_db
     .sync(expander_db_remote)
-    .on("complete", function () {
+    .on('complete', () => {
       console.log(
         `sync of ${expander_db_name} and ${expander_db_name}_remote successfully completed`
       );
     })
-    .on("error", function (err) {
+    .on('error', (err) => {
       console.log(
         `sync of ${expander_db_name} and ${expander_db_name}_remote failed with error: ${err}`
       );
@@ -87,12 +87,12 @@ const syncDB = () => {
 
   cards_db
     .sync(cards_db_remote)
-    .on("complete", function () {
+    .on('complete', () => {
       console.log(
         `sync of ${cards_db_name} and ${cards_db_name}_remote successfully completed`
       );
     })
-    .on("error", function (err) {
+    .on('error', (err) => {
       console.log(
         `sync of ${cards_db_name} and ${cards_db_name}_remote failed with error: ${err}`
       );

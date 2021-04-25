@@ -73,7 +73,7 @@ const MainWrapper = styled.div`
   }
 `;
 
-export default function PulmonaryEmbolism() {
+export default function PulmonaryEmbolismComponent() {
   const { PulmonaryEmbolismState, setPulmonaryEmbolismState } = useContext(
     StandardContext
   );

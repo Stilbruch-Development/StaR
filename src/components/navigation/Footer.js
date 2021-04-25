@@ -19,22 +19,22 @@ const Footer = () => {
   const [state, setState] = useState({
     version: ''
   });
-
+  window.ipcRenderer && window.ipcRenderer.send('app_version');
   useEffect(() => {
     window.ipcRenderer && window.ipcRenderer.send('app_version');
     window.ipcRenderer &&
       window.ipcRenderer.on('app_version', (event, arg) => {
         window.ipcRenderer.removeAllListeners('app_version');
         setState({ ...state, version: `Version ${arg.version}` });
+        console.log(arg.version);
       });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.version]);
 
   let version_name;
+  console.log(state.version);
 
   if (process.env.NODE_ENV === 'development') {
-    version_name = 'Dev';
+    version_name = `Dev-Mode Version ${process.env.REACT_APP_VERSION}`;
   } else {
     version_name = process.env.REACT_APP_VERSION;
   }
@@ -44,7 +44,7 @@ const Footer = () => {
       <div style={{ fontSize: '1rem' }}>
         {version_name} {state.version}
       </div>
-      <NavLogo dataTestId="FooterLogo" navLink="/#Start" width={'9%'} />
+      <NavLogo dataTestId="FooterLogo" navLink="/#Start" width="9%" />
       <NavItem dataTestId="FooterItemHelp" head="Hilfe" navLink="/help" />
       <NavItem
         dataTestId="FooterItemGDPR"
@@ -56,7 +56,7 @@ const Footer = () => {
         head="Impressum"
         navLink="/imprint/#top"
       />
-      <VisionXLogo width={'10%'} />
+      <VisionXLogo width="10%" />
     </FooterMain>
   );
 };

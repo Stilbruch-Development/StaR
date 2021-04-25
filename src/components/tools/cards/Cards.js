@@ -1,16 +1,17 @@
-import React, { useState, useContext } from "react";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import { withStyles } from "@material-ui/core/styles";
-import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
-import Typography from "@material-ui/core/Typography";
-import styled from "styled-components";
-import CardsList from "./CardsList";
-import DraftDisplay from "./DraftDisplay";
-import CardsForm from "./CardsForm";
-import CardsContext from "../../context/cards/cardsContext";
+/* eslint-disable no-nested-ternary */
+import React, { useState, useContext } from 'react';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import { withStyles } from '@material-ui/core/styles';
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import Typography from '@material-ui/core/Typography';
+import styled from 'styled-components';
+import CardsList from './CardsList';
+import DraftDisplay from './DraftDisplay';
+import CardsForm from './CardsForm';
+import CardsContext from '../../context/cards/cardsContext';
 
 const MainStyleWrapper = styled.div`
   display: flex;
@@ -59,29 +60,30 @@ const Cards = () => {
     setOpen(false);
 
     setTimeout(() => {
-      setCardsState("editingCards", false);
-      setCardsState("cardsFormState", null);
-      setCardsState("selectedCardsItem", null);
-      setCardsState("error", null);
+      setCardsState('editingCards', false);
+      setCardsState('cardsFormState', null);
+      setCardsState('selectedCardsItem', null);
+      setCardsState('error', null);
     }, 60);
   };
 
   const styles = (theme) => ({
     root: {
       margin: 0,
-      padding: theme.spacing(2),
+      padding: theme.spacing(2)
     },
     closeButton: {
-      position: "absolute",
+      position: 'absolute',
       right: theme.spacing(1),
       top: theme.spacing(1),
-      color: theme.palette.grey[500],
-    },
+      color: theme.palette.grey[500]
+    }
   });
 
   const DialogTitle = withStyles(styles)((props) => {
     const { children, classes, onClose, ...other } = props;
     return (
+      // eslint-disable-next-line react/jsx-props-no-spreading
       <MuiDialogTitle disableTypography className={classes.root} {...other}>
         <Typography variant="h6">{children}</Typography>
         {onClose ? (
@@ -114,7 +116,7 @@ const Cards = () => {
             <Typography
               variant="h6"
               style={{
-                padding: "16px",
+                padding: '16px'
               }}
             >
               Kartenliste

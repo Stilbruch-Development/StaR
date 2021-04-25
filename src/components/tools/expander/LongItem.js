@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import Draft from "./Draft";
+import React from 'react';
+import styled from 'styled-components';
+import Draft from './Draft';
 
 const MainWrapper = styled.div`
   margin: 0 1vw 1vw 1vw;

@@ -8,18 +8,18 @@ export default function useCards() {
 
   const { cardsUserData } = useContext(CardsContext);
 
-  const getKeywordArray = (cardsUserData) => {
+  const getKeywordArray = (userData) => {
     const finalArray = [];
-    if (cardsUserData) {
-      cardsUserData.forEach((element) => {
+    if (userData) {
+      userData.forEach((element) => {
         if (element.keywords.length !== 0) {
           const elementId = element._id;
           let keywordsArray;
           if (typeof element.keywords === 'string') {
             keywordsArray = element.keywords.split(' ');
-            keywordsArray.forEach((element) => {
+            keywordsArray.forEach((e) => {
               const keyObject = {
-                keyword: element,
+                keyword: e,
                 keyId: elementId
               };
               finalArray.push(keyObject);
@@ -32,16 +32,17 @@ export default function useCards() {
     return null;
   };
 
-  const findCardsDecorators = (contentBlock, cardsUserData, callback) => {
-    const keywordArray = getKeywordArray(cardsUserData);
+  const findCardsDecorators = (contentBlock, user_data, callback) => {
+    const keywordArray = getKeywordArray(user_data);
     const text = contentBlock.getText();
 
     if (keywordArray) {
       const match = keywordArray.map((keyword) => {
-        let matchArr, start;
-        var regex = `\\b${keyword.keyword}\\b`;
-        var keywordRegex = new RegExp(regex, 'g');
-        while ((matchArr = keywordRegex.exec(text)) !== null) {
+        let start;
+        const regex = `\\b${keyword.keyword}\\b`;
+        const keywordRegex = new RegExp(regex, 'g');
+        const matchArr = keywordRegex.exec(text);
+        while (matchArr !== null) {
           start = matchArr.index;
           callback(start, start + matchArr[0].length);
         }
@@ -49,15 +50,16 @@ export default function useCards() {
       });
       return match;
     }
+    return null;
   };
 
   const CardsSpan = (props) => {
     const { setNavState } = useContext(NavContext);
     const { setCardsState } = useContext(CardsContext);
 
-    const { cardsUserData, decoratedText } = props;
+    const { cardsData, decoratedText, children } = props;
 
-    const matchElement = cardsUserData.filter((element) => {
+    const matchElement = cardsData.filter((element) => {
       if (typeof element.keywords === 'string') {
         const keywordsArray = element.keywords.split(' ');
         return keywordsArray.includes(decoratedText) && element;
@@ -73,21 +75,21 @@ export default function useCards() {
       }
     };
     return (
-      // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-      <span
+      <button
         style={{
           fontStyle: 'italic',
           color: 'rgba(0, 80, 120, 1)',
           cursor: 'pointer'
         }}
         onClick={handleOnClick}
+        type="button"
       >
-        {props.children}
-      </span>
+        {children}
+      </button>
     );
   };
 
-  const cardsStrategy = (contentBlock, callback, contentState) => {
+  const cardsStrategy = (contentBlock, callback) => {
     findCardsDecorators(contentBlock, cardsUserData, callback);
   };
 

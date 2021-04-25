@@ -1,18 +1,17 @@
-import React, { useState, useEffect, useContext } from "react";
-import CardsContext from "../../context/cards/cardsContext";
-
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Editor,
   EditorState,
   RichUtils,
   DefaultDraftBlockRenderMap,
   convertToRaw,
-  convertFromRaw,
-} from "draft-js";
-import "draft-js/dist/Draft.css";
-import styled from "styled-components";
-import EditorToolBar from "./EditorToolBar";
-import blockRenderMap from "../../editor/blocktypes/TextAlign";
+  convertFromRaw
+} from 'draft-js';
+import 'draft-js/dist/Draft.css';
+import styled from 'styled-components';
+import CardsContext from '../../context/cards/cardsContext';
+import EditorToolBar from './EditorToolBar';
+import blockRenderMap from '../../editor/blocktypes/TextAlign';
 
 const MainStyleWrapper = styled.div`
   width: 100%;
@@ -55,20 +54,16 @@ const Draft = (props) => {
     if (selectedCardsItem !== null && selectedCardsItem !== undefined) {
       const convertedItem = convertFromRaw(selectedCardsItem.rawEditorState);
       setEditorState(
-        EditorState.push(editorState, convertedItem, "insert-characters")
+        EditorState.push(editorState, convertedItem, 'insert-characters')
       );
     } else {
       setEditorState(EditorState.createEmpty());
     }
-
-    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCardsItem]);
 
   useEffect(() => {
-    var rawEditorState = convertToRaw(contentState);
+    const rawEditorState = convertToRaw(contentState);
     props.setCardsFormEditorState(rawEditorState);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contentState]);
 
   useEffect(() => {

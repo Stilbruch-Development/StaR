@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { HashLink as Link } from "react-router-hash-link";
+import styled from 'styled-components';
+import { HashLink as Link } from 'react-router-hash-link';
 
 const StyledLink = styled(Link)`
   display: flex;

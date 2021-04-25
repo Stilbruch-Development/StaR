@@ -1,12 +1,12 @@
-import React, { useState, useContext, useEffect } from "react";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import styled from "styled-components";
-import AlertContext from "../context/alert/alertContext";
-import AuthContext from "../context/auth/authContext";
-import Divider from "@material-ui/core/Divider";
-import Logo from "../../images/styled_images/MainLogo";
-import { Link } from "react-router-dom";
+import React, { useState, useContext, useEffect } from 'react';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import styled from 'styled-components';
+import Divider from '@material-ui/core/Divider';
+import { Link } from 'react-router-dom';
+import AlertContext from '../context/alert/alertContext';
+import AuthContext from '../context/auth/authContext';
+import Logo from '../../images/styled_images/MainLogo';
 
 const MainStyleWrapper = styled.div`
   margin: 0% 35% 0% 35%;
@@ -39,14 +39,14 @@ const Login = (props) => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      props.history.push("/workplace");
+      props.history.push('/workplace');
     }
     // eslint-disable-next-line
   }, [isAuthenticated, props.history]);
 
   const [user, setUser] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: ''
   });
 
   const { email, password } = user;
@@ -54,21 +54,21 @@ const Login = (props) => {
   const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
 
   const onSubmit = () => {
-    if (email === "" || password === "") {
+    if (email === '' || password === '') {
       setAlert({
-        item: "message",
-        value: "Bitte gib eine gültige Email und das zugehörige Password ein.",
+        item: 'message',
+        value: 'Bitte gib eine gültige Email und das zugehörige Password ein.'
       });
     } else if (error) {
       setAlert({
-        item: "message",
-        value: error,
+        item: 'message',
+        value: error
       });
       clearErrors();
     } else {
       login({
         email,
-        password,
+        password
       });
     }
   };
@@ -80,19 +80,19 @@ const Login = (props) => {
 
   useEffect(() => {
     const listener = (event) => {
-      if (event.code === "Enter" || event.code === "NumpadEnter") {
+      if (event.code === 'Enter' || event.code === 'NumpadEnter') {
         onSubmit();
       }
     };
-    document.addEventListener("keydown", listener);
+    document.addEventListener('keydown', listener);
     return () => {
-      document.removeEventListener("keydown", listener);
+      document.removeEventListener('keydown', listener);
     };
   });
 
   return (
     <MainStyleWrapper>
-      <div style={{ width: "80%", padding: "2rem" }}>
+      <div style={{ width: '80%', padding: '2rem' }}>
         <Link to="/">
           <Logo />
         </Link>

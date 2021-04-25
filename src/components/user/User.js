@@ -1,13 +1,13 @@
-import React, { useState, useContext } from "react";
-import { useForm } from "react-hook-form";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import styled from "styled-components";
-import AuthContext from "../context/auth/authContext";
-import Divider from "@material-ui/core/Divider";
-import Switch from "@material-ui/core/Switch";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import bcrypt from "bcryptjs";
+import React, { useState, useContext } from 'react';
+import { useForm } from 'react-hook-form';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import styled from 'styled-components';
+import Divider from '@material-ui/core/Divider';
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import bcrypt from 'bcryptjs';
+import AuthContext from '../context/auth/authContext';
 
 const MainStyleWrapper = styled.div`
   display: flex;
@@ -74,16 +74,17 @@ const User = () => {
 
   const [localState, setLocalState] = useState({
     editing: false,
-    changingPassword: false,
+    changingPassword: false
   });
 
-  const onClickChange = (e) => setLocalState({ ...localState, editing: true });
+  const onClickChange = () => setLocalState({ ...localState, editing: true });
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (input) => {
+    const data = input;
     delete data.password2;
     const userData = {
       ...user,
-      ...data,
+      ...data
     };
     const salt = await bcrypt.genSalt(10);
 
@@ -106,37 +107,37 @@ const User = () => {
     emailInputRef = register({
       required: {
         value: true,
-        message: "Bitte eine gültige Email-Adresse angeben!",
-      },
+        message: 'Bitte eine gültige Email-Adresse angeben!'
+      }
     });
     passwordInputRef = register({
       required: {
         value: true,
-        message: "Bitte Passwort eingeben!",
-      },
+        message: 'Bitte Passwort eingeben!'
+      }
     });
   } else {
     emailInputRef = register({
       required: {
         value: true,
-        message: "Bitte eine gültige Email-Adresse angeben!",
+        message: 'Bitte eine gültige Email-Adresse angeben!'
       },
       pattern: {
         value: /^([a-zA-Z0-9_\-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/i,
-        message: "Bitte eine gültige Email-Adresse angeben!",
-      },
+        message: 'Bitte eine gültige Email-Adresse angeben!'
+      }
     });
     passwordInputRef = register({
       required: {
         value: true,
         message:
-          "Bitte Passwort aus mindestens 4 und höchstens 20 Zeichen wählen. Es muss mindestens einen Klein- und einen Großbuchstaben sowie eine Ziffer enthalten!",
+          'Bitte Passwort aus mindestens 4 und höchstens 20 Zeichen wählen. Es muss mindestens einen Klein- und einen Großbuchstaben sowie eine Ziffer enthalten!'
       },
       pattern: {
         value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,20}$/i,
         message:
-          "Passwort aus mindestens 4 und höchstens 20 Zeichen wählen, das mindestens einen Klein- und einen Großbuchstaben sowie eine Ziffer enthält!",
-      },
+          'Passwort aus mindestens 4 und höchstens 20 Zeichen wählen, das mindestens einen Klein- und einen Großbuchstaben sowie eine Ziffer enthält!'
+      }
     });
   }
 
@@ -163,7 +164,7 @@ const User = () => {
               fullWidth
               inputRef={register({
                 required: true,
-                pattern: /^[a-zA-ZöäüÖÄÜ][a-zA-ZöäüÖÄÜ0-9-_.]{1,20}$/i,
+                pattern: /^[a-zA-ZöäüÖÄÜ][a-zA-ZöäüÖÄÜ0-9-_.]{1,20}$/i
               })}
             />
             {errors.first_name && (
@@ -180,7 +181,7 @@ const User = () => {
               fullWidth
               inputRef={register({
                 required: true,
-                pattern: /^[a-zA-ZöäüÖÄÜ][a-zA-ZöäüÖÄÜ0-9-_.]{1,20}$/i,
+                pattern: /^[a-zA-ZöäüÖÄÜ][a-zA-ZöäüÖÄÜ0-9-_.]{1,20}$/i
               })}
             />
             {errors.last_name && (
@@ -232,14 +233,11 @@ const User = () => {
                   inputRef={register({
                     required: {
                       value: true,
-                      message: "Bitte Passwort wiederholen!",
+                      message: 'Bitte Passwort wiederholen!'
                     },
-                    validate: (value) => {
-                      return (
-                        value === watch("password") ||
-                        "Passwörter stimmen nicht überein!"
-                      );
-                    },
+                    validate: (value) =>
+                      value === watch('password') ||
+                      'Passwörter stimmen nicht überein!'
                   })}
                 />
                 {errors.password2 && (
@@ -253,9 +251,9 @@ const User = () => {
               fullWidth
               type="submit"
               style={{
-                marginTop: "10%",
-                fontSize: "1.5rem",
-                cursor: "pointer",
+                marginTop: '10%',
+                fontSize: '1.5rem',
+                cursor: 'pointer'
               }}
               id="user_edit_save"
             >
@@ -268,9 +266,9 @@ const User = () => {
                 setLocalState({ ...localState, editing: false });
               }}
               style={{
-                marginTop: "10%",
-                fontSize: "1.5rem",
-                cursor: "pointer",
+                marginTop: '10%',
+                fontSize: '1.5rem',
+                cursor: 'pointer'
               }}
               id="user_edit_cancel"
             >
@@ -280,44 +278,44 @@ const User = () => {
         </FormWrapper>
       ) : (
         <DisplayWrapper>
-          <div style={{ padding: "1rem" }}>
+          <div style={{ padding: '1rem' }}>
             Vorname:
             <p
               style={{
-                fontSize: "2rem",
-                fontWeight: "bold",
-                display: "inline",
+                fontSize: '2rem',
+                fontWeight: 'bold',
+                display: 'inline'
               }}
             >
               {` ${user.first_name}`}
             </p>
           </div>
-          <div style={{ padding: "1rem" }}>
+          <div style={{ padding: '1rem' }}>
             Nachname:
             <p
               style={{
-                fontSize: "2rem",
-                fontWeight: "bold",
-                display: "inline",
+                fontSize: '2rem',
+                fontWeight: 'bold',
+                display: 'inline'
               }}
             >
               {` ${user.last_name}`}
             </p>
           </div>
-          <div style={{ padding: "1rem" }}>
+          <div style={{ padding: '1rem' }}>
             Email:
             <p
               style={{
-                fontSize: "2rem",
-                fontWeight: "bold",
-                display: "inline",
+                fontSize: '2rem',
+                fontWeight: 'bold',
+                display: 'inline'
               }}
             >
               {` ${user.email}`}
             </p>
           </div>
           <Button
-            style={{ marginTop: "20%", fontSize: "1.5rem", cursor: "pointer" }}
+            style={{ marginTop: '20%', fontSize: '1.5rem', cursor: 'pointer' }}
             variant="outlined"
             fullWidth
             onClick={onClickChange}

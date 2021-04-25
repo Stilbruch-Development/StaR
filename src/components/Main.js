@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Landing from './../components/landing/Landing';
+import Landing from './landing/Landing';
 import Workplace from './Workplace';
 import AdminPanel from './admin/AdminPanel';
-import User from '../components/user/User';
-import Login from '../components/auth/Login';
+import User from './user/User';
+import Login from './auth/Login';
 import PrivatRoute from '../utils/PrivatRoute';
-import Alert from '../components/context/alert/Alert';
-import authContext from '../components/context/auth/authContext';
+import Alert from './context/alert/Alert';
+import authContext from './context/auth/authContext';
 
 const Main = () => {
   const { logout } = { ...useContext(authContext) };

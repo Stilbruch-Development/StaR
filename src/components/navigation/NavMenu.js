@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
-import NavContext from "../context/navigation/navContext";
-import NavCancel from "../../images/styled_images/NavCancel";
-import NavMenuIcon from "../../images/styled_images/NavMenu";
-import styled from "styled-components";
+import React, { useContext } from 'react';
+import styled from 'styled-components';
+import NavContext from '../context/navigation/navContext';
+import NavCancel from '../../images/styled_images/NavCancel';
+import NavMenuIcon from '../../images/styled_images/NavMenu';
 
 const Menu = styled.div`
   display: flex;

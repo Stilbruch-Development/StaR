@@ -26,11 +26,11 @@ export default function ListElementEmbolie() {
   const { Lokalisation, Abschnitte } = PulmonaryEmbolismState;
 
   const handleToggleLokalisation = (value) => () => {
-    const currentIndex = Lokalisation.indexOf(value + 'er');
+    const currentIndex = Lokalisation.indexOf(`${value}er`);
     const newLokalisation = [...Lokalisation];
 
     if (currentIndex === -1) {
-      newLokalisation.push(value + 'er');
+      newLokalisation.push(`${value}er`);
     } else {
       newLokalisation.splice(currentIndex, 1);
     }
@@ -42,7 +42,7 @@ export default function ListElementEmbolie() {
 
   const handleToggleAbschnitte = (value) => () => {
     const newString = `${
-      value === 'Truncus pulmonalis' ? 'im ' + value : 'in der ' + value
+      value === 'Truncus pulmonalis' ? `im ${value}` : `in der ${value}`
     }`;
     const currentIndex = Abschnitte.indexOf(newString);
     const newAbschnitte = [...Abschnitte];
@@ -120,7 +120,7 @@ export default function ListElementEmbolie() {
                       <ListItemIcon>
                         <Checkbox
                           edge="start"
-                          checked={Lokalisation?.indexOf(value + 'er') !== -1}
+                          checked={Lokalisation?.indexOf(`${value}er`) !== -1}
                           tabIndex={-1}
                           disableRipple
                           inputProps={{ 'aria-labelledby': labelId }}
@@ -163,8 +163,8 @@ export default function ListElementEmbolie() {
                           Abschnitte?.indexOf(
                             `${
                               value === 'Truncus pulmonalis'
-                                ? 'im ' + value
-                                : 'in der ' + value
+                                ? `im ${value}`
+                                : `in der ${value}`
                             }`
                           ) !== -1
                         }

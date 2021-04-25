@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext } from "react";
-import CardsContext from "../../context/cards/cardsContext";
-import useExternalLink from "../../../hooks/useExternalLink";
-import AlertContext from "../../context/alert/alertContext";
+import React, { useState, useEffect, useContext } from 'react';
+import { Editor, EditorState, convertFromRaw } from 'draft-js';
+import styled from 'styled-components';
+import CardsContext from '../../context/cards/cardsContext';
+import useExternalLink from '../../../hooks/useExternalLink';
+import AlertContext from '../../context/alert/alertContext';
 
-import { Editor, EditorState, convertFromRaw } from "draft-js";
-import "draft-js/dist/Draft.css";
-import styled from "styled-components";
+import 'draft-js/dist/Draft.css';
 
 const MainStyleWrapper = styled.div`
   margin: 0 1vw 1vw 1vw;
@@ -25,24 +25,22 @@ const DraftDisplay = (props) => {
     if (selectedCardsItem !== null && selectedCardsItem !== undefined) {
       const convertedItem = convertFromRaw(selectedCardsItem.rawEditorState);
       setEditorState(
-        EditorState.push(editorState, convertedItem, "insert-characters")
+        EditorState.push(editorState, convertedItem, 'insert-characters')
       );
     } else {
       setEditorState(EditorState.createEmpty());
     }
-
-    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCardsItem]);
 
   const onClickLogo = (url) => {
     goToExternalLink(url);
   };
   window.ipcRenderer &&
-    window.ipcRenderer.on("open_external_link_error", (event, msg) => {
-      window.ipcRenderer.removeAllListeners("open_external_link_error");
+    window.ipcRenderer.on('open_external_link_error', (event, msg) => {
+      window.ipcRenderer.removeAllListeners('open_external_link_error');
       setAlert({
-        item: "message",
-        value: msg,
+        item: 'message',
+        value: msg
       });
       props.handleClose();
     });
@@ -52,25 +50,26 @@ const DraftDisplay = (props) => {
       <Editor
         editorState={editorState}
         onChange={setEditorState}
-        readOnly={true}
+        readOnly
         placeholder="Bitte klicke auf ein Cards-Element."
       />
       <div>
-        <p style={{ textDecoration: "underline", fontWeight: "bold" }}>
+        <p style={{ textDecoration: 'underline', fontWeight: 'bold' }}>
           Schlagworte:
         </p>
         <p>{selectedCardsItem.keywords}</p>
       </div>
       <div>
-        <p style={{ textDecoration: "underline", fontWeight: "bold" }}>Link:</p>
-        <p
-          style={{ textDecoration: "underline", cursor: "pointer" }}
+        <p style={{ textDecoration: 'underline', fontWeight: 'bold' }}>Link:</p>
+        <button
+          style={{ textDecoration: 'underline', cursor: 'pointer' }}
           onClick={() => {
             onClickLogo(selectedCardsItem.url);
           }}
+          type="button"
         >
           {selectedCardsItem.url}
-        </p>
+        </button>
       </div>
     </MainStyleWrapper>
   ) : (

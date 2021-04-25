@@ -1,28 +1,28 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 const initialVal = {
-  Voruntersuchung: "",
-  Kategorie: "",
+  Voruntersuchung: '',
+  Kategorie: '',
   CTVeränderungen: {
     Kategorie1: [],
     Kategorie2: [],
     Kategorie3: [],
-    Kategorie4: [],
+    Kategorie4: []
   },
   Lokalisation: [],
-  Ausdehnung: "unbenannter",
-  Lungenparenchym: "Keine suspekte pulmonale Verdichtung.",
-  Pleura: "Kein Pleuraerguss.",
-  Herz_Mediastinum: "",
-  Lymphknoten: "Keine Lymphadenopathie.",
-  Oberbauch: "Oberbauch, soweit erfasst, unauffällig.",
-  Skelett: "Skelett mit degenerativen Veränderungen.",
-  Satz_1: "",
-  Satz_2: "",
-  Satz_3: "",
-  Satz_4: "",
-  Gesamt: "",
-  send: false,
+  Ausdehnung: 'unbenannter',
+  Lungenparenchym: 'Keine suspekte pulmonale Verdichtung.',
+  Pleura: 'Kein Pleuraerguss.',
+  Herz_Mediastinum: '',
+  Lymphknoten: 'Keine Lymphadenopathie.',
+  Oberbauch: 'Oberbauch, soweit erfasst, unauffällig.',
+  Skelett: 'Skelett mit degenerativen Veränderungen.',
+  Satz_1: '',
+  Satz_2: '',
+  Satz_3: '',
+  Satz_4: '',
+  Gesamt: '',
+  send: false
 };
 
 function useCovid19State() {

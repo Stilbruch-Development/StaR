@@ -1,16 +1,16 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import styled from "styled-components";
-import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import styled from 'styled-components';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 const useStyles = makeStyles((theme) => ({
   button: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(1)
   },
   input: {
-    display: "none",
-  },
+    display: 'none'
+  }
 }));
 
 const ButtonWrapper = styled.div`
@@ -27,16 +27,16 @@ const ButtonWrapper = styled.div`
 
 const SidebarButton = (props) => {
   const classes = useStyles();
-
+  const { setToggleState } = props;
   return (
     <ButtonWrapper>
       <Button
         variant="outlined"
         color="primary"
         className={classes.button}
-        onClick={props.setToggleState}
+        onClick={setToggleState}
       >
-        <ArrowForwardIosIcon style={{ fontSize: "1rem" }} />
+        <ArrowForwardIosIcon style={{ fontSize: '1rem' }} />
       </Button>
     </ButtonWrapper>
   );

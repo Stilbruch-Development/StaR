@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
-import NavItem from './NavItem';
-import NavLogo from './NavLogo';
 import styled from 'styled-components';
-import authContext from '../context/auth/authContext';
-import ExpanderContext from '../context/expander/expanderContext';
-import CardsContext from '../context/cards/cardsContext';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Link } from 'react-router-dom';
+import NavItem from './NavItem';
+import NavLogo from './NavLogo';
+import authContext from '../context/auth/authContext';
+import ExpanderContext from '../context/expander/expanderContext';
+import CardsContext from '../context/cards/cardsContext';
 
 const NavMain = styled.div`
   display: flex;
@@ -91,7 +91,12 @@ const Navbar = () => {
       <NavRight>
         {isAuthenticated ? (
           <>
-            <div onClick={handleClickMenu}>
+            <div
+              onClick={handleClickMenu}
+              role="menuitem"
+              onKeyPress={handleClickMenu}
+              tabIndex={0}
+            >
               <NavItem
                 head={user && `Hallo ${user.first_name}!`}
                 navLink="#!"
@@ -131,7 +136,7 @@ const Navbar = () => {
                   fontFamily: 'inherit',
                   fontSize: '1.5rem'
                 }}
-                onClick={(e) => onLogout()}
+                onClick={() => onLogout()}
               >
                 Logout
               </MenuItem>

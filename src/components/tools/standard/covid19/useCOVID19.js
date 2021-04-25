@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { useContext } from 'react';
 import StandardContext from '../../../context/standard/standardContext';
 import getSentence from '../shared_modules/getSentence';
@@ -68,18 +69,7 @@ export default function useCOVID19() {
   };
 
   const getSonstige = () => {
-    const sonstigeGesamt =
-      Lungenparenchym +
-      ' ' +
-      Pleura +
-      ' ' +
-      Herz_Mediastinum +
-      ' ' +
-      Lymphknoten +
-      ' ' +
-      Oberbauch +
-      ' ' +
-      Skelett;
+    const sonstigeGesamt = `${Lungenparenchym} ${Pleura} ${Herz_Mediastinum} ${Lymphknoten} ${Oberbauch} ${Skelett}`;
     setCovid19State({
       ...Covid19State,
       Satz_4: sonstigeGesamt
@@ -97,17 +87,9 @@ export default function useCOVID19() {
     setCovid19State({
       ...Covid19State,
       Gesamt:
-        'Befund:' +
-        '\n' +
-        Satz_1 +
-        '\n\n' +
-        Satz_3 +
-        '\n\n' +
-        Satz_4 +
-        '\n\n' +
-        'Beurteilung:' +
-        '\n' +
-        Satz_2,
+        `${'Befund: \n'}${Satz_1}\n\n${Satz_3}\n\n${Satz_4}\n\n` +
+        `Beurteilung:` +
+        `\n${Satz_2}`,
       send: true
     });
   };

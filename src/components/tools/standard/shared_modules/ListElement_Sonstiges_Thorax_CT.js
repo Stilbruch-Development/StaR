@@ -27,6 +27,7 @@ const FormWrapper = styled.div`
 `;
 
 export default function ListElementSonstiges(props) {
+  const { state } = props;
   const {
     Pleura,
     Lungenparenchym,
@@ -34,13 +35,13 @@ export default function ListElementSonstiges(props) {
     Herz_Mediastinum,
     Oberbauch,
     Skelett
-  } = props.state;
+  } = state;
+
+  const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
     setOpen(!open);
   };
-
-  const [open, setOpen] = React.useState(false);
 
   const handleChange = (event) => {
     const listItem = event.target.name;

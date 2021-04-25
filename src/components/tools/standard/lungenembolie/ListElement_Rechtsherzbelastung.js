@@ -1,17 +1,17 @@
-import React, { useContext } from "react";
-import styled from "styled-components";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import Checkbox from "@material-ui/core/Checkbox";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
-import Collapse from "@material-ui/core/Collapse";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import StandardContext from "../../../context/standard/standardContext";
+import React, { useContext } from 'react';
+import styled from 'styled-components';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Checkbox from '@material-ui/core/Checkbox';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import Collapse from '@material-ui/core/Collapse';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import StandardContext from '../../../context/standard/standardContext';
 
 const MainWrapper = styled.div`
   .MuiListItem-root {
@@ -37,22 +37,22 @@ export default function ListElementRechtsherzbelastung() {
     }
     setPulmonaryEmbolismState({
       ...PulmonaryEmbolismState,
-      Rechtsherzbelastungszeichen: newRechtsherzbelastungszeichen,
+      Rechtsherzbelastungszeichen: newRechtsherzbelastungszeichen
     });
   };
 
   const [open, setOpen] = React.useState(false);
 
   const handleChange = (event) => {
-    if (event.target.value === "ja") {
+    if (event.target.value === 'ja') {
       setOpen(true);
     }
-    if (event.target.value === "nein") {
+    if (event.target.value === 'nein') {
       setOpen(false);
     }
     setPulmonaryEmbolismState({
       ...PulmonaryEmbolismState,
-      Rechtsherzbelastung: event.target.value,
+      Rechtsherzbelastung: event.target.value
     });
   };
 
@@ -88,10 +88,10 @@ export default function ListElementRechtsherzbelastung() {
           <ListItem>
             <List>
               {[
-                "erweiterter rechter Vorhof",
-                "erweiterter rechter Ventrikel",
-                "Kontrastmittel Rückstrom in die Lebervenen",
-                "erweiterter Tr. pulmonalis/ Pulmonalarterien",
+                'erweiterter rechter Vorhof',
+                'erweiterter rechter Ventrikel',
+                'Kontrastmittel Rückstrom in die Lebervenen',
+                'erweiterter Tr. pulmonalis/ Pulmonalarterien'
               ].map((value) => {
                 const labelId = `${value}`;
 
@@ -111,7 +111,7 @@ export default function ListElementRechtsherzbelastung() {
                         }
                         tabIndex={-1}
                         disableRipple
-                        inputProps={{ "aria-labelledby": labelId }}
+                        inputProps={{ 'aria-labelledby': labelId }}
                       />
                     </ListItemIcon>
                   </ListItem>

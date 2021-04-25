@@ -1,19 +1,19 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
-import FormatAlignLeftIcon from "@material-ui/icons/FormatAlignLeft";
-import FormatAlignCenterIcon from "@material-ui/icons/FormatAlignCenter";
-import FormatAlignRightIcon from "@material-ui/icons/FormatAlignRight";
-import styled from "styled-components";
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
+import FormatAlignCenterIcon from '@material-ui/icons/FormatAlignCenter';
+import FormatAlignRightIcon from '@material-ui/icons/FormatAlignRight';
+import styled from 'styled-components';
 
 const useStyles = makeStyles((theme) => ({
   button: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(1)
   },
   input: {
-    display: "none",
-  },
+    display: 'none'
+  }
 }));
 
 const StyleWrapper = styled.div`
@@ -32,8 +32,8 @@ const EditorToolBar = (props) => {
         variant="outlined"
         color="primary"
         className={classes.button}
-        onClick={() => props._toggleInlineStyle("BOLD")}
-        style={{ fontWeight: "bolder" }}
+        onClick={() => props._toggleInlineStyle('BOLD')}
+        style={{ fontWeight: 'bolder' }}
       >
         Fett
       </Button>
@@ -41,8 +41,8 @@ const EditorToolBar = (props) => {
         variant="outlined"
         color="primary"
         className={classes.button}
-        onClick={() => props._toggleInlineStyle("ITALIC")}
-        style={{ fontStyle: "italic" }}
+        onClick={() => props._toggleInlineStyle('ITALIC')}
+        style={{ fontStyle: 'italic' }}
       >
         Kursiv
       </Button>
@@ -50,19 +50,19 @@ const EditorToolBar = (props) => {
         variant="outlined"
         color="primary"
         className={classes.button}
-        onClick={() => props._toggleInlineStyle("UNDERLINE")}
-        style={{ textDecoration: "underline" }}
+        onClick={() => props._toggleInlineStyle('UNDERLINE')}
+        style={{ textDecoration: 'underline' }}
       >
         Unterstrichen
       </Button>
       <ButtonGroup color="primary" aria-label="outlined primary button group">
-        <Button onClick={() => props._toggleBlockType("alignLeft")}>
+        <Button onClick={() => props._toggleBlockType('alignLeft')}>
           <FormatAlignLeftIcon />
         </Button>
-        <Button onClick={() => props._toggleBlockType("alignCenter")}>
+        <Button onClick={() => props._toggleBlockType('alignCenter')}>
           <FormatAlignCenterIcon />
         </Button>
-        <Button onClick={() => props._toggleBlockType("alignRight")}>
+        <Button onClick={() => props._toggleBlockType('alignRight')}>
           <FormatAlignRightIcon />
         </Button>
       </ButtonGroup>

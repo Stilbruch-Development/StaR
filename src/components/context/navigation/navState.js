@@ -1,13 +1,14 @@
-import React, { useReducer } from "react";
-import NavContext from "./navContext";
-import navReducer from "./navReducer";
+import React, { useReducer } from 'react';
+import NavContext from './navContext';
+import navReducer from './navReducer';
 
-import { SET_NAVSTATE } from "../types";
+import { SET_NAVSTATE } from '../types';
 
 const NavState = (props) => {
+  const { children } = props;
   const initialState = {
     rightSidebareOpen: false,
-    display: "",
+    display: ''
   };
 
   const [state, dispatch] = useReducer(navReducer, initialState);
@@ -16,7 +17,7 @@ const NavState = (props) => {
   const setNavState = (item, value) => {
     dispatch({
       type: SET_NAVSTATE,
-      payload: { item, value },
+      payload: { item, value }
     });
   };
 
@@ -25,10 +26,10 @@ const NavState = (props) => {
       value={{
         rightSidebareOpen: state.rightSidebareOpen,
         display: state.display,
-        setNavState,
+        setNavState
       }}
     >
-      {props.children}
+      {children}
     </NavContext.Provider>
   );
 };

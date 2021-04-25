@@ -6,12 +6,12 @@ import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
 import FormatAlignCenterIcon from '@material-ui/icons/FormatAlignCenter';
 import FormatAlignRightIcon from '@material-ui/icons/FormatAlignRight';
 import styled from 'styled-components';
-import useDraftEditor from '../../hooks/useDraftEditor';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import SaveIcon from '@material-ui/icons/Save';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import CloudOffIcon from '@material-ui/icons/CloudOff';
+import useDraftEditor from '../../hooks/useDraftEditor';
 
 const useStyles = makeStyles((theme) => ({
   button: {

@@ -4,7 +4,7 @@ const getSentence = (
   replacementRegEx = [/,(?=[^\s])/g, ', ']
 ) => {
   const array_start = [];
-  for (let i = 0; i < array.length - 1; i++) {
+  for (let i = 0; i < array.length - 1; i += 1) {
     array_start.push(array[i]);
   }
   let array_end;
@@ -26,9 +26,9 @@ const getSentence = (
       ])
     : (matchUpperCase = []);
 
-  var replacements = new Map([replacementRegEx, matchUpperCase]),
-    result = arrays_join;
-  replacements.forEach(function (value, key) {
+  const replacements = new Map([replacementRegEx, matchUpperCase]);
+  let result = arrays_join;
+  replacements.forEach((value, key) => {
     result = result.replace(key, value);
   });
 

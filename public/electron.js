@@ -92,33 +92,31 @@ const createAboutWindow = () => {
 };
 
 app.on('ready', async () => {
-  createWindow();
-  app.focus();
-  autoUpdater.checkForUpdatesAndNotify().catch((err) => {
+  const mainMenu = Menu.buildFromTemplate(menu);
+  await Menu.setApplicationMenu(mainMenu);
+  await createWindow();
+  await autoUpdater.checkForUpdatesAndNotify().catch((err) => {
     console.log(err);
     mainWindow.webContents.send('error');
   });
-
-  const mainMenu = Menu.buildFromTemplate(menu);
-  Menu.setApplicationMenu(mainMenu);
-
-  mainWindow.once('ready-to-show', () => {
+  await mainWindow.once('ready-to-show', () => {
     mainWindow.show();
   });
+  await app.focus();
 
   let devExtensionPath;
 
-  isMac
-    ? (devExtensionPath =
-        '/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.10.0_0')
-    : (devExtensionPath =
-        '%LOCALAPPDATA%GoogleChromeUser DataDefaultExtensions\\fmkadmapgofadopljbjfkapdkoienihi\\4.10.0_0');
+  if (isDev && isMac) {
+    devExtensionPath =
+      '/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.12.3_0';
+  } else if (isDev) {
+    devExtensionPath =
+      '%LOCALAPPDATA%GoogleChromeUser DataDefaultExtensions\\fmkadmapgofadopljbjfkapdkoienihi\\4.12.3_0';
+  }
 
-  isDev &&
-    isMac &&
-    (await session.defaultSession.loadExtension(
-      path.join(os.homedir(), devExtensionPath)
-    ));
+  session.defaultSession.loadExtension(
+    path.join(os.homedir(), devExtensionPath)
+  );
 });
 
 app.allowRendererProcessReuse = true;
@@ -138,6 +136,8 @@ app.on('window-all-closed', () => {
 
 ipcMain.on('app_version', (event) => {
   event.sender.send('app_version', { version: app.getVersion() });
+  console.log(`log`);
+  console.log(app.getVersion());
 });
 
 ipcMain.on('copy_to_clipboard', (event, content) => {

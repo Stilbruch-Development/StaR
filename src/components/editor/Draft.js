@@ -36,7 +36,7 @@ const ToolBarSyleWrapper = styled.div`
 const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap);
 
 const Draft = () => {
-  //------ Context and Hooks-----------------------------------------------------
+  // ------ Context and Hooks-----------------------------------------------------
   const [editorStateWithDecorator] = useCards();
 
   const [editorState, setEditorState] = useState(editorStateWithDecorator);
@@ -52,7 +52,7 @@ const Draft = () => {
     setPulmonaryEmbolismState
   } = useContext(StandardContext);
 
-  //------ BlockType Style -----------------------------------------------------
+  // ------ BlockType Style -----------------------------------------------------
   const _toggleBlockType = (blockType) => {
     const toggleBlock = RichUtils.toggleBlockType(editorState, blockType);
     setEditorState(toggleBlock);
@@ -66,11 +66,11 @@ const Draft = () => {
     setEditorState(toggleInlineStyle);
   };
 
-  //------ useEffect -----------------------------------------------------
+  // ------ useEffect -----------------------------------------------------
   useEffect(() => {
     checkExpander(editorState, setEditorState, expanderUserData);
     const contentState = editorState.getCurrentContent();
-    var rawEditorState = convertToRaw(contentState);
+    const rawEditorState = convertToRaw(contentState);
     localStorage.setItem('editorState', JSON.stringify(rawEditorState));
     // eslint-disable-next-line
   }, [editorState, expanderUserData]);

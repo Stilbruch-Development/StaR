@@ -1,8 +1,8 @@
-import React, { useContext, useEffect } from "react";
-import styled from "styled-components";
-import TextField from "@material-ui/core/TextField";
-import Draft from "./Draft";
-import CardsContext from "../../context/cards/cardsContext";
+import React, { useContext, useEffect } from 'react';
+import styled from 'styled-components';
+import TextField from '@material-ui/core/TextField';
+import Draft from './Draft';
+import CardsContext from '../../context/cards/cardsContext';
 
 const MainStyleWrapper = styled.div`
   display: flex;
@@ -17,32 +17,33 @@ const MainStyleWrapper = styled.div`
 `;
 
 export default function CardsForm(props) {
+  const { formPreset } = props;
   let keywords = [];
-  let url = "";
+  let url = '';
   let rawEditorState = null;
 
-  if (props.formPreset) {
-    keywords = props.formPreset.keywords;
-    url = props.formPreset.url;
-    rawEditorState = props.formPreset.rawEditorState;
+  if (formPreset) {
+    keywords = formPreset.keywords;
+    url = formPreset.url;
+    rawEditorState = formPreset.rawEditorState;
   }
 
   const [value, setValue] = React.useState({
     keywords: keywords,
     url: url,
-    rawEditorState: rawEditorState,
+    rawEditorState: rawEditorState
   });
 
   const { setCardsState } = useContext(CardsContext);
 
-  const setCardsFormEditorState = (rawEditorState) => {
-    setValue({ ...value, rawEditorState: rawEditorState });
+  const setCardsFormEditorState = (i) => {
+    setValue({ ...value, rawEditorState: i });
   };
 
   const handleChange = (event) => {
     const event_name = event.target.name;
     const event_value = event.target.value;
-    if (event_value.replace(/ /g, "").length !== 0) {
+    if (event_value.replace(/ /g, '').length !== 0) {
       setValue({ ...value, [event_name]: event_value });
     }
     if (event_value.length === 0) {
@@ -51,8 +52,7 @@ export default function CardsForm(props) {
   };
 
   useEffect(() => {
-    setCardsState("cardsFormState", value);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setCardsState('cardsFormState', value);
   }, [value]);
 
   return (

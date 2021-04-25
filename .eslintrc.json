@@ -1,6 +1,6 @@
 {
   "extends": ["airbnb", "prettier", "plugin:node/recommended"],
-  "plugins": ["prettier"],
+  "plugins": ["prettier", "jest"],
   "parserOptions": {
     "ecmaVersion": 2020,
     "sourceType": "module",
@@ -8,7 +8,6 @@
       "jsx": true
     }
   },
-  // "parser": "babe-eslint",
   "rules": {
     "prettier/prettier": "error",
     "no-unused-vars": "warn",
@@ -28,6 +27,19 @@
         "ignores": ["modules"]
       }
     ],
-    "camelcase": "off"
-  }
+    "camelcase": "off",
+    "react/prop-types": "off",
+    "no-underscore-dangle":"off",
+    "max-classes-per-file": "off"
+  },
+  "env": {
+    "jest/globals": true,
+    "browser": true
+  },
+  "overrides": [{
+    "files": "**/*.test.js",
+    "rules": {
+        "node/no-unpublished-import": 0
+    }
+  }]
 }

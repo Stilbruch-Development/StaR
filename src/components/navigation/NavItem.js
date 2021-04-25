@@ -1,15 +1,16 @@
-import React from "react";
-import StyledLink from "./../styled_components/StyledLink";
+import React from 'react';
+import StyledLink from '../styled_components/StyledLink';
 
 const NavItem = (props) => {
+  const { dataTestId, navLink, style, head } = props;
   return (
     <StyledLink
-      data-testid={props.dataTestId}
-      to={props.navLink}
-      scroll={(el) => el.scrollIntoView({ behavior: "smooth", block: "start" })}
-      style={props.style}
+      data-testid={dataTestId}
+      to={navLink}
+      scroll={(el) => el.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+      style={style}
     >
-      {props.head}
+      {head}
     </StyledLink>
   );
 };

@@ -1,10 +1,11 @@
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
+
 const jwtSecret = process.env.REACT_APP_JWTSECRET;
 
 export default function useJsonWebToken() {
   const checkToken = (token) => {
     if (!token) {
-      throw new Error("Kein Token! Keine Autorisierung!");
+      throw new Error('Kein Token! Keine Autorisierung!');
     }
 
     try {

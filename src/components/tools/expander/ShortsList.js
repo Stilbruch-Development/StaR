@@ -1,17 +1,18 @@
-import React, { useState, useContext, useEffect } from "react";
-import MaterialTable from "material-table";
-import Search from "@material-ui/icons/Search";
-import Edit from "@material-ui/icons/Edit";
-import Delete from "@material-ui/icons/Delete";
-import AddCircle from "@material-ui/icons/AddCircle";
-import Cancel from "@material-ui/icons/Cancel";
-import Check from "@material-ui/icons/Check";
-import Clear from "@material-ui/icons/Clear";
-import ArrowUpward from "@material-ui/icons/ArrowUpward";
-import ExpanderContext from "../../context/expander/expanderContext";
-import { convertToRaw, convertFromRaw } from "draft-js";
+/* eslint-disable react/jsx-props-no-spreading */
+import React, { useState, useContext, useEffect } from 'react';
+import MaterialTable from 'material-table';
+import Search from '@material-ui/icons/Search';
+import Edit from '@material-ui/icons/Edit';
+import Delete from '@material-ui/icons/Delete';
+import AddCircle from '@material-ui/icons/AddCircle';
+import Cancel from '@material-ui/icons/Cancel';
+import Check from '@material-ui/icons/Check';
+import Clear from '@material-ui/icons/Clear';
+import ArrowUpward from '@material-ui/icons/ArrowUpward';
+import { convertToRaw, convertFromRaw } from 'draft-js';
+import ExpanderContext from '../../context/expander/expanderContext';
 
-export default function ShortsList(props) {
+export default function ShortsList() {
   const {
     expanderUserData,
     addExpanderItem,
@@ -21,15 +22,15 @@ export default function ShortsList(props) {
     lockEditor,
     expanderEditorState,
     setExpanderEditor,
-    editorLocked,
+    editorLocked
   } = useContext(ExpanderContext);
 
   const [state, setState] = useState({
     columns: [
-      { title: "Kürzel", field: "short" },
-      { title: "Kategorie", field: "category" },
+      { title: 'Kürzel', field: 'short' },
+      { title: 'Kategorie', field: 'category' }
     ],
-    data: expanderUserData || null,
+    data: expanderUserData || null
   });
 
   useEffect(() => {
@@ -41,12 +42,12 @@ export default function ShortsList(props) {
     selectExpanderItem(originalRowData);
   };
 
-  const onAddClick = (editorLocked) => {
+  const onAddClick = (inputLock) => {
     selectExpanderItem(null);
-    if (editorLocked === false) {
+    if (inputLock === false) {
       setExpanderEditor(null);
     }
-    lockEditor(!editorLocked);
+    lockEditor(!inputLock);
   };
 
   return (
@@ -64,14 +65,10 @@ export default function ShortsList(props) {
                 lockEditor(true);
               }, 600);
             } else {
-              reject(
-                setState((prevState) => {
-                  return { ...prevState };
-                })
-              );
+              reject(setState((prevState) => ({ ...prevState })));
             }
           }),
-        onRowUpdate: (newData, oldData) =>
+        onRowUpdate: (newData) =>
           new Promise((resolve) => {
             setTimeout(() => {
               resolve();
@@ -86,16 +83,16 @@ export default function ShortsList(props) {
               resolve();
               deleteExpander(oldData._id);
             }, 600);
-          }),
+          })
       }}
       onRowClick={(event, rowData) => {
         handleItemClick(event, rowData);
       }}
       icons={{
         Search: Search,
-        Edit: (props) => (
+        Edit: (edit) => (
           <Edit
-            {...props}
+            {...edit}
             onClick={(event) => {
               const onClickElement =
                 event.target.parentNode.parentNode.parentNode.parentNode;
@@ -105,51 +102,39 @@ export default function ShortsList(props) {
           />
         ),
         Delete: Delete,
-        Add: (props) => (
-          <AddCircle
-            {...props}
-            onClick={() => {
-              return onAddClick(editorLocked);
-            }}
-          />
+        Add: (add) => (
+          <AddCircle {...add} onClick={() => onAddClick(editorLocked)} />
         ),
         Cancel: Cancel,
         Check: Check,
-        Clear: (props) => (
-          <Clear
-            {...props}
-            onClick={() => {
-              return lockEditor(true);
-            }}
-          />
-        ),
+        Clear: (clear) => <Clear {...clear} onClick={() => lockEditor(true)} />,
         SortArrow: ArrowUpward,
-        ResetSearch: Clear,
+        ResetSearch: Clear
       }}
       localization={{
         body: {
-          editTooltip: "Ändern",
-          deleteTooltip: "Löschen",
-          addTooltip: "Hinzufügen",
+          editTooltip: 'Ändern',
+          deleteTooltip: 'Löschen',
+          addTooltip: 'Hinzufügen',
           editRow: {
-            deleteText: "Element wirklich löschen?",
-            cancelTooltip: "Abbrechen",
-            saveTooltip: "Speichern",
+            deleteText: 'Element wirklich löschen?',
+            cancelTooltip: 'Abbrechen',
+            saveTooltip: 'Speichern'
           },
-          emptyDataSourceMessage: "Keine Elemente gefunden.",
+          emptyDataSourceMessage: 'Keine Elemente gefunden.'
         },
         toolbar: {
-          searchPlaceholder: "Suchen",
-          searchTooltip: "Suchen",
+          searchPlaceholder: 'Suchen',
+          searchTooltip: 'Suchen'
         },
         header: {
-          actions: "Bearbeiten",
-        },
+          actions: 'Bearbeiten'
+        }
       }}
       options={{
         pageSize: 100,
         paging: false,
-        showTitle: false,
+        showTitle: false
       }}
     />
   );

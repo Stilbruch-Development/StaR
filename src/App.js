@@ -11,7 +11,7 @@ import ExpanderState from './components/context/expander/ExpanderState';
 import NavigationState from './components/context/navigation/NavState';
 import CardsState from './components/context/cards/CardsState';
 
-import useHandleException from "./hooks/useHandleException";
+import useHandleException from './hooks/useHandleException';
 
 function App() {
   const [handleException] = useHandleException();

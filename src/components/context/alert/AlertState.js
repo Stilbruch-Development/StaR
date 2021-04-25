@@ -1,31 +1,32 @@
-import React, { useReducer } from "react";
-import AlertContext from "./alertContext";
-import alertReducer from "./alertReducer";
+import React, { useReducer } from 'react';
+import AlertContext from './alertContext';
+import alertReducer from './alertReducer';
 
-import { REMOVE_ALERT, SET_ALERT_STATE } from "../types";
+import { REMOVE_ALERT, SET_ALERT_STATE } from '../types';
 
 const AlertState = (props) => {
+  const { children } = props;
   const initialState = {
-    message: "",
-    button: "",
+    message: '',
+    button: '',
     onClickButton: null,
-    color: "rgba(255,184,191, 0.8)",
+    color: 'rgba(255,184,191, 0.8)'
   };
   const [state, dispatch] = useReducer(alertReducer, initialState);
 
   // Remove Alert
   const removeAlert = () => {
     dispatch({
-      type: REMOVE_ALERT,
+      type: REMOVE_ALERT
     });
   };
 
   // Set Alert args = { item, value }, item as string!
   const setAlert = (...args) => {
-    for (var i = 0; i < args.length; i++) {
+    for (let i = 0; i < args.length; i += 1) {
       dispatch({
         type: SET_ALERT_STATE,
-        payload: args[i],
+        payload: args[i]
       });
     }
     setTimeout(() => {
@@ -41,10 +42,10 @@ const AlertState = (props) => {
         button: state.button,
         onClickButton: state.onClickButton,
         removeAlert,
-        setAlert,
+        setAlert
       }}
     >
-      {props.children}
+      {children}
     </AlertContext.Provider>
   );
 };

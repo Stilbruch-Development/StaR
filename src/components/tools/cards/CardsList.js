@@ -1,16 +1,17 @@
-import React, { useState, useContext, useEffect } from "react";
-import MaterialTable from "material-table";
-import Search from "@material-ui/icons/Search";
-import Edit from "@material-ui/icons/Edit";
-import Delete from "@material-ui/icons/Delete";
-import AddCircle from "@material-ui/icons/AddCircle";
-import Cancel from "@material-ui/icons/Cancel";
-import Check from "@material-ui/icons/Check";
-import Clear from "@material-ui/icons/Clear";
-import ArrowUpward from "@material-ui/icons/ArrowUpward";
-import CardsContext from "../../context/cards/cardsContext";
+/* eslint-disable react/jsx-props-no-spreading */
+import React, { useState, useContext, useEffect } from 'react';
+import MaterialTable from 'material-table';
+import Search from '@material-ui/icons/Search';
+import Edit from '@material-ui/icons/Edit';
+import Delete from '@material-ui/icons/Delete';
+import AddCircle from '@material-ui/icons/AddCircle';
+import Cancel from '@material-ui/icons/Cancel';
+import Check from '@material-ui/icons/Check';
+import Clear from '@material-ui/icons/Clear';
+import ArrowUpward from '@material-ui/icons/ArrowUpward';
+import CardsContext from '../../context/cards/cardsContext';
 
-export default function ShortsList(props) {
+export default function ShortsList() {
   const {
     cardsUserData,
     addCardsItem,
@@ -18,15 +19,15 @@ export default function ShortsList(props) {
     updateCards,
     cardsFormState,
     setCardsState,
-    getCards,
+    getCards
   } = useContext(CardsContext);
 
   const [state, setState] = useState({
     columns: [
-      { title: "Name", field: "name" },
-      { title: "Kategorie", field: "category" },
+      { title: 'Name', field: 'name' },
+      { title: 'Kategorie', field: 'category' }
     ],
-    data: cardsUserData || null,
+    data: cardsUserData || null
   });
 
   useEffect(() => {
@@ -34,12 +35,12 @@ export default function ShortsList(props) {
   }, [cardsUserData]);
 
   const handleItemClick = (event, rowData) => {
-    setCardsState("selectedCardsItem", rowData);
+    setCardsState('selectedCardsItem', rowData);
   };
 
   const onAddClick = () => {
-    setCardsState("selectedCardsItem", null);
-    setCardsState("editingCards", true);
+    setCardsState('selectedCardsItem', null);
+    setCardsState('editingCards', true);
   };
 
   return (
@@ -53,30 +54,26 @@ export default function ShortsList(props) {
               setTimeout(() => {
                 resolve();
                 addCardsItem(newData, cardsFormState);
-                setCardsState("editingCards", false);
-                setCardsState("selectedCardsItem", {
+                setCardsState('editingCards', false);
+                setCardsState('selectedCardsItem', {
                   ...newData,
-                  ...cardsFormState,
+                  ...cardsFormState
                 });
                 getCards();
               }, 600);
             } else {
-              reject(
-                setState((prevState) => {
-                  return { ...prevState };
-                })
-              );
+              reject(setState((prevState) => ({ ...prevState })));
             }
           }),
-        onRowUpdate: (newData, oldData) =>
+        onRowUpdate: (newData) =>
           new Promise((resolve) => {
             setTimeout(() => {
               resolve();
-              setCardsState("editingCards", false);
-              setCardsState("cardsFormState", null);
-              setCardsState("selectedCardsItem", {
+              setCardsState('editingCards', false);
+              setCardsState('cardsFormState', null);
+              setCardsState('selectedCardsItem', {
                 ...newData,
-                ...cardsFormState,
+                ...cardsFormState
               });
               updateCards(newData, cardsFormState);
               getCards();
@@ -87,74 +84,67 @@ export default function ShortsList(props) {
             setTimeout(() => {
               resolve();
               deleteCards(oldData._id);
-              setCardsState("selectedCardsItem", null);
+              setCardsState('selectedCardsItem', null);
               getCards();
             }, 600);
-          }),
+          })
       }}
       onRowClick={(event, rowData) => {
         handleItemClick(event, rowData);
       }}
       icons={{
         Search: Search,
-        Edit: (props) => (
+        Edit: (edit) => (
           <Edit
-            {...props}
+            {...edit}
             onClick={(event) => {
               const onClickElement =
                 event.target.parentNode.parentNode.parentNode.parentNode;
               onClickElement.click();
-              setCardsState("editingCards", true);
+              setCardsState('editingCards', true);
             }}
           />
         ),
         Delete: Delete,
-        Add: (props) => (
-          <AddCircle
-            {...props}
-            onClick={() => {
-              return onAddClick();
-            }}
-          />
-        ),
+        Add: (add) => <AddCircle {...add} onClick={() => onAddClick()} />,
         Cancel: Cancel,
         Check: Check,
-        Clear: (props) => (
+        Clear: (clear) => (
           <Clear
-            {...props}
+            {...clear}
             onClick={() => {
-              setCardsState("cardsFormState", null);
-              setCardsState("editingCards", false);
+              setCardsState('cardsFormState', null);
+              setCardsState('editingCards', false);
             }}
           />
         ),
         SortArrow: ArrowUpward,
-        ResetSearch: Clear,
+        ResetSearch: Clear
       }}
       localization={{
         body: {
-          editTooltip: "Ändern",
-          deleteTooltip: "Löschen",
-          addTooltip: "Hinzufügen",
+          editTooltip: 'Ändern',
+          deleteTooltip: 'Löschen',
+          addTooltip: 'Hinzufügen',
           editRow: {
-            deleteText: "Element wirklich löschen?",
-            cancelTooltip: "Abbrechen",
-            saveTooltip: "Speichern",
+            deleteText: 'Element wirklich löschen?',
+            cancelTooltip: 'Abbrechen',
+            saveTooltip: 'Speichern'
           },
-          emptyDataSourceMessage: "Keine Elemente gefunden.",
+          emptyDataSourceMessage: 'Keine Elemente gefunden.'
         },
         toolbar: {
-          searchPlaceholder: "Suchen",
-          searchTooltip: "Suchen",
+          searchPlaceholder: 'Suchen',
+          searchTooltip: 'Suchen'
         },
         header: {
-          actions: "Bearbeiten",
-        },
+          actions: 'Bearbeiten'
+        }
       }}
       options={{
         pageSize: 100,
         paging: false,
-        showTitle: false,
+        showTitle: false
       }}
     />
   );

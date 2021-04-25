@@ -1,12 +1,12 @@
-import React, { useState, useContext } from "react";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import { makeStyles } from "@material-ui/core/styles";
-import styled from "styled-components";
-import AlertContext from "../context/alert/alertContext";
-import AuthContext from "../context/auth/authContext";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
+import React, { useState, useContext } from 'react';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
+import styled from 'styled-components';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import AlertContext from '../context/alert/alertContext';
+import AuthContext from '../context/auth/authContext';
 
 const MainStyleWrapper = styled.div`
   margin: 10% 30% 10% 30%;
@@ -19,11 +19,11 @@ const MainStyleWrapper = styled.div`
 const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1),
-    marginTop: "10%",
+    marginTop: '10%'
   },
   input: {
-    display: "none",
-  },
+    display: 'none'
+  }
 }));
 
 const Register = (props) => {
@@ -35,11 +35,11 @@ const Register = (props) => {
   const { register, error, clearErrors } = authContext;
 
   const [user, setUser] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    password: "",
-    password2: "",
+    first_name: '',
+    last_name: '',
+    email: '',
+    password: '',
+    password2: ''
   });
 
   const { first_name, last_name, email, password, password2 } = user;
@@ -50,22 +50,22 @@ const Register = (props) => {
     e.preventDefault();
 
     if (
-      first_name === "" ||
-      last_name === "" ||
-      email === "" ||
-      password === "" ||
-      password2 === ""
+      first_name === '' ||
+      last_name === '' ||
+      email === '' ||
+      password === '' ||
+      password2 === ''
     ) {
-      setAlert({ item: "message", value: "Bitte alle Felder ausfüllen!" });
+      setAlert({ item: 'message', value: 'Bitte alle Felder ausfüllen!' });
     } else if (password !== password2) {
       setAlert({
-        item: "message",
-        value: "Passwörter stimmen nicht überein!",
+        item: 'message',
+        value: 'Passwörter stimmen nicht überein!'
       });
     } else if (error) {
       setAlert({
-        item: "message",
-        value: error,
+        item: 'message',
+        value: error
       });
       clearErrors();
     } else {
@@ -73,17 +73,17 @@ const Register = (props) => {
         first_name,
         last_name,
         email,
-        password,
+        password
       });
       setAlert(
         {
-          item: "message",
-          value: `Neuer Beneutzer angelegt: ${first_name} ${last_name}, ${email}`,
+          item: 'message',
+          value: `Neuer Beneutzer angelegt: ${first_name} ${last_name}, ${email}`
         },
-        { item: "color", value: "rgba(191, 255, 184, 0.8)" }
+        { item: 'color', value: 'rgba(191, 255, 184, 0.8)' }
       );
       props.setAdminState({
-        register: false,
+        register: false
       });
     }
   };
@@ -94,7 +94,7 @@ const Register = (props) => {
     <MainStyleWrapper>
       <Typography
         variant="h4"
-        style={{ fontFamily: "inherit", marginBottom: "10%" }}
+        style={{ fontFamily: 'inherit', marginBottom: '10%' }}
       >
         Neues Benutzerkonto anlegen.
       </Typography>

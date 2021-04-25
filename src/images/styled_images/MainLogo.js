@@ -43,7 +43,7 @@ const Logo = styled.div`
 export default function MainLogo() {
   return (
     <Logo>
-      <canvas width="100" height="70%"></canvas>
+      <canvas width="100" height="70%" />
       <StaRLogo />
     </Logo>
   );

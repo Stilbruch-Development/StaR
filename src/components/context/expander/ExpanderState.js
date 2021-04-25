@@ -1,10 +1,10 @@
-import React, { useReducer, useContext } from "react";
-import ExpanderContext from "./expanderContext";
-import expanderReducer from "./expanderReducer";
-import AlertContext from "../../context/alert/alertContext";
-import { expander_db } from "../../../pouchdb/db";
+import React, { useReducer, useContext } from 'react';
 import { v4 as uuid4 } from 'uuid';
-import AuthContext from "../../context/auth/authContext";
+import ExpanderContext from './expanderContext';
+import expanderReducer from './expanderReducer';
+import AlertContext from '../alert/alertContext';
+import { expander_db } from '../../../pouchdb/db';
+import AuthContext from '../auth/authContext';
 
 import {
   GET_EXPANDER,
@@ -16,17 +16,18 @@ import {
   SELECT_EXPANDER_ITEM,
   DELETE_EXPANDER,
   LOCK_EXPANDER_EDITOR,
-  SET_EXPANDER_EDITOR,
-} from "../types";
+  SET_EXPANDER_EDITOR
+} from '../types';
 
 const ExpanderState = (props) => {
+  const { children } = props;
   const initialState = {
     loadingExpander: false,
     expanderUserData: null,
     selectedExpanderItem: null,
     expanderEditorState: null,
     editorLocked: true,
-    error: null,
+    error: null
   };
 
   const [state, dispatch] = useReducer(expanderReducer, initialState);
@@ -39,11 +40,11 @@ const ExpanderState = (props) => {
     if (user !== null) {
       try {
         const data = await expander_db.find({
-          selector: { user: user._id },
+          selector: { user: user._id }
         });
         dispatch({
           type: GET_EXPANDER_SUCCESS,
-          payload: data.docs,
+          payload: data.docs
         });
       } catch (err) {
         dispatch({ type: EXPANDER_ERROR, payload: err });
@@ -57,41 +58,39 @@ const ExpanderState = (props) => {
       ...itemElements,
       _id: uuid4(),
       user: user._id,
-      long: longState,
+      long: longState
     };
     try {
       await expander_db.put(item).then(
         dispatch({
           type: ADD_EXPANDER_ITEM,
-          payload: item,
+          payload: item
         })
       );
     } catch (err) {
       dispatch({ type: EXPANDER_ERROR, payload: err });
       setAlert({
-        item: "message",
-        value:
-          "Login-Berrechtigung ist abgelaufen. Bitte melde dich erneut an.",
+        item: 'message',
+        value: 'Login-Berrechtigung ist abgelaufen. Bitte melde dich erneut an.'
       });
     }
   };
 
-  //DELETE_EXPANDER
+  // DELETE_EXPANDER
   const deleteExpander = async (id) => {
     try {
-      var doc = await expander_db.get(id);
+      const doc = await expander_db.get(id);
       await expander_db.remove(doc).then(
         dispatch({
           type: DELETE_EXPANDER,
-          payload: id,
+          payload: id
         })
       );
     } catch (err) {
       dispatch({ type: EXPANDER_ERROR, payload: err });
       setAlert({
-        item: "message",
-        value:
-          "Login-Berrechtigung ist abgelaufen. Bitte melde dich erneut an.",
+        item: 'message',
+        value: 'Login-Berrechtigung ist abgelaufen. Bitte melde dich erneut an.'
       });
     }
   };
@@ -100,24 +99,23 @@ const ExpanderState = (props) => {
   const updateExpander = async (itemElements, longState) => {
     const item = { ...itemElements, long: longState };
     try {
-      var doc = await expander_db.get(item._id);
+      const doc = await expander_db.get(item._id);
       await expander_db
         .put({
           ...item,
-          _rev: doc._rev,
+          _rev: doc._rev
         })
         .then(
           dispatch({
             type: UPDATE_EXPANDER,
-            payload: item,
+            payload: item
           })
         );
     } catch (err) {
       dispatch({ type: EXPANDER_ERROR, payload: err });
       setAlert({
-        item: "message",
-        value:
-          "Login-Berrechtigung ist abgelaufen. Bitte melde dich erneut an.",
+        item: 'message',
+        value: 'Login-Berrechtigung ist abgelaufen. Bitte melde dich erneut an.'
       });
     }
   };
@@ -125,7 +123,7 @@ const ExpanderState = (props) => {
   // CLEAR_EXPANDER
   const clearExpander = () => {
     dispatch({
-      type: CLEAR_EXPANDER,
+      type: CLEAR_EXPANDER
     });
   };
 
@@ -133,7 +131,7 @@ const ExpanderState = (props) => {
   const selectExpanderItem = (item) => {
     dispatch({
       type: SELECT_EXPANDER_ITEM,
-      payload: item,
+      payload: item
     });
   };
 
@@ -141,15 +139,15 @@ const ExpanderState = (props) => {
   const lockEditor = (boolean) => {
     dispatch({
       type: LOCK_EXPANDER_EDITOR,
-      payload: boolean,
+      payload: boolean
     });
   };
 
   // SET_EDITOR_STATE
-  const setExpanderEditor = (state) => {
+  const setExpanderEditor = (e) => {
     dispatch({
       type: SET_EXPANDER_EDITOR,
-      payload: state,
+      payload: e
     });
   };
 
@@ -169,10 +167,10 @@ const ExpanderState = (props) => {
         selectExpanderItem,
         lockEditor,
         setExpanderEditor,
-        editorLocked: state.editorLocked,
+        editorLocked: state.editorLocked
       }}
     >
-      {props.children}
+      {children}
     </ExpanderContext.Provider>
   );
 };

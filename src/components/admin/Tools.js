@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from "react";
-import styled from "styled-components";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
-import AuthContext from "../context/auth/authContext";
+import React, { useContext, useEffect } from 'react';
+import styled from 'styled-components';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+import AuthContext from '../context/auth/authContext';
 
 const MainDiv = styled.div`
   display: flex;
@@ -27,8 +27,7 @@ const Tools = () => {
   };
 
   useEffect(() => {
-    window.ipcRenderer && window.ipcRenderer.send("toggle-dev-tools", devTools);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    window.ipcRenderer && window.ipcRenderer.send('toggle-dev-tools', devTools);
   }, [devTools]);
 
   return (

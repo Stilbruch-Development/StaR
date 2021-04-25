@@ -1,12 +1,12 @@
-import React, { useReducer, useContext } from "react";
-import AuthContext from "./authContext";
-import authReducer from "./authReducer";
-import AlertContext from "../alert/alertContext";
-import { user_db, cards_db, expander_db, syncDB } from "../../../pouchdb/db";
-import bcrypt from "bcryptjs";
+import React, { useReducer, useContext } from 'react';
+import bcrypt from 'bcryptjs';
 import { v4 as uuid4 } from 'uuid';
-import jwt from "jsonwebtoken";
-import useJsonWebToken from "../../../hooks/useJsonWebToken";
+import jwt from 'jsonwebtoken';
+import AuthContext from './authContext';
+import authReducer from './authReducer';
+import AlertContext from '../alert/alertContext';
+import { user_db, cards_db, expander_db, syncDB } from '../../../pouchdb/db';
+import useJsonWebToken from '../../../hooks/useJsonWebToken';
 
 import {
   REGISTER_FAIL,
@@ -16,19 +16,20 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   CLEAR_ERRORS,
-  SET_DEVTOOLS,
-} from "../types";
+  SET_DEVTOOLS
+} from '../types';
 
 const jwtSecret = process.env.REACT_APP_JWTSECRET;
 
 const AuthState = (props) => {
+  const { children } = props;
   const initialState = {
-    token: localStorage.getItem("token"),
+    token: localStorage.getItem('token'),
     isAuthenticated: false,
     loadingAuth: false,
     user: null,
     error: null,
-    devTools: false,
+    devTools: false
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
   const [checkToken] = useJsonWebToken();
@@ -43,21 +44,22 @@ const AuthState = (props) => {
 
         dispatch({
           type: USER_LOADED,
-          payload: userData,
+          payload: userData
         });
         syncDB();
       }
     } catch (err) {
       dispatch({ type: AUTH_ERROR, payload: err.message });
       setAlert({
-        item: "message",
-        value: err.message,
+        item: 'message',
+        value: err.message
       });
     }
   };
 
   // Register New User
-  const register = async (formData) => {
+  const register = async (e) => {
+    const formData = e;
     const { email, password } = formData;
 
     const salt = await bcrypt.genSalt(10);
@@ -66,12 +68,11 @@ const AuthState = (props) => {
 
     formData._id = uuid4();
 
-    const getEmail = (email) => {
-      return user_db.find({
-        selector: { email: email },
-        fields: ["email"],
+    const getEmail = (email_input) =>
+      user_db.find({
+        selector: { email: email_input },
+        fields: ['email']
       });
-    };
 
     try {
       const matchEmail = await getEmail(email);
@@ -79,16 +80,16 @@ const AuthState = (props) => {
       if (matchEmail.docs.length === 0) {
         await user_db.put(formData);
       } else {
-        throw new Error("Ein Benutzer mit dieser Email existiert schon!");
+        throw new Error('Ein Benutzer mit dieser Email existiert schon!');
       }
     } catch (err) {
       dispatch({
         type: REGISTER_FAIL,
-        payload: err.message,
+        payload: err.message
       });
       setAlert({
-        item: "message",
-        value: err.message,
+        item: 'message',
+        value: err.message
       });
     }
   };
@@ -97,21 +98,21 @@ const AuthState = (props) => {
   const update = async (formData) => {
     try {
       const response = await user_db.put({
-        ...formData,
+        ...formData
       });
       if (response.ok === true) {
         setAlert(
-          { item: "message", value: "Neue Benutzerdaten gespeichert!" },
-          { item: "color", value: "rgba(191, 255, 184, 0.8" }
+          { item: 'message', value: 'Neue Benutzerdaten gespeichert!' },
+          { item: 'color', value: 'rgba(191, 255, 184, 0.8' }
         );
         loadUser();
       }
     } catch (err) {
       dispatch({ type: AUTH_ERROR, payload: err });
       setAlert({
-        item: "message",
+        item: 'message',
         value:
-          "Neue Benutzerdaten konnten nicht gespeichert werden. Bitte neu einloggen.",
+          'Neue Benutzerdaten konnten nicht gespeichert werden. Bitte neu einloggen.'
       });
     }
   };
@@ -121,14 +122,15 @@ const AuthState = (props) => {
     try {
       const responseUser = await user_db.put({
         ...user,
-        _deleted: true,
+        _deleted: true
       });
 
       const expanderArray = await expander_db.find({
-        selector: { user: user._id },
+        selector: { user: user._id }
       });
 
-      expanderArray.docs.forEach((element) => {
+      expanderArray.docs.forEach((i) => {
+        const element = i;
         element._deleted = true;
       });
 
@@ -136,14 +138,15 @@ const AuthState = (props) => {
       let responseExpanderNumber = 0;
 
       responseExpander.forEach((x) => {
-        x.ok === true && (responseExpanderNumber = responseExpanderNumber + 1);
+        x.ok === true && (responseExpanderNumber += 1);
       });
 
       const cardsArray = await cards_db.find({
-        selector: { user: user._id },
+        selector: { user: user._id }
       });
 
-      cardsArray.docs.forEach((element) => {
+      cardsArray.docs.forEach((a) => {
+        const element = a;
         element._deleted = true;
       });
 
@@ -151,7 +154,7 @@ const AuthState = (props) => {
       let responseCardsNumber = 0;
 
       responseCards.forEach((x) => {
-        x.ok === true && (responseCardsNumber = responseCardsNumber + 1);
+        x.ok === true && (responseCardsNumber += 1);
       });
 
       if (
@@ -161,23 +164,23 @@ const AuthState = (props) => {
       ) {
         setAlert(
           {
-            item: "message",
-            value: `Benutzer und alle Benutzerdaten wurden gelöscht!! (Expander: ${responseExpanderNumber}; Cards: ${responseCardsNumber})`,
+            item: 'message',
+            value: `Benutzer und alle Benutzerdaten wurden gelöscht!! (Expander: ${responseExpanderNumber}; Cards: ${responseCardsNumber})`
           },
-          { item: "color", value: "rgba(191, 255, 184, 0.8" }
+          { item: 'color', value: 'rgba(191, 255, 184, 0.8' }
         );
         syncDB();
       } else {
         setAlert({
-          item: "message",
-          value: `Löschen nur teilweise erfolgreich! User: ${responseUser.ok}; Expander: ${responseExpanderNumber}; Cards: ${responseCardsNumber};`,
+          item: 'message',
+          value: `Löschen nur teilweise erfolgreich! User: ${responseUser.ok}; Expander: ${responseExpanderNumber}; Cards: ${responseCardsNumber};`
         });
       }
     } catch (err) {
       dispatch({ type: AUTH_ERROR, payload: err });
       setAlert({
-        item: "message",
-        value: "Benutzer und Benutzerdaten konnten nicht gelöscht werden!!",
+        item: 'message',
+        value: 'Benutzer und Benutzerdaten konnten nicht gelöscht werden!!'
       });
     }
   };
@@ -186,11 +189,11 @@ const AuthState = (props) => {
   const login = async (formData) => {
     try {
       const dbResponse = await user_db.find({
-        selector: { email: formData.email },
+        selector: { email: formData.email }
       });
 
       if (dbResponse.docs.length === 0) {
-        throw new Error("Dieser Benutzer existiert nicht. Bitte registrieren.");
+        throw new Error('Dieser Benutzer existiert nicht. Bitte registrieren.');
       }
 
       const userData = dbResponse.docs[0];
@@ -201,23 +204,23 @@ const AuthState = (props) => {
       );
 
       if (!isMatch) {
-        throw new Error("Ungültiges Passwort!");
+        throw new Error('Ungültiges Passwort!');
       }
 
       const payload = {
         user: {
           _id: userData._id,
-          role: userData.role || null,
-        },
+          role: userData.role || null
+        }
       };
 
       const token = jwt.sign(payload, jwtSecret, {
-        expiresIn: 7200,
+        expiresIn: 7200
       });
 
       dispatch({
         type: LOGIN_SUCCESS,
-        payload: token,
+        payload: token
       });
 
       loadUser();
@@ -225,11 +228,11 @@ const AuthState = (props) => {
     } catch (err) {
       dispatch({
         type: LOGIN_FAIL,
-        payload: err.message,
+        payload: err.message
       });
       setAlert({
-        item: "message",
-        value: err.message,
+        item: 'message',
+        value: err.message
       });
     }
   };
@@ -248,7 +251,7 @@ const AuthState = (props) => {
   const setDevTools = (boolean) => {
     dispatch({
       type: SET_DEVTOOLS,
-      payload: boolean,
+      payload: boolean
     });
   };
 
@@ -268,10 +271,10 @@ const AuthState = (props) => {
         login,
         logout,
         clearErrors,
-        setDevTools,
+        setDevTools
       }}
     >
-      {props.children}
+      {children}
     </AuthContext.Provider>
   );
 };

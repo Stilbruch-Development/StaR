@@ -1,9 +1,9 @@
 import React, { useReducer, useContext } from 'react';
+import { v4 as uuid4 } from 'uuid';
 import CardsContext from './cardsContext';
 import cardsReducer from './cardsReducer';
 import AlertContext from '../alert/alertContext';
 import { cards_db } from '../../../pouchdb/db';
-import { v4 as uuid4 } from 'uuid';
 import AuthContext from '../auth/authContext';
 
 import {
@@ -18,6 +18,7 @@ import {
 } from '../types';
 
 const CardsState = (props) => {
+  const { children } = props;
   const initialState = {
     loadingCards: false,
     cardsUserData: null,
@@ -82,10 +83,10 @@ const CardsState = (props) => {
     }
   };
 
-  //DELETE_CARDS
+  // DELETE_CARDS
   const deleteCards = async (id) => {
     try {
-      var doc = await cards_db.get(id);
+      const doc = await cards_db.get(id);
       await cards_db.remove(doc).then(
         dispatch({
           type: DELETE_CARDS,
@@ -106,7 +107,7 @@ const CardsState = (props) => {
     const item = { ...newItemElements, ...cardsFormState };
 
     try {
-      var doc = await cards_db.get(item._id);
+      const doc = await cards_db.get(item._id);
       await cards_db
         .put({
           ...item,
@@ -151,7 +152,7 @@ const CardsState = (props) => {
         setCardsState
       }}
     >
-      {props.children}
+      {children}
     </CardsContext.Provider>
   );
 };

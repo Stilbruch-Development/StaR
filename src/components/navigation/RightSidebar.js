@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
-import styled from "styled-components";
-import Button from "@material-ui/core/Button";
-import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
-import Lungenembolie from "../tools/standard/lungenembolie/Lungenembolie";
-import Covid19 from "../tools/standard/covid19/Covid19";
-import NavContext from "../../components/context/navigation/navContext";
-import CardsDisplay from "../../components/tools/cards/DraftDisplay";
-import CardsContext from "../../components/context/cards/cardsContext";
+import React, { useContext } from 'react';
+import styled from 'styled-components';
+import Button from '@material-ui/core/Button';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import Lungenembolie from '../tools/standard/lungenembolie/Lungenembolie';
+import Covid19 from '../tools/standard/covid19/Covid19';
+import NavContext from '../context/navigation/navContext';
+import CardsDisplay from '../tools/cards/DraftDisplay';
+import CardsContext from '../context/cards/cardsContext';
 
 const SidebarDiv = styled.div`
   display: flex;
@@ -26,26 +26,26 @@ const RightSidebar = () => {
   const { setCardsState } = useContext(CardsContext);
 
   const onButtonClick = () => {
-    setNavState("rightSidebareOpen", !rightSidebareOpen);
-    setCardsState("selectedCardsItem", null);
+    setNavState('rightSidebareOpen', !rightSidebareOpen);
+    setCardsState('selectedCardsItem', null);
   };
 
   const handleClose = () => {
-    setNavState("rightSidebareOpen", false);
-    setCardsState("selectedCardsItem", null);
+    setNavState('rightSidebareOpen', false);
+    setCardsState('selectedCardsItem', null);
   };
 
   const getDisplay = () => {
     switch (display) {
-      case "":
+      case '':
         return <></>;
-      case "CT-Pulmonalis":
+      case 'CT-Pulmonalis':
         return <Lungenembolie />;
-      case "CT-COVID-19":
+      case 'CT-COVID-19':
         return <Covid19 />;
-      case "MRT-Prostata":
+      case 'MRT-Prostata':
         return <></>;
-      case "Cards":
+      case 'Cards':
         return <CardsDisplay handleClose={handleClose} />;
       default:
         return <></>;

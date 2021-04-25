@@ -63,6 +63,7 @@ const SidebarDiv = styled.div`
 `;
 
 const LeftSidebar = (props) => {
+  const { setToggleState, setExpanderItem } = props;
   const [standard, setLists] = React.useState('');
 
   const { setNavState } = useContext(NavContext);
@@ -75,7 +76,7 @@ const LeftSidebar = (props) => {
 
   return (
     <SidebarDiv>
-      <Button variant="outlined" color="primary" onClick={props.setToggleState}>
+      <Button variant="outlined" color="primary" onClick={setToggleState}>
         <ArrowBackIosIcon viewBox="-5 0 24 24" />
       </Button>
 
@@ -91,12 +92,12 @@ const LeftSidebar = (props) => {
           <MenuItem value="">
             <em>Keine</em>
           </MenuItem>
-          <MenuItem value={'CT-Pulmonalis'}>CT-Pulmonalis</MenuItem>
-          <MenuItem value={'CT-COVID-19'}>CT-COVID-19</MenuItem>
-          <MenuItem value={'MRT-Prostata'}>MRT-Prostata</MenuItem>
+          <MenuItem value="CT-Pulmonalis">CT-Pulmonalis</MenuItem>
+          <MenuItem value="CT-COVID-19">CT-COVID-19</MenuItem>
+          <MenuItem value="MRT-Prostata">MRT-Prostata</MenuItem>
         </Select>
       </FormControl>
-      <Expander setExpanderItem={props.setExpanderItem} />
+      <Expander setExpanderItem={setExpanderItem} />
       <Cards />
       <Button variant="outlined" color="primary">
         Werkzeuge

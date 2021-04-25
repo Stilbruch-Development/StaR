@@ -2,8 +2,8 @@ import {
   EditorState,
   Modifier,
   SelectionState,
-  convertFromRaw,
-} from "draft-js";
+  convertFromRaw
+} from 'draft-js';
 
 export default function useExpander() {
   // GET THE CURRENT/SELECTED TEXT
@@ -19,21 +19,19 @@ export default function useExpander() {
       anchorKey: anchorKey,
       anchorOffset: end,
       isBackward: true,
-      hasFocus: true,
+      hasFocus: true
     });
 
-    const blockDelimiter = "/n";
-    var startKey = selection.getStartKey();
-    var endKey = selection.getEndKey();
-    var blocks = contentState.getBlockMap();
+    const blockDelimiter = '/n';
+    const startKey = selection.getStartKey();
+    const endKey = selection.getEndKey();
+    const blocks = contentState.getBlockMap();
 
-    var lastWasEnd = false;
-    var selectedBlock = blocks
-      .skipUntil(function (block) {
-        return block.getKey() === startKey;
-      })
-      .takeUntil(function (block) {
-        var result = lastWasEnd;
+    let lastWasEnd = false;
+    const selectedBlock = blocks
+      .skipUntil((block) => block.getKey() === startKey)
+      .takeUntil((block) => {
+        const result = lastWasEnd;
 
         if (block.getKey() === endKey) {
           lastWasEnd = true;
@@ -42,44 +40,24 @@ export default function useExpander() {
         return result;
       });
     return selectedBlock
-      .map(function (block) {
-        var key = block.getKey();
-        var text = block.getText();
+      .map((block) => {
+        const key = block.getKey();
+        let text = block.getText();
 
-        var start = 0;
-        var end = text.length;
+        let start = 0;
+        let textEnd = text.length;
 
         if (key === startKey) {
           start = selection.getStartOffset();
         }
         if (key === endKey) {
-          end = selection.getEndOffset();
+          textEnd = selection.getEndOffset();
         }
 
-        text = text.slice(start, end);
+        text = text.slice(start, textEnd);
         return text;
       })
       .join(blockDelimiter);
-  };
-
-  // CHECK IF CURRENT TEXT === EXPANDER-ITEM AND UPDATE EDITOR WITH updateEditorStateExpander
-  const checkExpander = (editorState, setEditorState, expanderUserData) => {
-    const userEditorInput = getTextSelection(editorState);
-    const selectionArray = userEditorInput.split(" ");
-    const selectionText = selectionArray.slice(-2, -1)[0];
-
-    if (expanderUserData) {
-      let matchData = expanderUserData.find((val) => {
-        if (val.short && val.long) {
-          return val.short === selectionText;
-        }
-        return null;
-      });
-
-      if (matchData !== undefined && matchData !== null) {
-        updateEditorStateExpander(matchData, editorState, setEditorState);
-      }
-    }
   };
 
   // UPDATE THE EDITOR WITH matchData.long
@@ -95,7 +73,7 @@ export default function useExpander() {
 
       const originalMatchData = convertFromRaw({
         ...matchData.long,
-        entityMap: {},
+        entityMap: {}
       });
 
       const blockLength = selectionState.getFocusOffset();
@@ -110,7 +88,7 @@ export default function useExpander() {
         focusKey: blockKey,
         focusOffset: focus - 1,
         isBackward: true,
-        hasFocus: true,
+        hasFocus: true
       });
 
       const insertLongContentState = Modifier.replaceWithFragment(
@@ -123,9 +101,29 @@ export default function useExpander() {
         EditorState.push(
           editorState,
           insertLongContentState,
-          "change-block-data"
+          'change-block-data'
         )
       );
+    }
+  };
+
+  // CHECK IF CURRENT TEXT === EXPANDER-ITEM AND UPDATE EDITOR WITH updateEditorStateExpander
+  const checkExpander = (editorState, setEditorState, expanderUserData) => {
+    const userEditorInput = getTextSelection(editorState);
+    const selectionArray = userEditorInput.split(' ');
+    const selectionText = selectionArray.slice(-2, -1)[0];
+
+    if (expanderUserData) {
+      const matchData = expanderUserData.find((val) => {
+        if (val.short && val.long) {
+          return val.short === selectionText;
+        }
+        return null;
+      });
+
+      if (matchData !== undefined && matchData !== null) {
+        updateEditorStateExpander(matchData, editorState, setEditorState);
+      }
     }
   };
 

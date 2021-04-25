@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import styled from "styled-components";
-import Immutable from "immutable";
+import React, { PureComponent } from 'react';
+import styled from 'styled-components';
+import Immutable from 'immutable';
 
 const AlignRight = styled.div`
   .public-DraftStyleDefault-ltr {
@@ -20,34 +20,37 @@ const AlignCenter = styled.div`
   }
 `;
 
-class AlignRightWrapper extends Component {
+class AlignRightWrapper extends PureComponent {
   render() {
+    const { children } = this.props;
     return (
       <AlignRight>
         {/* this.props.children contains a <section> container, as that was the matching element */}
-        {this.props.children}
+        {children}
       </AlignRight>
     );
   }
 }
 
-class AlignLeftWrapper extends Component {
+class AlignLeftWrapper extends PureComponent {
   render() {
+    const { children } = this.props;
     return (
       <AlignLeft>
         {/* this.props.children contains a <section> container, as that was the matching element */}
-        {this.props.children}
+        {children}
       </AlignLeft>
     );
   }
 }
 
-class AlignCenterWrapper extends Component {
+class AlignCenterWrapper extends PureComponent {
   render() {
+    const { children } = this.props;
     return (
       <AlignCenter>
         {/* this.props.children contains a <section> container, as that was the matching element */}
-        {this.props.children}
+        {children}
       </AlignCenter>
     );
   }
@@ -57,19 +60,19 @@ const blockRenderMap = Immutable.Map({
   alignRight: {
     // element is used during paste or html conversion to auto match your component;
     // it is also retained as part of this.props.children and not stripped out
-    element: "section",
+    element: 'section',
     wrapper: <AlignRightWrapper />
   },
   alignLeft: {
     // element is used during paste or html conversion to auto match your component;
     // it is also retained as part of this.props.children and not stripped out
-    element: "section",
+    element: 'section',
     wrapper: <AlignLeftWrapper />
   },
   alignCenter: {
     // element is used during paste or html conversion to auto match your component;
     // it is also retained as part of this.props.children and not stripped out
-    element: "section",
+    element: 'section',
     wrapper: <AlignCenterWrapper />
   }
 });
