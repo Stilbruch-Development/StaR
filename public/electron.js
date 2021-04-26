@@ -6,14 +6,16 @@ const {
   clipboard,
   shell,
   screen,
-  session,
   dialog
 } = require('electron');
 const { autoUpdater } = require('electron-updater');
+const {
+  default: installExtension,
+  REACT_DEVELOPER_TOOLS
+} = require('electron-devtools-installer');
 const path = require('path');
 const isDev = require('electron-is-dev');
 const log = require('electron-log');
-const os = require('os');
 
 const isMac = process.platform === 'darwin';
 
@@ -64,6 +66,12 @@ const createWindow = () => {
   mainWindow.on('closed', () => (mainWindow = null));
 };
 
+//-------------------------------------------------------------------
+// About Window
+//
+//
+//-------------------------------------------------------------------
+
 const createAboutWindow = () => {
   const mainScreen = screen.getPrimaryDisplay();
   const dimensions = mainScreen.size;
@@ -91,32 +99,128 @@ const createAboutWindow = () => {
   );
 };
 
+//-------------------------------------------------------------------
+// Menu
+//
+//
+//-------------------------------------------------------------------
+const menu = [
+  ...(isMac
+    ? [
+        {
+          label: 'StaR',
+          submenu: [
+            {
+              label: 'Über StaR',
+              click: createAboutWindow
+            },
+            {
+              label: 'Neu laden',
+              role: 'reload'
+            },
+            {
+              label: 'DevTools',
+              role: 'toggledevtools'
+            },
+            {
+              label: 'Beenden',
+              // accelerator: isMac ? "Command+Q" : "Ctl+Q",
+              accelerator: 'CmdOrCtrl+Q',
+              click: () => app.quit()
+            }
+          ]
+        },
+        {
+          label: 'Bearbeiten',
+          submenu: [
+            { role: 'undo' },
+            { role: 'redo' },
+            { type: 'separator' },
+            { role: 'cut' },
+            { role: 'copy' },
+            { role: 'paste' },
+            { role: 'delete' },
+            { role: 'selectAll' }
+          ]
+        }
+      ]
+    : []),
+  ...(!isMac
+    ? [
+        {
+          label: 'StaR',
+          submenu: [
+            {
+              label: 'Über StaR',
+              click: createAboutWindow
+            },
+            {
+              label: 'Neu laden',
+              role: 'reload'
+            },
+            {
+              label: 'DevTools',
+              role: 'toggledevtools'
+            },
+            {
+              label: 'Beenden',
+              // accelerator: isMac ? "Command+Q" : "Ctl+Q",
+              accelerator: 'CmdOrCtrl+Q',
+              click: () => app.quit()
+            }
+          ]
+        },
+        {
+          label: 'Bearbeiten',
+          submenu: [
+            { role: 'undo' },
+            { role: 'redo' },
+            { type: 'separator' },
+            { role: 'cut' },
+            { role: 'copy' },
+            { role: 'paste' },
+            { role: 'delete' },
+            { type: 'separator' },
+            { role: 'selectAll' }
+          ]
+        }
+      ]
+    : [])
+];
+
+//-------------------------------------------------------------------
+// app.on('ready', ()=>{})
+//
+//
+//-------------------------------------------------------------------
+
 app.on('ready', async () => {
-  const mainMenu = Menu.buildFromTemplate(menu);
-  await Menu.setApplicationMenu(mainMenu);
-  await createWindow();
-  await autoUpdater.checkForUpdatesAndNotify().catch((err) => {
-    console.log(err);
-    mainWindow.webContents.send('error');
-  });
-  await mainWindow.once('ready-to-show', () => {
-    mainWindow.show();
-  });
-  await app.focus();
+  try {
+    const mainMenu = Menu.buildFromTemplate(menu);
+    // const macExtensionPath =
+    //   '/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.12.3_0';
 
-  let devExtensionPath;
+    // const winExtensionPath =
+    //   '%LOCALAPPDATA%GoogleChromeUser DataDefaultExtensions\\fmkadmapgofadopljbjfkapdkoienihi\\4.12.3_0';
 
-  if (isDev && isMac) {
-    devExtensionPath =
-      '/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.12.3_0';
-  } else if (isDev) {
-    devExtensionPath =
-      '%LOCALAPPDATA%GoogleChromeUser DataDefaultExtensions\\fmkadmapgofadopljbjfkapdkoienihi\\4.12.3_0';
+    // await session.defaultSession.loadExtension(
+    //   path.join(os.homedir(), macExtensionPath || winExtensionPath)
+    // );
+
+    await Menu.setApplicationMenu(mainMenu);
+    await createWindow();
+    await autoUpdater.checkForUpdatesAndNotify();
+
+    await mainWindow.once('ready-to-show', () => {
+      mainWindow.show();
+    });
+
+    await app.focus();
+    await installExtension(REACT_DEVELOPER_TOOLS);
+  } catch (e) {
+    console.log("Error from  app.on('ready', () => {}) catch block:");
+    console.log(e);
   }
-
-  session.defaultSession.loadExtension(
-    path.join(os.homedir(), devExtensionPath)
-  );
 });
 
 app.allowRendererProcessReuse = true;
@@ -222,92 +326,3 @@ process.on('uncaughtException', (error) => {
   dialog.showMessageBox(messageBoxOptions);
   throw error;
 });
-
-//-------------------------------------------------------------------
-// Menu
-//
-//
-//-------------------------------------------------------------------
-const menu = [
-  ...(isMac
-    ? [
-        {
-          label: 'StaR',
-          submenu: [
-            {
-              label: 'Über StaR',
-              click: createAboutWindow
-            },
-            {
-              label: 'Neu laden',
-              role: 'reload'
-            },
-            {
-              label: 'DevTools',
-              role: 'toggledevtools'
-            },
-            {
-              label: 'Beenden',
-              // accelerator: isMac ? "Command+Q" : "Ctl+Q",
-              accelerator: 'CmdOrCtrl+Q',
-              click: () => app.quit()
-            }
-          ]
-        },
-        {
-          label: 'Bearbeiten',
-          submenu: [
-            { role: 'undo' },
-            { role: 'redo' },
-            { type: 'separator' },
-            { role: 'cut' },
-            { role: 'copy' },
-            { role: 'paste' },
-            { role: 'delete' },
-            { role: 'selectAll' }
-          ]
-        }
-      ]
-    : []),
-  ...(!isMac
-    ? [
-        {
-          label: 'StaR',
-          submenu: [
-            {
-              label: 'Über StaR',
-              click: createAboutWindow
-            },
-            {
-              label: 'Neu laden',
-              role: 'reload'
-            },
-            {
-              label: 'DevTools',
-              role: 'toggledevtools'
-            },
-            {
-              label: 'Beenden',
-              // accelerator: isMac ? "Command+Q" : "Ctl+Q",
-              accelerator: 'CmdOrCtrl+Q',
-              click: () => app.quit()
-            }
-          ]
-        },
-        {
-          label: 'Bearbeiten',
-          submenu: [
-            { role: 'undo' },
-            { role: 'redo' },
-            { type: 'separator' },
-            { role: 'cut' },
-            { role: 'copy' },
-            { role: 'paste' },
-            { role: 'delete' },
-            { type: 'separator' },
-            { role: 'selectAll' }
-          ]
-        }
-      ]
-    : [])
-];
