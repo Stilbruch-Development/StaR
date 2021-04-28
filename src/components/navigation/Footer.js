@@ -19,22 +19,18 @@ const Footer = () => {
   const [state, setState] = useState({
     version: ''
   });
-  window.ipcRenderer && window.ipcRenderer.send('app_version');
+
   useEffect(() => {
-    window.ipcRenderer && window.ipcRenderer.send('app_version');
-    window.ipcRenderer &&
-      window.ipcRenderer.on('app_version', (event, arg) => {
-        window.ipcRenderer.removeAllListeners('app_version');
-        setState({ ...state, version: `Version ${arg.version}` });
-        console.log(arg.version);
-      });
-  }, [state.version]);
+    window.electron.requestVersion();
+    window.electron.receiveVersion((args) => {
+      args && setState({ ...state, version: args.version });
+    });
+  }, []);
 
   let version_name;
-  console.log(state.version);
 
   if (process.env.NODE_ENV === 'development') {
-    version_name = `Dev-Mode Version ${process.env.REACT_APP_VERSION}`;
+    version_name = `Development Version`;
   } else {
     version_name = process.env.REACT_APP_VERSION;
   }

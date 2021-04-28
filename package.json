@@ -32,7 +32,7 @@
         "repo": "StaR"
       }
     ],
-    "copyright": "Copyright © 2020 visionx.dev",
+    "copyright": "Copyright © 2021 visionx.dev",
     "mac": {
       "icon": "./src/images/icons/mac/icon.icns",
       "category": "public.app-category.utilities"
@@ -111,7 +111,6 @@
     "eslint-plugin-react": "^7.23.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "jest-styled-components": "^7.0.3",
-    "jsdom-quokka-plugin": "^1.0.16",
     "mutationobserver-shim": "^0.3.7",
     "prettier": "^2.2.1",
     "react-app-rewired": "^2.1.8"

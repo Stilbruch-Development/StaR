@@ -50,10 +50,11 @@ const createWindow = () => {
     show: false,
     webPreferences: {
       devTools: tools,
-      nodeIntegration: true,
+      nodeIntegration: false,
       preload: `${__dirname}/preload.js`,
       worldSafeExecuteJavaScript: true,
-      enableRemoteModule: true
+      enableRemoteModule: true,
+      contextIsolation: true
     }
   });
 
@@ -197,16 +198,6 @@ const menu = [
 app.on('ready', async () => {
   try {
     const mainMenu = Menu.buildFromTemplate(menu);
-    // const macExtensionPath =
-    //   '/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.12.3_0';
-
-    // const winExtensionPath =
-    //   '%LOCALAPPDATA%GoogleChromeUser DataDefaultExtensions\\fmkadmapgofadopljbjfkapdkoienihi\\4.12.3_0';
-
-    // await session.defaultSession.loadExtension(
-    //   path.join(os.homedir(), macExtensionPath || winExtensionPath)
-    // );
-
     await Menu.setApplicationMenu(mainMenu);
     await createWindow();
     await autoUpdater.checkForUpdatesAndNotify();
@@ -226,7 +217,7 @@ app.on('ready', async () => {
 app.allowRendererProcessReuse = true;
 
 app.on('before-quit', () => {
-  mainWindow.webContents.send('loggout');
+  mainWindow.webContents.send('logout');
 });
 
 app.on('window-all-closed', () => {
@@ -238,13 +229,13 @@ app.on('window-all-closed', () => {
 
 // -------------------------------------------------------------------
 
-ipcMain.on('app_version', (event) => {
-  event.sender.send('app_version', { version: app.getVersion() });
-  console.log(`log`);
-  console.log(app.getVersion());
+ipcMain.on('app_version_request', () => {
+  mainWindow.webContents.send('app_version_respond', {
+    version: app.getVersion()
+  });
 });
 
-ipcMain.on('copy_to_clipboard', (event, content) => {
+ipcMain.on('copy_clipboard', (event, content) => {
   clipboard.writeText(content);
 });
 

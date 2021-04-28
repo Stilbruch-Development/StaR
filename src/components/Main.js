@@ -12,10 +12,9 @@ import authContext from './context/auth/authContext';
 const Main = () => {
   const { logout } = { ...useContext(authContext) };
 
-  window.ipcRenderer &&
-    window.ipcRenderer.on('loggout', () => {
-      logout();
-    });
+  window.electron.receiveLogout(() => {
+    logout();
+  });
 
   return (
     <div data-testid="MainComponent">

@@ -28,6 +28,7 @@ function renderWithContext(node) {
 }
 
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
+window.electron = jest.fn();
 
 test('<Footer/> renders correct', () => {
   const { getByTestId } = render(

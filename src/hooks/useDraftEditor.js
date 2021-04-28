@@ -20,7 +20,7 @@ export default function useDraftEditor() {
 
   const copyEditorToClipboard = (editorState) => {
     const content = editorState.getCurrentContent().getPlainText('\u0001');
-    window.ipcRenderer && window.ipcRenderer.send('copy_to_clipboard', content);
+    window.electron.sendClipboard(content);
     setAlert(
       { item: 'message', value: 'Inhalt zur Zwischenablage kopiert!' },
       { item: 'color', value: 'rgba(191, 255, 184, 0.8' }
