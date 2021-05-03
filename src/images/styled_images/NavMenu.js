@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { ReactComponent as NavMenuIcon } from '../navMenu.svg';
 
 const Icon = styled.object`

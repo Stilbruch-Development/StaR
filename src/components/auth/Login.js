@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import Divider from '@material-ui/core/Divider';
 import { Link } from 'react-router-dom';
 import AlertContext from '../context/alert/alertContext';

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Editor, EditorState, convertFromRaw } from 'draft-js';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import CardsContext from '../../context/cards/cardsContext';
 import useExternalLink from '../../../hooks/useExternalLink';
 import AlertContext from '../../context/alert/alertContext';
@@ -59,18 +59,22 @@ const DraftDisplay = (props) => {
         </p>
         <p>{selectedCardsItem.keywords}</p>
       </div>
-      <div>
-        <p style={{ textDecoration: 'underline', fontWeight: 'bold' }}>Link:</p>
-        <button
-          style={{ textDecoration: 'underline', cursor: 'pointer' }}
-          onClick={() => {
-            onClickLogo(selectedCardsItem.url);
-          }}
-          type="button"
-        >
-          {selectedCardsItem.url}
-        </button>
-      </div>
+      {selectedCardsItem.url && (
+        <div>
+          <p style={{ textDecoration: 'underline', fontWeight: 'bold' }}>
+            Link:
+          </p>
+          <button
+            style={{ textDecoration: 'underline', cursor: 'pointer' }}
+            onClick={() => {
+              onClickLogo(selectedCardsItem.url);
+            }}
+            type="button"
+          >
+            {selectedCardsItem.url}
+          </button>
+        </div>
+      )}
     </MainStyleWrapper>
   ) : (
     <></>

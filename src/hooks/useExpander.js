@@ -123,6 +123,7 @@ export default function useExpander() {
 
       if (matchData !== undefined && matchData !== null) {
         updateEditorStateExpander(matchData, editorState, setEditorState);
+        console.log(matchData);
       }
     }
   };

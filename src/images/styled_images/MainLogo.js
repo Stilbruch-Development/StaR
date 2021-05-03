@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { ReactComponent as StaRLogo } from '../StaR_Main_500.svg';
 
 const Logo = styled.div`

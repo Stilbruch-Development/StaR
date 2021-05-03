@@ -54,7 +54,7 @@ const createWindow = () => {
       preload: `${__dirname}/preload.js`,
       worldSafeExecuteJavaScript: true,
       enableRemoteModule: true,
-      contextIsolation: true
+      contextIsolation: false
     }
   });
 
@@ -229,13 +229,11 @@ app.on('window-all-closed', () => {
 
 // -------------------------------------------------------------------
 
-ipcMain.on('app_version_request', () => {
-  mainWindow.webContents.send('app_version_respond', {
-    version: app.getVersion()
-  });
+ipcMain.on('app_version_request', (event) => {
+  event.sender.send('app_version_received', { version: app.getVersion() });
 });
 
-ipcMain.on('copy_clipboard', (event, content) => {
+ipcMain.on('copy_to_clipboard', (event, content) => {
   clipboard.writeText(content);
 });
 

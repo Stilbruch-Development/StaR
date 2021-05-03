@@ -6,7 +6,7 @@ import {
   DefaultDraftBlockRenderMap
 } from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import ExpanderContext from '../../context/expander/expanderContext';
 import EditorToolBar from './EditorToolBar';
 import blockRenderMap from '../../editor/blocktypes/TextAlign';

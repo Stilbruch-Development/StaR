@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import NavContext from '../context/navigation/navContext';
 import NavCancel from '../../images/styled_images/NavCancel';
 import NavMenuIcon from '../../images/styled_images/NavMenu';

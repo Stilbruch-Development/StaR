@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import MaterialTable from 'material-table';
 import Search from '@material-ui/icons/Search';
 import Clear from '@material-ui/icons/Clear';

@@ -7,7 +7,7 @@ import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import CardsList from './CardsList';
 import DraftDisplay from './DraftDisplay';
 import CardsForm from './CardsForm';

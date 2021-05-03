@@ -3,7 +3,6 @@ import { render } from '@testing-library/react';
 import App from './App';
 import '@testing-library/jest-dom/extend-expect';
 
-window.electron.receiveLogout = jest.fn();
 test('renders App without crashing', () => {
   const { getByTestId } = render(<App />);
 

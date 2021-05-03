@@ -60,14 +60,28 @@ const ExpanderState = (props) => {
       user: user._id,
       long: longState
     };
+
+    const test = await expander_db.find({
+      selector: { short: item.short, user: user._id }
+    });
+
     try {
-      await expander_db.put(item).then(
-        dispatch({
-          type: ADD_EXPANDER_ITEM,
-          payload: item
-        })
-      );
+      if (test.docs.length === 0) {
+        await expander_db.put(item).then(
+          dispatch({
+            type: ADD_EXPANDER_ITEM,
+            payload: item
+          })
+        );
+      } else {
+        dispatch({ type: EXPANDER_ERROR });
+        setAlert({
+          item: 'message',
+          value: 'Element-Kürzel bereits vorhanden !!'
+        });
+      }
     } catch (err) {
+      console.log(err);
       dispatch({ type: EXPANDER_ERROR, payload: err });
       setAlert({
         item: 'message',

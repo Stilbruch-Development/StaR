@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import Immutable from 'immutable';
 
 const AlignRight = styled.div`

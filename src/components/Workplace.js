@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import LeftSidebar from './navigation/LeftSidebar';
 import RightSidebar from './navigation/RightSidebar';
 import ExpanderContext from './context/expander/expanderContext';

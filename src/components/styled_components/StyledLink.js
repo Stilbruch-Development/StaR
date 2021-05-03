@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { HashLink as Link } from 'react-router-hash-link';
 
 const StyledLink = styled(Link)`

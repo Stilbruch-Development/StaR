@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import NavItem from './NavItem';
 import NavLogo from './NavLogo';
 import VisionXLogo from './VisionXLogo';
@@ -21,16 +21,17 @@ const Footer = () => {
   });
 
   useEffect(() => {
-    window.electron.requestVersion();
-    window.electron.receiveVersion((args) => {
-      args && setState({ ...state, version: args.version });
+    window.ipcRenderer?.send('app_version_request');
+    window.ipcRenderer?.on('app_version_received', (event, arg) => {
+      window.ipcRenderer.removeAllListeners('app_version:request');
+      setState({ ...state, version: `Version ${arg.version}` });
     });
   }, []);
 
   let version_name;
 
   if (process.env.NODE_ENV === 'development') {
-    version_name = `Development Version`;
+    version_name = `Development `;
   } else {
     version_name = process.env.REACT_APP_VERSION;
   }

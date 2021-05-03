@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components/macro';
 
 const play_regular = require('../../fonts/Play/Play-Regular.ttf');
 const play_bold = require('../../fonts/Play/Play-Bold.ttf');

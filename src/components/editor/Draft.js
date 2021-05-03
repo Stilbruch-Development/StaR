@@ -6,7 +6,7 @@ import {
   convertToRaw
 } from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import EditorToolBar from './EditorToolBar';
 import blockRenderMap from './blocktypes/TextAlign';
 import ExpanderContext from '../context/expander/expanderContext';

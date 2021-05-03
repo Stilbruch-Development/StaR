@@ -12,7 +12,7 @@ import authContext from './context/auth/authContext';
 const Main = () => {
   const { logout } = { ...useContext(authContext) };
 
-  window.electron.receiveLogout(() => {
+  window.ipcRenderer?.on('loggout', () => {
     logout();
   });
 

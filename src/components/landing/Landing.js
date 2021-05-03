@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { Link } from 'react-router-dom';
 import MainLogo from '../../images/styled_images/MainLogo';
 import useAutoUpdater from '../../hooks/useAutoUpdater';

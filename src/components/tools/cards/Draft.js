@@ -8,7 +8,7 @@ import {
   convertFromRaw
 } from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import CardsContext from '../../context/cards/cardsContext';
 import EditorToolBar from './EditorToolBar';
 import blockRenderMap from '../../editor/blocktypes/TextAlign';

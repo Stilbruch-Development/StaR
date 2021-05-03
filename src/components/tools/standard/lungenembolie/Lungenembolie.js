@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import List from '@material-ui/core/List';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import ListElementVoruntersuchung from '../shared_modules/ListElement_Voruntersuchung';
