@@ -61,12 +61,12 @@ const ExpanderState = (props) => {
       long: longState
     };
 
-    const test = await expander_db.find({
+    const duplicat = await expander_db.find({
       selector: { short: item.short, user: user._id }
     });
 
     try {
-      if (test.docs.length === 0) {
+      if (duplicat.docs.length === 0) {
         await expander_db.put(item).then(
           dispatch({
             type: ADD_EXPANDER_ITEM,
@@ -77,7 +77,7 @@ const ExpanderState = (props) => {
         dispatch({ type: EXPANDER_ERROR });
         setAlert({
           item: 'message',
-          value: 'Element-Kürzel bereits vorhanden !!'
+          value: 'Kürzel ist bereits vorhanden und wurde nicht gespeichert !!'
         });
       }
     } catch (err) {

@@ -67,14 +67,28 @@ const CardsState = (props) => {
       user: user._id
     };
 
+    const duplicat = await cards_db.find({
+      selector: { name: item.name, user: user._id }
+    });
+
     try {
-      await cards_db.put(item).then(
-        dispatch({
-          type: ADD_CARDS_ITEM,
-          payload: item
-        })
-      );
+      if (duplicat.docs.length === 0) {
+        await cards_db.put(item).then(
+          dispatch({
+            type: ADD_CARDS_ITEM,
+            payload: item
+          })
+        );
+      } else {
+        dispatch({ type: CARDS_ERROR });
+        setAlert({
+          item: 'message',
+          value:
+            'Karten-Name ist bereits vorhanden! Bitte keine Doppeleinträge.'
+        });
+      }
     } catch (err) {
+      console.log(err);
       dispatch({ type: CARDS_ERROR, payload: err });
       setAlert({
         item: 'message',

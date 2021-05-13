@@ -13,6 +13,7 @@ const AlertWrapper = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  z-index: 10000;
 `;
 
 const Notefication = styled.div`

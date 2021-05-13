@@ -87,9 +87,6 @@
     "build": "npm run react-build && npm run electron-build",
     "start": "concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\""
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "devDependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.13.12",
     "@babel/register": "^7.13.16",
