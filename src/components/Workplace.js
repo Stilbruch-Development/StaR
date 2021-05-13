@@ -35,9 +35,8 @@ const Editor = () => {
     loadingExpander
   } = useContext(ExpanderContext);
 
-  const { getCards, clearCards, setCardsState, loadingCards } = useContext(
-    CardsContext
-  );
+  const { getCards, clearCards, setCardsState, loadingCards } =
+    useContext(CardsContext);
 
   const { user } = useContext(AuthContext);
 

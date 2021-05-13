@@ -19,12 +19,8 @@ const SidebarDiv = styled.div`
 `;
 
 const Sidebar = (props) => {
-  const {
-    setToggleState,
-    onRegisterClick,
-    onChangeUserClick,
-    onToolsClick
-  } = props;
+  const { setToggleState, onRegisterClick, onChangeUserClick, onToolsClick } =
+    props;
   return (
     <SidebarDiv>
       <Button variant="outlined" color="primary" onClick={setToggleState}>

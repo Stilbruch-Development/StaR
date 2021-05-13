@@ -20,9 +20,8 @@ const MainWrapper = styled.div`
 `;
 
 export default function ListElementRechtsherzbelastung() {
-  const { PulmonaryEmbolismState, setPulmonaryEmbolismState } = useContext(
-    StandardContext
-  );
+  const { PulmonaryEmbolismState, setPulmonaryEmbolismState } =
+    useContext(StandardContext);
 
   const { Rechtsherzbelastungszeichen } = PulmonaryEmbolismState;
 
