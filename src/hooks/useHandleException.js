@@ -1,3 +1,4 @@
+/* eslint-disable node/no-unpublished-require */
 export default function useHandleException() {
   const handleException = () => {
     window.process &&
