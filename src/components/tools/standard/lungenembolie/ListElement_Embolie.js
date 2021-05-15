@@ -20,8 +20,9 @@ const MainWrapper = styled.div`
 `;
 
 export default function ListElementEmbolie() {
-  const { PulmonaryEmbolismState, setPulmonaryEmbolismState } =
-    useContext(StandardContext);
+  const { PulmonaryEmbolismState, setPulmonaryEmbolismState } = useContext(
+    StandardContext
+  );
   const { Lokalisation, Abschnitte } = PulmonaryEmbolismState;
 
   const handleToggleLokalisation = (value) => () => {

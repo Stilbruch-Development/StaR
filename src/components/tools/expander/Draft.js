@@ -34,8 +34,9 @@ const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap);
 const Draft = () => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const contentState = editorState.getCurrentContent();
-  const { selectedExpanderItem, editorLocked, setExpanderEditor } =
-    useContext(ExpanderContext);
+  const { selectedExpanderItem, editorLocked, setExpanderEditor } = useContext(
+    ExpanderContext
+  );
 
   const _toggleBlockType = (blockType) => {
     const toggleBlock = RichUtils.toggleBlockType(editorState, blockType);

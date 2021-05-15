@@ -18,8 +18,9 @@ const initialVal = {
 };
 
 function usePulmonaryEmbolismState() {
-  const [PulmonaryEmbolismState, setPulmonaryEmbolismState] =
-    useState(initialVal);
+  const [PulmonaryEmbolismState, setPulmonaryEmbolismState] = useState(
+    initialVal
+  );
 
   return [PulmonaryEmbolismState, setPulmonaryEmbolismState];
 }

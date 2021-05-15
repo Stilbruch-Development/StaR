@@ -1,3 +1,5 @@
+/* eslint-disable node/no-unpublished-require */
+/* eslint-disable import/no-extraneous-dependencies */
 const {
   app,
   BrowserWindow,

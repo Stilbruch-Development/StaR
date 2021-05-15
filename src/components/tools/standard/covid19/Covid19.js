@@ -90,8 +90,12 @@ export default function Covid19() {
     Skelett
   } = Covid19State;
 
-  const { getVoruntersuchung, getKategorie, getSonstige, setGesamt } =
-    useCovid19();
+  const {
+    getVoruntersuchung,
+    getKategorie,
+    getSonstige,
+    setGesamt
+  } = useCovid19();
 
   const handleSubmit = () => {
     setGesamt();
