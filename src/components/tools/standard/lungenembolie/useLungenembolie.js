@@ -10,9 +10,8 @@ export default function useLungenembolie() {
     Satz_4: ''
   });
 
-  const { PulmonaryEmbolismState, setPulmonaryEmbolismState } = useContext(
-    StandardContext
-  );
+  const { PulmonaryEmbolismState, setPulmonaryEmbolismState } =
+    useContext(StandardContext);
 
   const {
     Voruntersuchung,
