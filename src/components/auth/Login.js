@@ -66,6 +66,7 @@ const Login = (props) => {
       });
       clearErrors();
     } else {
+      console.log(email, password);
       login({
         email,
         password

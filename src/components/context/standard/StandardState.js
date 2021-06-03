@@ -6,10 +6,8 @@ import usePulmonaryEmbolismState from './pulmonaryEmbolism/usePulmonaryEmbolismS
 const StandardState = (props) => {
   const { children } = props;
   const [Covid19State, setCovid19State] = useCovid19State();
-  const [
-    PulmonaryEmbolismState,
-    setPulmonaryEmbolismState
-  ] = usePulmonaryEmbolismState();
+  const [PulmonaryEmbolismState, setPulmonaryEmbolismState] =
+    usePulmonaryEmbolismState();
   return (
     <StandardContext.Provider
       value={{

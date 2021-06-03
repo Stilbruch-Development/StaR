@@ -53,6 +53,7 @@ const setAdmin = async () => {
       }
     }
   }
+  console.log('admin set');
 };
 
 setAdmin();

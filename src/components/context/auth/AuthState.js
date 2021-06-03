@@ -234,6 +234,7 @@ const AuthState = (props) => {
         item: 'message',
         value: err.message
       });
+      console.log('from catch login in AuthState.js');
     }
   };
 

@@ -36,9 +36,8 @@ const ExpanderShortsWrapper = styled.div`
 const Expander = () => {
   const [open, setOpen] = useState(false);
 
-  const { selectExpanderItem, lockEditor, setExpanderEditor } = useContext(
-    ExpanderContext
-  );
+  const { selectExpanderItem, lockEditor, setExpanderEditor } =
+    useContext(ExpanderContext);
 
   const handleClickOpen = () => {
     setOpen(true);

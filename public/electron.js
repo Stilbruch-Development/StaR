@@ -16,10 +16,10 @@ const {
   REACT_DEVELOPER_TOOLS
 } = require('electron-devtools-installer');
 const path = require('path');
-const isDev = require('electron-is-dev');
 const log = require('electron-log');
 
 const isMac = process.platform === 'darwin';
+const isDev = true; /* require('electron-is-dev'); */
 
 //-------------------------------------------------------------------
 // Main Window

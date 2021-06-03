@@ -48,9 +48,8 @@ const UnselectedWrapper = styled.div`
 const Cards = () => {
   const [open, setOpen] = useState(false);
 
-  const { selectedCardsItem, editingCards, setCardsState } = useContext(
-    CardsContext
-  );
+  const { selectedCardsItem, editingCards, setCardsState } =
+    useContext(CardsContext);
 
   const handleClickOpen = () => {
     setOpen(true);
