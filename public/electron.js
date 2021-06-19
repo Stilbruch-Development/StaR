@@ -209,7 +209,9 @@ app.on('ready', async () => {
     });
 
     await app.focus();
-    await installExtension(REACT_DEVELOPER_TOOLS);
+    installExtension(REACT_DEVELOPER_TOOLS)
+      .then((name) => console.log(`Added Extension:  ${name}`))
+      .catch((err) => console.log('An error occurred: ', err));
   } catch (e) {
     console.log("Error from  app.on('ready', () => {}) catch block:");
     console.log(e);
